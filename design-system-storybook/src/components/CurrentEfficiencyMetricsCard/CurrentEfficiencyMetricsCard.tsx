@@ -39,9 +39,10 @@ export const CurrentEfficiencyMetricsCard: React.FC<CurrentEfficiencyMetricsCard
         flexDirection: 'column',
         gap: '22px', // Figma Auto Layout gap: 22px
         fontFamily: 'Inter, sans-serif',
-        width: '100%',
-        maxWidth: '758px',
+        width: '758px',
+        minWidth: '758px',
         height: '608px',
+        minHeight: '608px',
         boxSizing: 'border-box',
         ...style
       }}

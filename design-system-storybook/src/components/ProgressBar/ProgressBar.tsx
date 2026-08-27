@@ -56,9 +56,9 @@ export const ProgressBar: React.FC<ProgressBarProps> = ({
         className="pb-track"
         style={{
           flex: 1,
-          height: '8px',
+          height: '6px',
           backgroundColor: '#edeffe', // Inactive track background color
-          borderRadius: '4px',
+          borderRadius: '0px',
           position: 'relative',
           overflow: 'hidden',
           boxSizing: 'border-box',
@@ -70,7 +70,7 @@ export const ProgressBar: React.FC<ProgressBarProps> = ({
             width: Procent,
             height: '100%',
             backgroundColor: isDisabled ? '#cbd5e1' : '#115e59', // Active teal fill color
-            borderRadius: '4px',
+            borderRadius: '0px',
             transition: 'width 0.3s ease',
           }}
         />
