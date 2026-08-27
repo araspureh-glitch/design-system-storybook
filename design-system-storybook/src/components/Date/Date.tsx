@@ -1,170 +1,233 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './Date.css';
 
 export interface DateProps {
+  /** Figma variant selection: 'Frame 1171275911' (active/opened) | 'Frame 1171275912' (default/closed) */
   Property_1?: 'Frame 1171275911' | 'Frame 1171275912';
   className?: string;
   style?: React.CSSProperties;
 }
 
 /**
- * **Preserved Figma Layer Name**: `date `
- * Page: `date and time`
- * Type: `COMPONENT_SET`
- * ID: `181:5913`
+ * **Date Picker Button & Dropdown** component (Figma Node: 181:5913)
+ * 
+ * Displays a calendar selection pill:
+ * - 'Frame 1171275912': Closed pill (white background, teal icon, dark text).
+ * - 'Frame 1171275911': Active pill (teal background, white text/icon) with absolute calendar dropdown.
+ * Clicking the pill toggles the calendar dropdown open and closed.
  */
 export const Date: React.FC<DateProps> = ({
-  Property_1 = "Frame 1171275912",
+  Property_1 = 'Frame 1171275912',
   className = '',
   style = {},
-  ...props
 }) => {
-  return (
-    <div 
-      className={`date-container ${className}`}
-      style={style}
-      data-figma-layer="date "
-      data-figma-page="date and time"
-      {...props}
+  const [isOpen, setIsOpen] = useState(Property_1 === 'Frame 1171275911');
+  const [selectedDay, setSelectedDay] = useState<number>(9);
+
+  // Sync state if variant prop changes in Storybook controls
+  useEffect(() => {
+    setIsOpen(Property_1 === 'Frame 1171275911');
+  }, [Property_1]);
+
+  const toggleDropdown = () => {
+    setIsOpen(!isOpen);
+  };
+
+  const daysOfWeek = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
+  
+  // Generating grid: Sept 2025 starts on Monday (1st), has 30 days
+  const daysInMonth = 30;
+  const calendarDays: (number | null)[] = [];
+  for (let i = 1; i <= daysInMonth; i++) {
+    calendarDays.push(i);
+  }
+
+  // Calendar Icon SVG
+  const CalendarIcon = ({ color }: { color: string }) => (
+    <svg
+      width="20"
+      height="20"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke={color}
+      strokeWidth="2.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      style={{ transition: 'stroke 0.2s ease', marginRight: '10px' }}
     >
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px', borderBottom: '1px solid rgba(255,255,255,0.1)', paddingBottom: '6px' }}>
-        <span style={{ fontSize: '12px', fontWeight: 600, color: 'var(--uedp-slate-400, #94a3b8)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-          date and time / date 
-        </span>
-        <span style={{ fontSize: '10px', background: 'rgba(255,255,255,0.1)', padding: '2px 6px', borderRadius: '4px', fontFamily: 'monospace' }}>
-          181:5913
-        </span>
-      </div>
+      <rect x="3" y="4" width="18" height="18" rx="4" ry="4" />
+      <line x1="16" y1="2" x2="16" y2="6" />
+      <line x1="8" y1="2" x2="8" y2="6" />
+      <line x1="3" y1="10" x2="21" y2="10" />
+    </svg>
+  );
 
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-        <div style={{ border: '1px solid rgba(255,255,255,0.08)', borderRadius: '8px', padding: '12px', marginBottom: '8px', background: 'rgba(15,23,42,0.4)' }}>
-            <div style={{ fontSize: '11px', fontWeight: 600, color: '#38bdf8', marginBottom: '8px' }}>Variant: Property 1=Frame 1171275912</div>
-            <div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '31.596271514892578px', background: 'rgb(255, 255, 255)', alignItems: 'center' }}>
-<span style={{ fontSize: '11px', color: 'var(--uedp-slate-400, #94a3b8)' }}>Rectangle 16</span>
-</div>
-<span style={{ fontSize: '14.744926452636719px', fontWeight: 600, color: 'rgb(0, 0, 0)', display: 'inline-block' }}>9 Sept 25</span>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgb(255, 255, 255)', alignItems: 'center' }}>
-<div style={{ width: '16px', height: '16px', borderRadius: '50%', background: 'rgb(1, 135, 147)', display: 'inline-block', flexShrink: 0 }} />
-</div>
-</div>
-</div>
+  // Chevron Down SVG
+  const ChevronDown = ({ color }: { color: string }) => (
+    <svg
+      width="14"
+      height="14"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke={color}
+      strokeWidth="2.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      style={{ marginLeft: '6px' }}
+    >
+      <polyline points="6 9 12 15 18 9" />
+    </svg>
+  );
+
+  return (
+    <div
+      className={`date-picker-wrapper ${className}`}
+      style={{
+        position: 'relative',
+        display: 'inline-block',
+        fontFamily: 'Inter, sans-serif',
+        ...style
+      }}
+      data-figma-node="181:5913"
+      data-property1={Property_1}
+    >
+      {/* Selection Pill Button */}
+      <button
+        onClick={toggleDropdown}
+        className="date-pill-btn"
+        style={{
+          display: 'inline-flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          height: '46px',
+          padding: '0 24px',
+          borderRadius: '23px',
+          border: 'none',
+          cursor: 'pointer',
+          fontSize: '15px',
+          fontWeight: '700',
+          transition: 'all 0.25s ease',
+          boxShadow: '0 4px 16px rgba(0, 0, 0, 0.04)',
+          outline: 'none',
+          userSelect: 'none',
+          ...(isOpen
+            ? {
+                backgroundColor: '#0d9488', // Active Teal Background
+                color: '#ffffff',
+              }
+            : {
+                backgroundColor: '#ffffff', // Default White Background
+                color: '#000000',
+              }),
+        }}
+      >
+        <CalendarIcon color={isOpen ? '#ffffff' : '#0d9488'} />
+        <span>9 Sept 25</span>
+      </button>
+
+      {/* Calendar Card Dropdown */}
+      {isOpen && (
+        <div
+          className="calendar-dropdown-card"
+          style={{
+            position: 'absolute',
+            top: '56px',
+            right: 0,
+            width: '380px',
+            backgroundColor: '#ffffff',
+            borderRadius: '28px',
+            boxShadow: '0 12px 36px rgba(0, 0, 0, 0.08)',
+            padding: '24px',
+            boxSizing: 'border-box',
+            zIndex: 99,
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '16px',
+          }}
+        >
+          {/* Calendar Header: Year & Month */}
+          <div style={{ display: 'flex', gap: '16px', paddingLeft: '8px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', cursor: 'pointer', fontSize: '16px', fontWeight: '600', color: '#1e293b' }}>
+              <span>2025</span>
+              <ChevronDown color="#64748b" />
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', cursor: 'pointer', fontSize: '16px', fontWeight: '600', color: '#1e293b' }}>
+              <span>September</span>
+              <ChevronDown color="#64748b" />
+            </div>
           </div>
-<div style={{ border: '1px solid rgba(255,255,255,0.08)', borderRadius: '8px', padding: '12px', marginBottom: '8px', background: 'rgba(15,23,42,0.4)' }}>
-            <div style={{ fontSize: '11px', fontWeight: 600, color: '#38bdf8', marginBottom: '8px' }}>Variant: Property 1=Frame 1171275911</div>
-            <div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '31.596271514892578px', background: 'rgb(1, 135, 147)', alignItems: 'center' }}>
-<span style={{ fontSize: '11px', color: 'var(--uedp-slate-400, #94a3b8)' }}>Rectangle 16</span>
-</div>
-<span style={{ fontSize: '14.744926452636719px', fontWeight: 600, color: 'rgb(255, 255, 255)', display: 'inline-block' }}>9 Sept 25</span>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgb(255, 255, 255)', alignItems: 'center' }}>
-<div style={{ width: '16px', height: '16px', borderRadius: '50%', background: 'rgb(255, 255, 255)', display: 'inline-block', flexShrink: 0 }} />
-</div>
-</div>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '31.596271514892578px', background: 'rgb(255, 255, 255)', alignItems: 'center' }}>
-<span style={{ fontSize: '11px', color: 'var(--uedp-slate-400, #94a3b8)' }}>Rectangle 727</span>
-</div>
-<div style={{ display: 'flex', flexDirection: 'column', gap: '16px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'column', gap: '16px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'column', gap: '12px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'column', gap: '12px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
 
-</div>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<span style={{ fontSize: '11px', color: 'var(--uedp-slate-400, #94a3b8)' }}>Line 10</span>
-</div>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '12px', padding: '4px 8px', borderRadius: '6px', background: 'rgb(255, 255, 255)', alignItems: 'center' }}>
-
-</div>
-</div>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '8px', background: 'rgba(1, 135, 147, 0.11999999731779099)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '10px', padding: '9px 63px 9px 63px', borderRadius: '8px', background: 'rgb(1, 135, 147)', alignItems: 'center' }}>
-
-</div>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '10px', padding: '9px 26px 9px 26px', borderRadius: '8px', background: 'rgba(1, 135, 147, 0)', alignItems: 'center' }}>
-
-</div>
-</div>
-</div>
-<div style={{ display: 'flex', flexDirection: 'column', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'column', gap: '8px', padding: '0px 12px 8px 12px', borderRadius: '12px', background: 'rgba(222, 239, 241, 0.5)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-
-</div>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-
-</div>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-
-</div>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-
-</div>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-
-</div>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-
-</div>
-</div>
-</div>
-</div>
-<span style={{ fontSize: '16px', fontWeight: 400, color: 'rgb(255, 255, 255)', display: 'inline-block' }}>9</span>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '0px 8px 0px 8px', borderRadius: '12px', background: 'rgba(222, 239, 241, 0.5)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<span style={{ fontSize: '12px', fontWeight: 400, color: 'rgb(0, 60, 66)', display: 'inline-block' }}>M</span>
-</div>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<span style={{ fontSize: '12px', fontWeight: 400, color: 'rgb(0, 60, 66)', display: 'inline-block' }}>T</span>
-</div>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<span style={{ fontSize: '12px', fontWeight: 400, color: 'rgb(0, 60, 66)', display: 'inline-block' }}>W</span>
-</div>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<span style={{ fontSize: '12px', fontWeight: 400, color: 'rgb(0, 60, 66)', display: 'inline-block' }}>T</span>
-</div>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<span style={{ fontSize: '12px', fontWeight: 400, color: 'rgb(0, 60, 66)', display: 'inline-block' }}>F</span>
-</div>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<span style={{ fontSize: '12px', fontWeight: 400, color: 'rgb(0, 60, 66)', display: 'inline-block' }}>S</span>
-</div>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<span style={{ fontSize: '12px', fontWeight: 400, color: 'rgb(0, 60, 66)', display: 'inline-block' }}>S</span>
-</div>
-</div>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '86px', padding: '12px 36px 12px 24px', borderRadius: '6px', background: 'rgb(255, 255, 255)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '24px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '12px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '2px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-
-</div>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-
-</div>
-</div>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '12px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '2px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-
-</div>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-
-</div>
-</div>
-</div>
-</div>
-</div>
+          {/* Days of Week Row */}
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(7, 1fr)',
+              backgroundColor: '#e5f2f5',
+              borderRadius: '12px',
+              padding: '6px 0',
+              textAlign: 'center',
+            }}
+          >
+            {daysOfWeek.map((day, idx) => (
+              <span key={idx} style={{ fontSize: '12px', fontWeight: '600', color: '#105e68' }}>
+                {day}
+              </span>
+            ))}
           </div>
-      </div>
 
-      <div style={{ marginTop: '12px', display: 'flex', flexWrap: 'wrap', gap: '8px', fontSize: '11px', borderTop: '1px dashed rgba(255,255,255,0.1)', paddingTop: '8px' }}>
-        <div style={{ background: 'rgba(0,0,0,0.3)', padding: '4px 8px', borderRadius: '4px' }}>
-          <span style={{ color: 'var(--uedp-slate-400, #94a3b8)' }}>Property_1: </span>
-          <span style={{ color: '#38bdf8', fontWeight: 600 }}>{String(Property_1)}</span>
+          {/* Days Calendar Grid */}
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(7, 1fr)',
+              rowGap: '12px',
+              columnGap: '4px',
+              textAlign: 'center',
+              padding: '8px 0',
+            }}
+          >
+            {calendarDays.map((day, idx) => {
+              if (day === null) {
+                return <div key={idx} />;
+              }
+
+              const isSelected = selectedDay === day;
+
+              return (
+                <div
+                  key={idx}
+                  onClick={() => setSelectedDay(day)}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    height: '38px',
+                    width: '38px',
+                    borderRadius: '50%',
+                    cursor: 'pointer',
+                    fontSize: '14px',
+                    fontWeight: isSelected ? '700' : '500',
+                    margin: '0 auto',
+                    transition: 'all 0.2s ease',
+                    ...(isSelected
+                      ? {
+                          backgroundColor: '#0d9488', // Solid Teal Selection Circle
+                          color: '#ffffff',
+                        }
+                      : {
+                          backgroundColor: 'transparent',
+                          color: '#1e293b',
+                        }),
+                  }}
+                  className={isSelected ? '' : 'calendar-day-hover'}
+                >
+                  {day}
+                </div>
+              );
+            })}
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };
