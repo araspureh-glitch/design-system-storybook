@@ -1,8 +1,13 @@
-.condition-container {
-  background-color: var(--uedp-slate-800, #1e293b);
-  border-radius: 5px;
-  padding: var(--uedp-padding-4, 16px);
+/* ============================================
+   Condition — Figma Node 181:6753 Styles
+   ============================================ */
+
+.condition-tag {
   box-sizing: border-box;
-  color: var(--uedp-base-white, #ffffff);
-  font-family: Inter, sans-serif;
+}
+
+.condition-tag:hover {
+  transform: scale(1.02);
+  opacity: 0.95;
+  cursor: default;
 }
