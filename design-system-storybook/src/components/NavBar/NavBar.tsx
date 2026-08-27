@@ -1,490 +1,118 @@
 import React from 'react';
 import './NavBar.css';
+import { NavComponent } from '../NavComponent/NavComponent';
 
 export interface NavBarProps {
+  /** Figma active variant selection */
   Property_1?: 'Dashboard' | 'Sustainability' | 'Energy Grid' | 'reports' | 'settings' | 'log out';
   className?: string;
   style?: React.CSSProperties;
+  onSelect?: (active: 'Dashboard' | 'Sustainability' | 'Energy Grid' | 'reports' | 'settings' | 'log out') => void;
 }
 
 /**
- * **Preserved Figma Layer Name**: `nav bar `
- * Page: `nav bar`
- * Type: `COMPONENT_SET`
- * ID: `181:4864`
+ * **Sidebar Navigation Bar** component (Figma Node ID: 181:4864)
+ * 
+ * Organizes the vertical menu navigation layout using our individual NavComponent.
  */
 export const NavBar: React.FC<NavBarProps> = ({
-  Property_1 = "Dashboard",
+  Property_1 = 'Dashboard',
   className = '',
   style = {},
-  ...props
+  onSelect,
 }) => {
+  // Normalize casing of variants to match input values
+  const activeKey = Property_1;
+
+  // Custom icon SVG render helpers to ensure sharp design system presentation
+  const dashboardIcon = (isFilled: boolean) => (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={isFilled ? '#0d9488' : '#275259'} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ transition: 'stroke 0.2s ease' }}>
+      <path d="M 4 4 L 4 20 L 20 20" />
+      <path d="M 6 15 L 10 10 L 14 13 L 19 6" />
+    </svg>
+  );
+
+  const sustainabilityIcon = (isFilled: boolean) => (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={isFilled ? '#0d9488' : '#275259'} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ transition: 'stroke 0.2s ease' }}>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
+      <line x1="12" y1="17" x2="12.01" y2="17" />
+    </svg>
+  );
+
+  const energyGridIcon = (isFilled: boolean) => (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={isFilled ? '#0d9488' : '#275259'} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ transition: 'stroke 0.2s ease' }}>
+      <rect x="3" y="3" width="18" height="18" rx="2" />
+      <path d="M9 3v18" />
+      <path d="M15 3v18" />
+      <path d="M3 9h18" />
+      <path d="M3 15h18" />
+    </svg>
+  );
+
+  const reportsIcon = (isFilled: boolean) => (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={isFilled ? '#0d9488' : '#275259'} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ transition: 'stroke 0.2s ease' }}>
+      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+      <polyline points="14 2 14 8 20 8" />
+      <line x1="16" y1="13" x2="8" y2="13" />
+      <line x1="16" y1="17" x2="8" y2="17" />
+      <polyline points="10 9 9 9 8 9" />
+    </svg>
+  );
+
+  const settingsIcon = (isFilled: boolean) => (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={isFilled ? '#0d9488' : '#275259'} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ transition: 'stroke 0.2s ease' }}>
+      <circle cx="12" cy="12" r="3" />
+      <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z" />
+    </svg>
+  );
+
+  const logoutIcon = (isFilled: boolean) => (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={isFilled ? '#0d9488' : '#275259'} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ transition: 'stroke 0.2s ease' }}>
+      <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+      <polyline points="16 17 21 12 16 7" />
+      <line x1="21" y1="12" x2="9" y2="12" />
+    </svg>
+  );
+
+  const menuItems: { key: 'Dashboard' | 'Sustainability' | 'Energy Grid' | 'reports' | 'settings' | 'log out'; label: string; icon: (isFilled: boolean) => React.ReactNode }[] = [
+    { key: 'Dashboard', label: 'Dashboard', icon: dashboardIcon },
+    { key: 'Sustainability', label: 'Sustainability', icon: sustainabilityIcon },
+    { key: 'Energy Grid', label: 'Energy Grid', icon: energyGridIcon },
+    { key: 'reports', label: 'Reports', icon: reportsIcon },
+    { key: 'settings', label: 'Settings', icon: settingsIcon },
+    { key: 'log out', label: 'Log Out', icon: logoutIcon },
+  ];
+
   return (
-    <div 
-      className={`navbar-container ${className}`}
-      style={style}
-      data-figma-layer="nav bar "
-      data-figma-page="nav bar"
-      {...props}
+    <div
+      className={`sidebar-navbar-container ${className}`}
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '12px',
+        padding: '24px 16px',
+        backgroundColor: '#13171f', // dark sidebar canvas theme
+        width: '352px',
+        boxSizing: 'border-box',
+        borderRadius: '24px',
+        ...style
+      }}
+      data-figma-node="181:4864"
+      data-property1={Property_1}
     >
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px', borderBottom: '1px solid rgba(255,255,255,0.1)', paddingBottom: '6px' }}>
-        <span style={{ fontSize: '12px', fontWeight: 600, color: 'var(--uedp-slate-400, #94a3b8)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-          nav bar / nav bar 
-        </span>
-        <span style={{ fontSize: '10px', background: 'rgba(255,255,255,0.1)', padding: '2px 6px', borderRadius: '4px', fontFamily: 'monospace' }}>
-          181:4864
-        </span>
-      </div>
-
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-        <div style={{ border: '1px solid rgba(255,255,255,0.08)', borderRadius: '8px', padding: '12px', marginBottom: '8px', background: 'rgba(15,23,42,0.4)' }}>
-            <div style={{ fontSize: '11px', fontWeight: 600, color: '#38bdf8', marginBottom: '8px' }}>Variant: Property 1=Dashboard</div>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '24px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '-9px', padding: '4px 8px', borderRadius: '6px', background: 'rgb(255, 255, 255)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '20px', padding: '17px 93px 17px 33px', borderRadius: '6px', background: 'rgb(255, 255, 255)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-
-</div>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-
-</div>
-</div>
-</div>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6.5px', background: 'rgb(13, 148, 136)', alignItems: 'center' }}>
-<span style={{ fontSize: '11px', color: 'var(--uedp-slate-400, #94a3b8)' }}>Rectangle 778</span>
-</div>
-</div>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '-18px', padding: '4px 8px', borderRadius: '6px', background: 'rgb(255, 255, 255)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '20px', padding: '17px 93px 17px 33px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-
-</div>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-
-</div>
-</div>
-</div>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6.5px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<span style={{ fontSize: '11px', color: 'var(--uedp-slate-400, #94a3b8)' }}>Rectangle 778</span>
-</div>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<span style={{ fontSize: '11px', color: 'var(--uedp-slate-400, #94a3b8)' }}>Frame 1171275918</span>
-</div>
-</div>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '-18px', padding: '4px 8px', borderRadius: '6px', background: 'rgb(255, 255, 255)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '20px', padding: '17px 93px 17px 33px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-
-</div>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-
-</div>
-</div>
-</div>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6.5px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<span style={{ fontSize: '11px', color: 'var(--uedp-slate-400, #94a3b8)' }}>Rectangle 778</span>
-</div>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<span style={{ fontSize: '11px', color: 'var(--uedp-slate-400, #94a3b8)' }}>Frame 1171275918</span>
-</div>
-</div>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '-18px', padding: '4px 8px', borderRadius: '6px', background: 'rgb(255, 255, 255)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '20px', padding: '17px 93px 17px 33px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-
-</div>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-
-</div>
-</div>
-</div>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6.5px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<span style={{ fontSize: '11px', color: 'var(--uedp-slate-400, #94a3b8)' }}>Rectangle 778</span>
-</div>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<span style={{ fontSize: '11px', color: 'var(--uedp-slate-400, #94a3b8)' }}>Frame 1171275918</span>
-</div>
-</div>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '-18px', padding: '4px 8px', borderRadius: '6px', background: 'rgb(255, 255, 255)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '20px', padding: '17px 93px 17px 33px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-
-</div>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-
-</div>
-</div>
-</div>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6.5px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<span style={{ fontSize: '11px', color: 'var(--uedp-slate-400, #94a3b8)' }}>Rectangle 778</span>
-</div>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<span style={{ fontSize: '11px', color: 'var(--uedp-slate-400, #94a3b8)' }}>Frame 1171275918</span>
-</div>
-</div>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '-18px', padding: '4px 8px', borderRadius: '6px', background: 'rgb(255, 255, 255)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '20px', padding: '17px 93px 17px 33px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-
-</div>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-
-</div>
-</div>
-</div>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6.5px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<span style={{ fontSize: '11px', color: 'var(--uedp-slate-400, #94a3b8)' }}>Rectangle 778</span>
-</div>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<span style={{ fontSize: '11px', color: 'var(--uedp-slate-400, #94a3b8)' }}>Frame 1171275918</span>
-</div>
-</div>
-</div>
-          </div>
-<div style={{ border: '1px solid rgba(255,255,255,0.08)', borderRadius: '8px', padding: '12px', marginBottom: '8px', background: 'rgba(15,23,42,0.4)' }}>
-            <div style={{ fontSize: '11px', fontWeight: 600, color: '#38bdf8', marginBottom: '8px' }}>Variant: Property 1=Sustainability</div>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '24px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '-18px', padding: '4px 8px', borderRadius: '6px', background: 'rgb(255, 255, 255)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '20px', padding: '17px 93px 17px 33px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-
-</div>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-
-</div>
-</div>
-</div>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6.5px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<span style={{ fontSize: '11px', color: 'var(--uedp-slate-400, #94a3b8)' }}>Rectangle 778</span>
-</div>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<span style={{ fontSize: '11px', color: 'var(--uedp-slate-400, #94a3b8)' }}>Frame 1171275918</span>
-</div>
-</div>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '-9px', padding: '4px 8px', borderRadius: '6px', background: 'rgb(255, 255, 255)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '20px', padding: '17px 93px 17px 33px', borderRadius: '6px', background: 'rgb(255, 255, 255)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-
-</div>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-
-</div>
-</div>
-</div>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6.5px', background: 'rgb(13, 148, 136)', alignItems: 'center' }}>
-<span style={{ fontSize: '11px', color: 'var(--uedp-slate-400, #94a3b8)' }}>Rectangle 778</span>
-</div>
-</div>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '-18px', padding: '4px 8px', borderRadius: '6px', background: 'rgb(255, 255, 255)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '20px', padding: '17px 93px 17px 33px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-
-</div>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-
-</div>
-</div>
-</div>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6.5px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<span style={{ fontSize: '11px', color: 'var(--uedp-slate-400, #94a3b8)' }}>Rectangle 778</span>
-</div>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<span style={{ fontSize: '11px', color: 'var(--uedp-slate-400, #94a3b8)' }}>Frame 1171275918</span>
-</div>
-</div>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '-18px', padding: '4px 8px', borderRadius: '6px', background: 'rgb(255, 255, 255)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '20px', padding: '17px 93px 17px 33px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-
-</div>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-
-</div>
-</div>
-</div>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6.5px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<span style={{ fontSize: '11px', color: 'var(--uedp-slate-400, #94a3b8)' }}>Rectangle 778</span>
-</div>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<span style={{ fontSize: '11px', color: 'var(--uedp-slate-400, #94a3b8)' }}>Frame 1171275918</span>
-</div>
-</div>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '-18px', padding: '4px 8px', borderRadius: '6px', background: 'rgb(255, 255, 255)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '20px', padding: '17px 93px 17px 33px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-
-</div>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-
-</div>
-</div>
-</div>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6.5px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<span style={{ fontSize: '11px', color: 'var(--uedp-slate-400, #94a3b8)' }}>Rectangle 778</span>
-</div>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<span style={{ fontSize: '11px', color: 'var(--uedp-slate-400, #94a3b8)' }}>Frame 1171275918</span>
-</div>
-</div>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '-18px', padding: '4px 8px', borderRadius: '6px', background: 'rgb(255, 255, 255)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '20px', padding: '17px 93px 17px 33px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-
-</div>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-
-</div>
-</div>
-</div>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6.5px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<span style={{ fontSize: '11px', color: 'var(--uedp-slate-400, #94a3b8)' }}>Rectangle 778</span>
-</div>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<span style={{ fontSize: '11px', color: 'var(--uedp-slate-400, #94a3b8)' }}>Frame 1171275918</span>
-</div>
-</div>
-</div>
-          </div>
-<div style={{ border: '1px solid rgba(255,255,255,0.08)', borderRadius: '8px', padding: '12px', marginBottom: '8px', background: 'rgba(15,23,42,0.4)' }}>
-            <div style={{ fontSize: '11px', fontWeight: 600, color: '#38bdf8', marginBottom: '8px' }}>Variant: Property 1=Energy Grid</div>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '24px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '-18px', padding: '4px 8px', borderRadius: '6px', background: 'rgb(255, 255, 255)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '20px', padding: '17px 93px 17px 33px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-
-</div>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-
-</div>
-</div>
-</div>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6.5px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<span style={{ fontSize: '11px', color: 'var(--uedp-slate-400, #94a3b8)' }}>Rectangle 778</span>
-</div>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<span style={{ fontSize: '11px', color: 'var(--uedp-slate-400, #94a3b8)' }}>Frame 1171275918</span>
-</div>
-</div>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '-18px', padding: '4px 8px', borderRadius: '6px', background: 'rgb(255, 255, 255)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '20px', padding: '17px 93px 17px 33px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-
-</div>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-
-</div>
-</div>
-</div>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6.5px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<span style={{ fontSize: '11px', color: 'var(--uedp-slate-400, #94a3b8)' }}>Rectangle 778</span>
-</div>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<span style={{ fontSize: '11px', color: 'var(--uedp-slate-400, #94a3b8)' }}>Frame 1171275918</span>
-</div>
-</div>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '-9px', padding: '4px 8px', borderRadius: '6px', background: 'rgb(255, 255, 255)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '20px', padding: '17px 93px 17px 33px', borderRadius: '6px', background: 'rgb(255, 255, 255)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-
-</div>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-
-</div>
-</div>
-</div>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6.5px', background: 'rgb(13, 148, 136)', alignItems: 'center' }}>
-<span style={{ fontSize: '11px', color: 'var(--uedp-slate-400, #94a3b8)' }}>Rectangle 778</span>
-</div>
-</div>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '-18px', padding: '4px 8px', borderRadius: '6px', background: 'rgb(255, 255, 255)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '20px', padding: '17px 93px 17px 33px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-
-</div>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-
-</div>
-</div>
-</div>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6.5px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<span style={{ fontSize: '11px', color: 'var(--uedp-slate-400, #94a3b8)' }}>Rectangle 778</span>
-</div>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<span style={{ fontSize: '11px', color: 'var(--uedp-slate-400, #94a3b8)' }}>Frame 1171275918</span>
-</div>
-</div>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '-18px', padding: '4px 8px', borderRadius: '6px', background: 'rgb(255, 255, 255)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '20px', padding: '17px 93px 17px 33px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-
-</div>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-
-</div>
-</div>
-</div>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6.5px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<span style={{ fontSize: '11px', color: 'var(--uedp-slate-400, #94a3b8)' }}>Rectangle 778</span>
-</div>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<span style={{ fontSize: '11px', color: 'var(--uedp-slate-400, #94a3b8)' }}>Frame 1171275918</span>
-</div>
-</div>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '-18px', padding: '4px 8px', borderRadius: '6px', background: 'rgb(255, 255, 255)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '20px', padding: '17px 93px 17px 33px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-
-</div>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-
-</div>
-</div>
-</div>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6.5px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<span style={{ fontSize: '11px', color: 'var(--uedp-slate-400, #94a3b8)' }}>Rectangle 778</span>
-</div>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<span style={{ fontSize: '11px', color: 'var(--uedp-slate-400, #94a3b8)' }}>Frame 1171275918</span>
-</div>
-</div>
-</div>
-          </div>
-<div style={{ border: '1px solid rgba(255,255,255,0.08)', borderRadius: '8px', padding: '12px', marginBottom: '8px', background: 'rgba(15,23,42,0.4)' }}>
-            <div style={{ fontSize: '11px', fontWeight: 600, color: '#38bdf8', marginBottom: '8px' }}>Variant: Property 1=reports</div>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '24px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '-18px', padding: '4px 8px', borderRadius: '6px', background: 'rgb(255, 255, 255)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '20px', padding: '17px 93px 17px 33px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-
-</div>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-
-</div>
-</div>
-</div>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6.5px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<span style={{ fontSize: '11px', color: 'var(--uedp-slate-400, #94a3b8)' }}>Rectangle 778</span>
-</div>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<span style={{ fontSize: '11px', color: 'var(--uedp-slate-400, #94a3b8)' }}>Frame 1171275918</span>
-</div>
-</div>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '-18px', padding: '4px 8px', borderRadius: '6px', background: 'rgb(255, 255, 255)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '20px', padding: '17px 93px 17px 33px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-
-</div>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-
-</div>
-</div>
-</div>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6.5px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<span style={{ fontSize: '11px', color: 'var(--uedp-slate-400, #94a3b8)' }}>Rectangle 778</span>
-</div>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<span style={{ fontSize: '11px', color: 'var(--uedp-slate-400, #94a3b8)' }}>Frame 1171275918</span>
-</div>
-</div>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '-18px', padding: '4px 8px', borderRadius: '6px', background: 'rgb(255, 255, 255)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '20px', padding: '17px 93px 17px 33px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-
-</div>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-
-</div>
-</div>
-</div>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6.5px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<span style={{ fontSize: '11px', color: 'var(--uedp-slate-400, #94a3b8)' }}>Rectangle 778</span>
-</div>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<span style={{ fontSize: '11px', color: 'var(--uedp-slate-400, #94a3b8)' }}>Frame 1171275918</span>
-</div>
-</div>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '-9px', padding: '4px 8px', borderRadius: '6px', background: 'rgb(255, 255, 255)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '20px', padding: '17px 93px 17px 33px', borderRadius: '6px', background: 'rgb(255, 255, 255)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-
-</div>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-
-</div>
-</div>
-</div>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6.5px', background: 'rgb(13, 148, 136)', alignItems: 'center' }}>
-<span style={{ fontSize: '11px', color: 'var(--uedp-slate-400, #94a3b8)' }}>Rectangle 778</span>
-</div>
-</div>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '-18px', padding: '4px 8px', borderRadius: '6px', background: 'rgb(255, 255, 255)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '20px', padding: '17px 93px 17px 33px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-
-</div>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-
-</div>
-</div>
-</div>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6.5px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<span style={{ fontSize: '11px', color: 'var(--uedp-slate-400, #94a3b8)' }}>Rectangle 778</span>
-</div>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<span style={{ fontSize: '11px', color: 'var(--uedp-slate-400, #94a3b8)' }}>Frame 1171275918</span>
-</div>
-</div>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '-18px', padding: '4px 8px', borderRadius: '6px', background: 'rgb(255, 255, 255)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '20px', padding: '17px 93px 17px 33px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-
-</div>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-
-</div>
-</div>
-</div>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6.5px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<span style={{ fontSize: '11px', color: 'var(--uedp-slate-400, #94a3b8)' }}>Rectangle 778</span>
-</div>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<span style={{ fontSize: '11px', color: 'var(--uedp-slate-400, #94a3b8)' }}>Frame 1171275918</span>
-</div>
-</div>
-</div>
-          </div>
-      </div>
-
-      <div style={{ marginTop: '12px', display: 'flex', flexWrap: 'wrap', gap: '8px', fontSize: '11px', borderTop: '1px dashed rgba(255,255,255,0.1)', paddingTop: '8px' }}>
-        <div style={{ background: 'rgba(0,0,0,0.3)', padding: '4px 8px', borderRadius: '4px' }}>
-          <span style={{ color: 'var(--uedp-slate-400, #94a3b8)' }}>Property_1: </span>
-          <span style={{ color: '#38bdf8', fontWeight: 600 }}>{String(Property_1)}</span>
-        </div>
-      </div>
+      {menuItems.map((item) => {
+        const isActive = activeKey === item.key;
+        return (
+          <NavComponent
+            key={item.key}
+            Property_1={isActive ? 'filled' : 'blank'}
+            label={item.label}
+            icon={item.icon}
+            onClick={() => onSelect?.(item.key)}
+          />
+        );
+      })}
     </div>
   );
 };

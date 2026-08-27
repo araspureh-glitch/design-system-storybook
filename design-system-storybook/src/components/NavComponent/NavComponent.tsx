@@ -6,6 +6,8 @@ export interface NavComponentProps {
   Property_1?: 'filled' | 'blank';
   /** Text label displayed in the nav item */
   label?: string;
+  /** Custom icon element */
+  icon?: (isFilled: boolean) => React.ReactNode;
   className?: string;
   style?: React.CSSProperties;
   onClick?: () => void;
@@ -21,6 +23,7 @@ export interface NavComponentProps {
 export const NavComponent: React.FC<NavComponentProps> = ({
   Property_1 = 'filled',
   label = 'Dashboard',
+  icon,
   className = '',
   style = {},
   onClick,
@@ -50,23 +53,25 @@ export const NavComponent: React.FC<NavComponentProps> = ({
     >
       {/* Icon + Label Flex */}
       <div style={{ display: 'flex', alignItems: 'center', gap: '20px', flex: 1 }}>
-        {/* Line Chart Icon */}
-        <svg
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke={isFilled ? '#0d9488' : '#275259'}
-          strokeWidth="2.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          style={{ transition: 'stroke 0.2s ease' }}
-        >
-          {/* L-shaped Axis */}
-          <path d="M 4 4 L 4 20 L 20 20" />
-          {/* Trendline */}
-          <path d="M 6 15 L 10 10 L 14 13 L 19 6" />
-        </svg>
+        {icon ? (
+          icon(isFilled)
+        ) : (
+          /* Line Chart Icon (Fallback) */
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke={isFilled ? '#0d9488' : '#275259'}
+            strokeWidth="2.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            style={{ transition: 'stroke 0.2s ease' }}
+          >
+            <path d="M 4 4 L 4 20 L 20 20" />
+            <path d="M 6 15 L 10 10 L 14 13 L 19 6" />
+          </svg>
+        )}
 
         {/* Text Label */}
         <span
