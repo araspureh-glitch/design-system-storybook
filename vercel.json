@@ -1,7 +1,7 @@
 {
   "version": 2,
-  "installCommand": "npm install --legacy-peer-deps",
-  "buildCommand": "cd design-system-storybook && npm install --legacy-peer-deps --force && npm run build-storybook",
+  "installCommand": "cd design-system-storybook && npm install --legacy-peer-deps",
+  "buildCommand": "cd design-system-storybook && npm run build-storybook",
   "outputDirectory": "design-system-storybook/storybook-static",
   "rewrites": [
     { "source": "/(.*)", "destination": "/index.html" }
