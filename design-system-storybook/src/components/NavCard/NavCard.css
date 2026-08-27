@@ -1,8 +1,18 @@
-.navcard-container {
-  background-color: rgb(255, 255, 255);
-  border-radius: 18px;
-  padding: var(--uedp-padding-4, 16px);
-  box-sizing: border-box;
-  color: var(--uedp-base-white, #ffffff);
-  font-family: Inter, sans-serif;
+/* ============================================
+   NavCard — Figma Node 181:4807 Styles
+   ============================================ */
+
+.nav-card-box {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.nav-card-box:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.06);
+}
+
+.nav-card-tab-btn:hover:not(.nav-card-tab-btn--active) {
+  color: #105e68 !important;
+  opacity: 0.85;
+  background-color: rgba(255, 255, 255, 0.3);
 }
