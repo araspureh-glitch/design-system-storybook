@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './CircleChart.css';
 
 export interface CircleChartProps {
@@ -30,6 +30,8 @@ export const CircleChart: React.FC<CircleChartProps> = ({
   className = '',
   style = {},
 }) => {
+  const [hoveredSliceId, setHoveredSliceId] = useState<'A' | 'B' | 'C' | 'D' | 'E' | 'F' | null>(null);
+
   // Determine how many slices to show based on "Add X" variant
   let visibleSlicesCount = 6;
   if (Property_1.startsWith('Add ')) {
@@ -74,13 +76,16 @@ export const CircleChart: React.FC<CircleChartProps> = ({
           const radStart = (startAngle * Math.PI) / 180;
           const radEnd = (endAngle * Math.PI) / 180;
 
-          // Check if this slice is exploded
+           // Check if this slice is exploded (by variant or hover)
           const isExploded = explodedSliceId === slice.id;
+          const isHovered = hoveredSliceId === slice.id;
+          const isActive = isExploded || isHovered;
+          
           const bisectorRad = ((startAngle + angleDelta / 2) * Math.PI) / 180;
           
-          // Center offsets for exploded slice
-          const offsetX = isExploded ? Math.cos(bisectorRad) * 12 : 0;
-          const offsetY = isExploded ? Math.sin(bisectorRad) * 12 : 0;
+          // Center offsets for active (exploded/hovered) slice
+          const offsetX = isActive ? Math.cos(bisectorRad) * 12 : 0;
+          const offsetY = isActive ? Math.sin(bisectorRad) * 12 : 0;
 
           const x1 = center + offsetX + radius * Math.cos(radStart);
           const y1 = center + offsetY + radius * Math.sin(radStart);
@@ -107,16 +112,18 @@ export const CircleChart: React.FC<CircleChartProps> = ({
               <path
                 d={pathData}
                 fill={slice.color}
-                className={`cc-pie-slice ${isExploded ? 'cc-pie-slice--exploded' : ''}`}
+                className={`cc-pie-slice ${isActive ? 'cc-pie-slice--exploded' : ''}`}
                 style={{
                   transition: 'all 0.3s ease',
                   cursor: 'pointer'
                 }}
+                onMouseEnter={() => setHoveredSliceId(slice.id)}
+                onMouseLeave={() => setHoveredSliceId(null)}
               />
 
-              {/* Exploded Label Badge */}
-              {isExploded && (
-                <g className="cc-tooltip-badge">
+              {/* Exploded / Hover Label Badge */}
+              {isActive && (
+                <g className="cc-tooltip-badge" style={{ pointerEvents: 'none' }}>
                   {/* Small Rect badge */}
                   <rect
                     x={tooltipX - 18}
