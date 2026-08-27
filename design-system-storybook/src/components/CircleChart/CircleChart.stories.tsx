@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
+import React from 'react';
 import { CircleChart } from './CircleChart';
 
 const meta: Meta<typeof CircleChart> = {
@@ -8,28 +9,36 @@ const meta: Meta<typeof CircleChart> = {
     docs: {
       description: {
         component:
-          'Renewable vs Non Renewable Energy donut chart card. Figma Node ID: 4-639 | Page: charts | Type: COMPONENT_SET',
+          'Circle Chart Component Set supporting Add A-F variants and exploded detail views with tooltips. Figma Node ID: 180:4469 | Page: charts.',
       },
     },
     backgrounds: {
       default: 'dark',
       values: [
         { name: 'dark', value: '#13171f' },
-        { name: 'light', value: '#f1f5f9' },
+        { name: 'light', value: '#f8fafc' },
       ],
     },
+    layout: 'centered',
   },
   argTypes: {
-    variant: {
+    Property_1: {
       control: { type: 'select' },
-      options: ['small', 'medium', 'large'],
-      description: 'Card size variant',
-    },
-    renewablePercent: {
-      control: { type: 'range', min: 0, max: 100, step: 1 },
-    },
-    nonRenewablePercent: {
-      control: { type: 'range', min: 0, max: 100, step: 1 },
+      options: [
+        'Add A',
+        'Add B',
+        'Add C',
+        'Add D',
+        'Add E',
+        'Add F',
+        'View A detail',
+        'View B detail',
+        'View C detail',
+        'View D detail',
+        'View E detail',
+        'View F detail',
+      ],
+      description: 'Figma variant options',
     },
   },
 };
@@ -37,51 +46,35 @@ const meta: Meta<typeof CircleChart> = {
 export default meta;
 type Story = StoryObj<typeof CircleChart>;
 
-export const Small: Story = {
+export const Default: Story = {
   args: {
-    variant: 'small',
-    title: 'Renewable vs Non Renewable Energy',
-    renewableKwh: '3,120 kWh',
-    renewablePercent: 25,
-    nonRenewableKwh: '9,330 kWh',
-    nonRenewablePercent: 75,
-    centerValue: 100,
-    centerLabel: 'November',
+    Property_1: 'Add F',
   },
 };
 
-export const Medium: Story = {
+export const ExplodedView: Story = {
   args: {
-    variant: 'medium',
-    title: 'Renewable vs Non Renewable Energy',
-    renewableKwh: '3,120 kWh',
-    renewablePercent: 25,
-    nonRenewableKwh: '9,330 kWh',
-    nonRenewablePercent: 75,
-    centerValue: 100,
-    centerLabel: 'November',
-  },
-};
-
-export const Large: Story = {
-  args: {
-    variant: 'large',
-    title: 'Renewable vs Non Renewable Energy',
-    renewableKwh: '3,120 kWh',
-    renewablePercent: 25,
-    nonRenewableKwh: '9,330 kWh',
-    nonRenewablePercent: 75,
-    centerValue: 100,
-    centerLabel: 'November',
+    Property_1: 'View A detail',
   },
 };
 
 export const AllVariants: Story = {
+  name: 'All Variants (Like Figma Canvas)',
   render: () => (
-    <div style={{ display: 'flex', gap: '20px', flexWrap: 'wrap', alignItems: 'flex-start', padding: '20px', background: '#13171f' }}>
-      <CircleChart variant="small" />
-      <CircleChart variant="medium" />
-      <CircleChart variant="large" />
+    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(6, 1fr)', gap: '20px', padding: '40px', background: '#13171f', borderRadius: '12px' }}>
+      <CircleChart Property_1="Add A" />
+      <CircleChart Property_1="Add B" />
+      <CircleChart Property_1="Add C" />
+      <CircleChart Property_1="Add D" />
+      <CircleChart Property_1="Add E" />
+      <CircleChart Property_1="Add F" />
+      
+      <CircleChart Property_1="View A detail" />
+      <CircleChart Property_1="View B detail" />
+      <CircleChart Property_1="View C detail" />
+      <CircleChart Property_1="View D detail" />
+      <CircleChart Property_1="View E detail" />
+      <CircleChart Property_1="View F detail" />
     </div>
   ),
 };
