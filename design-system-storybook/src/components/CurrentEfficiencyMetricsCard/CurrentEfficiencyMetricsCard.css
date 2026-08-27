@@ -1,9 +1,25 @@
-.currentefficiencymetricscard-container {
-  background-color: rgb(255, 255, 255);
-  border-radius: 18px;
-  gap: 22px;
-  padding: var(--uedp-padding-4, 16px);
+/* ========================================================
+   Current Efficiency Metrics Card — Figma Node 181:4697
+   ======================================================== */
+
+.current-efficiency-card {
   box-sizing: border-box;
-  color: var(--uedp-base-white, #ffffff);
-  font-family: Inter, sans-serif;
+}
+
+/* Custom Scrollbar for the metrics list */
+.current-efficiency-list::-webkit-scrollbar {
+  width: 4px;
+}
+
+.current-efficiency-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.current-efficiency-list::-webkit-scrollbar-thumb {
+  background: #deeff1;
+  border-radius: 2px;
+}
+
+.current-efficiency-list::-webkit-scrollbar-thumb:hover {
+  background: #cbd5e1;
 }

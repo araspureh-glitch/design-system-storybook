@@ -1,22 +1,29 @@
 import type { Meta, StoryObj } from '@storybook/react';
+import React from 'react';
 import { CurrentEfficiencyMetricsCard } from './CurrentEfficiencyMetricsCard';
 
 const meta: Meta<typeof CurrentEfficiencyMetricsCard> = {
-  title: "cards/ Current Efficiency Metrics card",
+  title: 'cards/CurrentEfficiencyMetricsCard',
   component: CurrentEfficiencyMetricsCard,
   parameters: {
     docs: {
       description: {
-        component: "Figma Layer:  Current Efficiency Metrics card | Page: cards | Node ID: 181:4697 | Type: INSTANCE",
+        component:
+          'Dashboard card displaying Current Efficiency Metrics (HVAC, Street Lighting, etc.) using custom progress bars. Figma Node ID: 181:4697 | Page: cards.',
       },
     },
+    backgrounds: {
+      default: 'dark',
+      values: [
+        { name: 'dark', value: '#13171f' },
+        { name: 'light', value: '#f8fafc' },
+      ],
+    },
+    layout: 'centered',
   },
-  argTypes: {},
 };
 
 export default meta;
 type Story = StoryObj<typeof CurrentEfficiencyMetricsCard>;
 
-export const Primary: Story = {
-  args: {},
-};
+export const Default: Story = {};
