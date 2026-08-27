@@ -1,8 +1,18 @@
-.component424-container {
-  background-color: var(--uedp-slate-800, #1e293b);
-  border-radius: 5px;
-  padding: var(--uedp-padding-4, 16px);
+/* ============================================
+   Component424 — Figma Node 125:2420 Styles
+   ============================================ */
+
+.c424-bar-container {
   box-sizing: border-box;
-  color: var(--uedp-base-white, #ffffff);
-  font-family: Inter, sans-serif;
+}
+
+.c424-bar {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.c424-bar-container:hover .c424-bar {
+  transform: scaleY(1.02);
+  transform-origin: bottom;
+  box-shadow: 0 4px 12px rgba(13, 148, 136, 0.1);
 }
