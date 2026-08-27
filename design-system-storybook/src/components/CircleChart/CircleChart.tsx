@@ -2,85 +2,158 @@ import React from 'react';
 import './CircleChart.css';
 
 export interface CircleChartProps {
-  Property_1?: 'Add A' | 'Add B' | 'Add C' | 'Add D' | 'Add E' | 'Add F' | 'View A detail' | 'View B detail' | 'View C detail' | 'View D detail' | 'View E detail' | 'View F detail';
+  /** Variant size of the card */
+  variant?: 'small' | 'medium' | 'large';
+  /** Title text */
+  title?: string;
+  /** Renewable energy value in kWh */
+  renewableKwh?: string;
+  /** Renewable energy percentage (0–100) */
+  renewablePercent?: number;
+  /** Non-renewable energy value in kWh */
+  nonRenewableKwh?: string;
+  /** Non-renewable energy percentage (0–100) */
+  nonRenewablePercent?: number;
+  /** Center label (e.g. month name) */
+  centerLabel?: string;
+  /** Center value */
+  centerValue?: string | number;
   className?: string;
   style?: React.CSSProperties;
 }
 
 /**
- * **Preserved Figma Layer Name**: `circle chart`
- * Page: `charts`
- * Type: `COMPONENT_SET`
- * ID: `180:4469`
+ * **Renewable vs Non Renewable Energy** donut chart card.
+ * Figma Node ID: 4-639
+ * Page: charts
+ * Type: COMPONENT_SET
  */
 export const CircleChart: React.FC<CircleChartProps> = ({
-  Property_1 = "Add A",
+  variant = 'small',
+  title = 'Renewable vs Non Renewable Energy',
+  renewableKwh = '3,120 kWh',
+  renewablePercent = 25,
+  nonRenewableKwh = '9,330 kWh',
+  nonRenewablePercent = 75,
+  centerLabel = 'November',
+  centerValue = 100,
   className = '',
   style = {},
-  ...props
 }) => {
+  // SVG donut chart geometry
+  const sizeMap = {
+    small:  { card: 280, donut: 70, stroke: 14, cx: 35, r: 26 },
+    medium: { card: 320, donut: 80, stroke: 15, cx: 40, r: 30 },
+    large:  { card: 360, donut: 90, stroke: 16, cx: 45, r: 34 },
+  };
+  const { card, donut, stroke, cx, r } = sizeMap[variant];
+  const circumference = 2 * Math.PI * r;
+  const renewableDash   = (renewablePercent / 100) * circumference;
+  const nonRenewableDash = (nonRenewablePercent / 100) * circumference;
+  const gap = 2; // small gap between segments
+
+  // renewable starts at top (−90°), non-renewable follows
+  const renewableOffset   = circumference * 0.25; // start at top
+  const nonRenewableOffset = -(nonRenewableDash - circumference * 0.25) + gap;
+
   return (
-    <div 
-      className={`circlechart-container ${className}`}
-      style={style}
-      data-figma-layer="circle chart"
-      data-figma-page="charts"
-      {...props}
+    <div
+      className={`cc-card cc-card--${variant} ${className}`}
+      style={{ width: card, ...style }}
+      data-figma-node="4-639"
     >
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px', borderBottom: '1px solid rgba(255,255,255,0.1)', paddingBottom: '6px' }}>
-        <span style={{ fontSize: '12px', fontWeight: 600, color: 'var(--uedp-slate-400, #94a3b8)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-          charts / circle chart
-        </span>
-        <span style={{ fontSize: '10px', background: 'rgba(255,255,255,0.1)', padding: '2px 6px', borderRadius: '4px', fontFamily: 'monospace' }}>
-          180:4469
-        </span>
-      </div>
+      {/* Title */}
+      <h3 className="cc-title">{title}</h3>
 
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-        <div style={{ border: '1px solid rgba(255,255,255,0.08)', borderRadius: '8px', padding: '12px', marginBottom: '8px', background: 'rgba(15,23,42,0.4)' }}>
-            <div style={{ fontSize: '11px', fontWeight: 600, color: '#38bdf8', marginBottom: '8px' }}>Variant: Property 1=Add A</div>
-            <div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<div style={{ width: '16px', height: '16px', borderRadius: '50%', background: 'rgb(61, 189, 202)', display: 'inline-block', flexShrink: 0 }} />
-<div style={{ width: '16px', height: '16px', borderRadius: '50%', background: 'rgb(24, 74, 79)', display: 'inline-block', flexShrink: 0 }} />
-<span style={{ fontSize: '19.243637084960938px', fontWeight: 700, color: 'rgba(255, 255, 255, 0)', display: 'inline-block' }}>B</span>
-</div>
+      <div className="cc-body">
+        {/* Legend */}
+        <div className="cc-legend">
+          <div className="cc-legend-item">
+            <span className="cc-dot cc-dot--renewable" />
+            <div className="cc-legend-text">
+              <span className="cc-legend-label">Renewable Energy</span>
+              <span className="cc-legend-kwh">{renewableKwh}</span>
+            </div>
+            <span className="cc-legend-pct cc-legend-pct--renewable">
+              {renewablePercent}%
+            </span>
           </div>
-<div style={{ border: '1px solid rgba(255,255,255,0.08)', borderRadius: '8px', padding: '12px', marginBottom: '8px', background: 'rgba(15,23,42,0.4)' }}>
-            <div style={{ fontSize: '11px', fontWeight: 600, color: '#38bdf8', marginBottom: '8px' }}>Variant: Property 1=Add B</div>
-            <div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<div style={{ width: '16px', height: '16px', borderRadius: '50%', background: 'rgb(61, 189, 202)', display: 'inline-block', flexShrink: 0 }} />
-<div style={{ width: '16px', height: '16px', borderRadius: '50%', background: 'rgb(24, 74, 79)', display: 'inline-block', flexShrink: 0 }} />
-<div style={{ width: '16px', height: '16px', borderRadius: '50%', background: 'rgb(13, 148, 136)', display: 'inline-block', flexShrink: 0 }} />
-<span style={{ fontSize: '21.381818771362305px', fontWeight: 700, color: 'rgb(15, 118, 110)', display: 'inline-block' }}>C</span>
-</div>
-          </div>
-<div style={{ border: '1px solid rgba(255,255,255,0.08)', borderRadius: '8px', padding: '12px', marginBottom: '8px', background: 'rgba(15,23,42,0.4)' }}>
-            <div style={{ fontSize: '11px', fontWeight: 600, color: '#38bdf8', marginBottom: '8px' }}>Variant: Property 1=Add C</div>
-            <div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<div style={{ width: '16px', height: '16px', borderRadius: '50%', background: 'rgb(61, 189, 202)', display: 'inline-block', flexShrink: 0 }} />
-<div style={{ width: '16px', height: '16px', borderRadius: '50%', background: 'rgb(24, 74, 79)', display: 'inline-block', flexShrink: 0 }} />
-<div style={{ width: '16px', height: '16px', borderRadius: '50%', background: 'rgb(13, 148, 136)', display: 'inline-block', flexShrink: 0 }} />
-<div style={{ width: '16px', height: '16px', borderRadius: '50%', background: 'rgb(99, 156, 89)', display: 'inline-block', flexShrink: 0 }} />
-<span style={{ fontSize: '34.21091079711914px', fontWeight: 700, color: 'rgb(15, 118, 110)', display: 'inline-block' }}>D</span>
-</div>
-          </div>
-<div style={{ border: '1px solid rgba(255,255,255,0.08)', borderRadius: '8px', padding: '12px', marginBottom: '8px', background: 'rgba(15,23,42,0.4)' }}>
-            <div style={{ fontSize: '11px', fontWeight: 600, color: '#38bdf8', marginBottom: '8px' }}>Variant: Property 1=Add D</div>
-            <div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<div style={{ width: '16px', height: '16px', borderRadius: '50%', background: 'rgb(61, 189, 202)', display: 'inline-block', flexShrink: 0 }} />
-<div style={{ width: '16px', height: '16px', borderRadius: '50%', background: 'rgb(24, 74, 79)', display: 'inline-block', flexShrink: 0 }} />
-<div style={{ width: '16px', height: '16px', borderRadius: '50%', background: 'rgb(13, 148, 136)', display: 'inline-block', flexShrink: 0 }} />
-<div style={{ width: '16px', height: '16px', borderRadius: '50%', background: 'rgb(20, 184, 166)', display: 'inline-block', flexShrink: 0 }} />
-<div style={{ width: '16px', height: '16px', borderRadius: '50%', background: 'rgb(99, 156, 89)', display: 'inline-block', flexShrink: 0 }} />
-<span style={{ fontSize: '17.10545539855957px', fontWeight: 700, color: 'rgb(15, 118, 110)', display: 'inline-block' }}>E</span>
-</div>
-          </div>
-      </div>
 
-      <div style={{ marginTop: '12px', display: 'flex', flexWrap: 'wrap', gap: '8px', fontSize: '11px', borderTop: '1px dashed rgba(255,255,255,0.1)', paddingTop: '8px' }}>
-        <div style={{ background: 'rgba(0,0,0,0.3)', padding: '4px 8px', borderRadius: '4px' }}>
-          <span style={{ color: 'var(--uedp-slate-400, #94a3b8)' }}>Property_1: </span>
-          <span style={{ color: '#38bdf8', fontWeight: 600 }}>{String(Property_1)}</span>
+          <div className="cc-legend-item">
+            <span className="cc-dot cc-dot--nonrenewable" />
+            <div className="cc-legend-text">
+              <span className="cc-legend-label">Non Renewable Energy</span>
+              <span className="cc-legend-kwh">{nonRenewableKwh}</span>
+            </div>
+            <span className="cc-legend-pct cc-legend-pct--nonrenewable">
+              {nonRenewablePercent}%
+            </span>
+          </div>
+        </div>
+
+        {/* Donut Chart */}
+        <div className="cc-donut-wrap">
+          <svg
+            width={donut}
+            height={donut}
+            viewBox={`0 0 ${cx * 2} ${cx * 2}`}
+            className="cc-donut-svg"
+          >
+            {/* Background track */}
+            <circle
+              cx={cx}
+              cy={cx}
+              r={r}
+              fill="none"
+              stroke="rgba(255,255,255,0.07)"
+              strokeWidth={stroke}
+            />
+            {/* Non-renewable segment (dark teal) — bottom 75% */}
+            <circle
+              cx={cx}
+              cy={cx}
+              r={r}
+              fill="none"
+              stroke="#1a4a50"
+              strokeWidth={stroke}
+              strokeDasharray={`${nonRenewableDash - gap} ${circumference - nonRenewableDash + gap}`}
+              strokeDashoffset={-(renewableDash) + circumference * 0.25 - gap / 2}
+              strokeLinecap="round"
+              style={{ transform: 'rotate(-90deg)', transformOrigin: 'center' }}
+            />
+            {/* Renewable segment (bright teal) — top 25% */}
+            <circle
+              cx={cx}
+              cy={cx}
+              r={r}
+              fill="none"
+              stroke="#3dbdca"
+              strokeWidth={stroke}
+              strokeDasharray={`${renewableDash - gap} ${circumference - renewableDash + gap}`}
+              strokeDashoffset={circumference * 0.25}
+              strokeLinecap="round"
+              style={{ transform: 'rotate(-90deg)', transformOrigin: 'center' }}
+            />
+            {/* Center text */}
+            <text
+              x={cx}
+              y={cx - 5}
+              textAnchor="middle"
+              dominantBaseline="middle"
+              className="cc-center-value"
+            >
+              {centerValue}
+            </text>
+            <text
+              x={cx}
+              y={cx + 8}
+              textAnchor="middle"
+              dominantBaseline="middle"
+              className="cc-center-label"
+            >
+              {centerLabel}
+            </text>
+          </svg>
         </div>
       </div>
     </div>

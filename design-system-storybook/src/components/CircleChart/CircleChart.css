@@ -1,8 +1,127 @@
-.circlechart-container {
-  background-color: var(--uedp-slate-800, #1e293b);
-  border-radius: 5.345454692840576px;
-  padding: var(--uedp-padding-4, 16px);
+.cc-card {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 20px;
   box-sizing: border-box;
-  color: var(--uedp-base-white, #ffffff);
-  font-family: Inter, sans-serif;
+  font-family: 'Inter', sans-serif;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+}
+
+/* Dark background context (matches Figma canvas) */
+.cc-card--small  { min-height: 160px; }
+.cc-card--medium { min-height: 180px; }
+.cc-card--large  { min-height: 200px; }
+
+/* Title */
+.cc-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: #1a2332;
+  margin: 0;
+  line-height: 1.3;
+  max-width: 160px;
+}
+
+/* Body: legend + donut side by side */
+.cc-body {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+/* Legend */
+.cc-legend {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex: 1;
+}
+
+.cc-legend-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.cc-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-top: 3px;
+  flex-shrink: 0;
+}
+
+.cc-dot--renewable {
+  background-color: #3dbdca;
+}
+
+.cc-dot--nonrenewable {
+  background-color: #1a4a50;
+}
+
+.cc-legend-text {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  flex: 1;
+}
+
+.cc-legend-label {
+  font-size: 11px;
+  color: #64748b;
+  font-weight: 500;
+  line-height: 1.3;
+}
+
+.cc-legend-kwh {
+  font-size: 11px;
+  color: #334155;
+  font-weight: 500;
+}
+
+.cc-legend-pct {
+  font-size: 14px;
+  font-weight: 700;
+  align-self: center;
+  flex-shrink: 0;
+}
+
+.cc-legend-pct--renewable {
+  color: #3dbdca;
+}
+
+.cc-legend-pct--nonrenewable {
+  color: #1a4a50;
+}
+
+/* Donut chart */
+.cc-donut-wrap {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.cc-donut-svg {
+  display: block;
+}
+
+/* SVG text inside donut */
+.cc-center-value {
+  font-size: 11px;
+  font-weight: 700;
+  fill: #1a2332;
+  font-family: 'Inter', sans-serif;
+}
+
+.cc-center-label {
+  font-size: 6px;
+  fill: #64748b;
+  font-family: 'Inter', sans-serif;
 }

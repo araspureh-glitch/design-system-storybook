@@ -2,44 +2,86 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { CircleChart } from './CircleChart';
 
 const meta: Meta<typeof CircleChart> = {
-  title: "charts/circle chart",
+  title: 'charts/CircleChart',
   component: CircleChart,
   parameters: {
     docs: {
       description: {
-        component: "Figma Layer: circle chart | Page: charts | Node ID: 180:4469 | Type: COMPONENT_SET",
+        component:
+          'Renewable vs Non Renewable Energy donut chart card. Figma Node ID: 4-639 | Page: charts | Type: COMPONENT_SET',
       },
+    },
+    backgrounds: {
+      default: 'dark',
+      values: [
+        { name: 'dark', value: '#13171f' },
+        { name: 'light', value: '#f1f5f9' },
+      ],
     },
   },
   argTypes: {
-  "Property_1": {
-    "control": {
-      "type": "select"
+    variant: {
+      control: { type: 'select' },
+      options: ['small', 'medium', 'large'],
+      description: 'Card size variant',
     },
-    "options": [
-      "Add A",
-      "Add B",
-      "Add C",
-      "Add D",
-      "Add E",
-      "Add F",
-      "View A detail",
-      "View B detail",
-      "View C detail",
-      "View D detail",
-      "View E detail",
-      "View F detail"
-    ],
-    "description": "Figma property: Property 1"
-  }
-},
+    renewablePercent: {
+      control: { type: 'range', min: 0, max: 100, step: 1 },
+    },
+    nonRenewablePercent: {
+      control: { type: 'range', min: 0, max: 100, step: 1 },
+    },
+  },
 };
 
 export default meta;
 type Story = StoryObj<typeof CircleChart>;
 
-export const Primary: Story = {
+export const Small: Story = {
   args: {
-  "Property_1": "Add A"
-},
+    variant: 'small',
+    title: 'Renewable vs Non Renewable Energy',
+    renewableKwh: '3,120 kWh',
+    renewablePercent: 25,
+    nonRenewableKwh: '9,330 kWh',
+    nonRenewablePercent: 75,
+    centerValue: 100,
+    centerLabel: 'November',
+  },
+};
+
+export const Medium: Story = {
+  args: {
+    variant: 'medium',
+    title: 'Renewable vs Non Renewable Energy',
+    renewableKwh: '3,120 kWh',
+    renewablePercent: 25,
+    nonRenewableKwh: '9,330 kWh',
+    nonRenewablePercent: 75,
+    centerValue: 100,
+    centerLabel: 'November',
+  },
+};
+
+export const Large: Story = {
+  args: {
+    variant: 'large',
+    title: 'Renewable vs Non Renewable Energy',
+    renewableKwh: '3,120 kWh',
+    renewablePercent: 25,
+    nonRenewableKwh: '9,330 kWh',
+    nonRenewablePercent: 75,
+    centerValue: 100,
+    centerLabel: 'November',
+  },
+};
+
+export const AllVariants: Story = {
+  render: () => (
+    <div style={{ display: 'flex', gap: '20px', flexWrap: 'wrap', alignItems: 'flex-start', padding: '20px', background: '#13171f' }}>
+      <CircleChart variant="small" />
+      <CircleChart variant="medium" />
+      <CircleChart variant="large" />
+    </div>
+  ),
 };
