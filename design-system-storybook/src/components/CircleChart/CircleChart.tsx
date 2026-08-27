@@ -14,12 +14,12 @@ interface SliceConfig {
 }
 
 const SLICES: SliceConfig[] = [
-  { id: 'A', percentage: 23, color: '#a7f3d0' }, // light mint
-  { id: 'B', percentage: 18, color: '#6ee7b7' }, // medium-light teal
-  { id: 'C', percentage: 16, color: '#34d399' }, // medium teal
-  { id: 'D', percentage: 25, color: '#059669' }, // darker teal
-  { id: 'E', percentage: 10, color: '#047857' }, // darkest teal
-  { id: 'F', percentage: 8, color: '#a7f3d0' },  // very thin light teal
+  { id: 'A', percentage: 23, color: '#e5f2f5' }, // very light mint
+  { id: 'B', percentage: 18, color: '#7bc1c9' }, // mid-light teal
+  { id: 'C', percentage: 16, color: '#30848d' }, // mid teal
+  { id: 'D', percentage: 25, color: '#105e68' }, // dark teal
+  { id: 'E', percentage: 10, color: '#003c42' }, // darkest teal
+  { id: 'F', percentage: 8, color: '#3dbdca' },  // bright cyan/teal
 ];
 
 /**
