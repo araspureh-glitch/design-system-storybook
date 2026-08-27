@@ -3,16 +3,42 @@
    ============================================ */
 
 .view-trigger-btn {
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition: transform 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
 }
 
+/* Hover effects for trigger button */
 .view-trigger-btn:hover {
   transform: translateY(-0.5px);
   box-shadow: 0 6px 18px rgba(13, 148, 136, 0.08);
 }
 
+.view-trigger-btn[style*="background-color: rgb(229, 242, 245)"]:hover,
+.view-trigger-btn[style*="background-color: #e5f2f5"]:hover {
+  background-color: #deeff1 !important;
+}
+
+.view-trigger-btn[style*="background-color: rgb(13, 148, 136)"]:hover,
+.view-trigger-btn[style*="background-color: #0d9488"]:hover {
+  background-color: #0f766e !important;
+}
+
+/* Hover effects for dropdown options */
+.view-dropdown-option {
+  box-sizing: border-box;
+}
+
+.view-dropdown-option:hover {
+  background-color: #e5f2f5 !important;
+  color: #0d9488 !important;
+}
+
+.view-dropdown-option--selected {
+  background-color: rgba(13, 148, 136, 0.04);
+}
+
 .view-dropdown-card {
   transform-origin: top center;
+  padding: 8px 0 !important; /* adjust padding for full-width hover highlight */
 }
 
 @keyframes viewDropdownFade {

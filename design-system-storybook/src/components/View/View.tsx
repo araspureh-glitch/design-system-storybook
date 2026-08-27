@@ -141,6 +141,7 @@ export const View: React.FC<ViewProps> = ({
           {/* Yearly option */}
           <button
             onClick={() => handleSelectOption('Yearly')}
+            className={`view-dropdown-option ${selectedView === 'Yearly' ? 'view-dropdown-option--selected' : ''}`}
             style={{
               border: 'none',
               background: 'none',
@@ -149,10 +150,10 @@ export const View: React.FC<ViewProps> = ({
               color: selectedView === 'Yearly' ? '#0d9488' : '#1e293b',
               cursor: 'pointer',
               outline: 'none',
-              padding: '4px 12px',
+              padding: '6px 0',
               width: '100%',
               textAlign: 'center',
-              transition: 'color 0.2s ease',
+              transition: 'all 0.2s ease',
             }}
           >
             Yearly
@@ -161,6 +162,7 @@ export const View: React.FC<ViewProps> = ({
           {/* Monthly option */}
           <button
             onClick={() => handleSelectOption('Monthly')}
+            className={`view-dropdown-option ${selectedView === 'Monthly' ? 'view-dropdown-option--selected' : ''}`}
             style={{
               border: 'none',
               background: 'none',
@@ -169,10 +171,10 @@ export const View: React.FC<ViewProps> = ({
               color: selectedView === 'Monthly' ? '#0d9488' : '#1e293b',
               cursor: 'pointer',
               outline: 'none',
-              padding: '4px 12px',
+              padding: '6px 0',
               width: '100%',
               textAlign: 'center',
-              transition: 'color 0.2s ease',
+              transition: 'all 0.2s ease',
             }}
           >
             Monthly
