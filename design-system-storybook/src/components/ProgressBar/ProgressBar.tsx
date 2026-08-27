@@ -51,39 +51,29 @@ export const ProgressBar: React.FC<ProgressBarProps> = ({
       data-property-state={State}
       data-property-procent={Procent}
     >
-      {/* 5-Segmented Progress Track */}
+      {/* Continuous Progress Track */}
       <div
-        className="pb-track-segmented"
+        className="pb-track"
         style={{
           flex: 1,
-          display: 'flex',
-          gap: '8px',
           height: '8px',
+          backgroundColor: '#edeffe', // Inactive track background color
+          borderRadius: '4px',
+          position: 'relative',
+          overflow: 'hidden',
           boxSizing: 'border-box',
         }}
       >
-        {segmentThresholds.map((threshold, index) => {
-          const isFilled = percentValue >= threshold;
-          
-          let fillColor = '#dfedf0'; // Inactive segment color (light mint/grey)
-          if (isFilled) {
-            fillColor = isDisabled ? '#cbd5e1' : '#0d9488'; // Active segment color
-          }
-
-          return (
-            <div
-              key={index}
-              className={`pb-segment pb-segment-${index + 1}`}
-              style={{
-                flex: 1,
-                height: '8px',
-                backgroundColor: fillColor,
-                borderRadius: '4px', // rounded corners for each segment block
-                transition: 'background-color 0.3s ease',
-              }}
-            />
-          );
-        })}
+        <div
+          className="pb-fill"
+          style={{
+            width: Procent,
+            height: '100%',
+            backgroundColor: isDisabled ? '#cbd5e1' : '#115e59', // Active teal fill color
+            borderRadius: '4px',
+            transition: 'width 0.3s ease',
+          }}
+        />
       </div>
 
       {/* Percentage Label */}
@@ -92,8 +82,8 @@ export const ProgressBar: React.FC<ProgressBarProps> = ({
           className="pb-label"
           style={{
             fontSize: '14px',
-            fontWeight: '600',
-            color: isDisabled ? '#94a3b8' : '#334155',
+            fontWeight: '500',
+            color: isDisabled ? '#94a3b8' : '#000000',
             minWidth: '38px',
             textAlign: 'right',
             userSelect: 'none',
