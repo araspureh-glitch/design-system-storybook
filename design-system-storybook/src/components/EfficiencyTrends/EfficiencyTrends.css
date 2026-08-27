@@ -127,3 +127,33 @@
   fill: #ffffff;
   font-weight: 600;
 }
+
+/* Single Stacked Bar Column Component (Figma Node 180:4460) */
+.et-bar-wrap {
+  display: inline-block;
+  position: relative;
+  border-radius: 9999px;
+  box-sizing: border-box;
+  transition: transform 0.2s ease;
+}
+
+.et-bar-wrap--hover {
+  transform: scale(1.02);
+}
+
+.et-seg {
+  transition: y 0.3s ease, height 0.3s ease;
+}
+
+.et-seg--light {
+  fill: #e5f2f5;
+}
+
+.et-seg--mid {
+  fill: #7bc1c9;
+}
+
+.et-seg--dark {
+  fill: #0d9488;
+}
+

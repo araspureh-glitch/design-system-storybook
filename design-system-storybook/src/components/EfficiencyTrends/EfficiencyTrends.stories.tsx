@@ -3,20 +3,20 @@ import React from 'react';
 import { EfficiencyTrends } from './EfficiencyTrends';
 
 const meta: Meta<typeof EfficiencyTrends> = {
-  title: 'charts/Efficiency trends',
+  title: 'charts/EfficiencyTrends',
   component: EfficiencyTrends,
   parameters: {
     docs: {
       description: {
         component:
-          'Efficiency Trends grouped bar chart. Figma Node ID: 180:4420 | Page: charts | Type: COMPONENT_SET. Shows 2025 (light teal) vs 2024 (dark teal) efficiency data by month.',
+          'Efficiency Trends Bar — single bar column component. Figma Node ID: 180:4460 | Page: charts | Type: COMPONENT_SET. Features a 3-layer rounded stacked bar (light, medium, dark teal).',
       },
     },
     backgrounds: {
-      default: 'light',
+      default: 'dark',
       values: [
-        { name: 'light', value: '#f8fafc' },
         { name: 'dark', value: '#13171f' },
+        { name: 'light', value: '#f8fafc' },
       ],
     },
     layout: 'centered',
@@ -25,14 +25,13 @@ const meta: Meta<typeof EfficiencyTrends> = {
     Property_1: {
       control: { type: 'select' },
       options: ['Default', 'hover'],
-      description: 'Figma variant: Default or hover state',
+      description: 'Figma variant: Default or hover',
     },
-    yMin: { control: { type: 'number', min: 0, max: 100, step: 5 } },
-    yMax: { control: { type: 'number', min: 0, max: 100, step: 5 } },
-    yStep: { control: { type: 'number', min: 1, max: 20, step: 1 } },
-    title: { control: 'text' },
-    label2025: { control: 'text' },
-    label2024: { control: 'text' },
+    height: { control: { type: 'number', min: 100, max: 400, step: 10 } },
+    width: { control: { type: 'number', min: 20, max: 100, step: 4 } },
+    darkPercent: { control: { type: 'range', min: 0, max: 100, step: 5 } },
+    midPercent: { control: { type: 'range', min: 0, max: 100, step: 5 } },
+    lightPercent: { control: { type: 'range', min: 0, max: 100, step: 5 } },
   },
 };
 
@@ -43,49 +42,30 @@ export const Default: Story = {
   name: 'Default',
   args: {
     Property_1: 'Default',
-    title: 'Efficiency trends',
-    yMin: 75,
-    yMax: 95,
-    yStep: 5,
-    label2025: '2025',
-    label2024: '2024',
+    height: 220,
+    width: 52,
   },
 };
 
-export const HoverState: Story = {
-  name: 'Hover State',
+export const Hover: Story = {
+  name: 'Hover',
   args: {
-    ...Default.args,
     Property_1: 'hover',
+    height: 220,
+    width: 52,
   },
 };
 
-export const CustomData: Story = {
-  name: 'Custom Data',
-  args: {
-    ...Default.args,
-    data: [
-      { month: 'Jan', value2025: 92, value2024: 80 },
-      { month: 'Feb', value2025: 88, value2024: 76 },
-      { month: 'Mar', value2025: 94, value2024: 83 },
-      { month: 'Apr', value2025: 90, value2024: 79 },
-      { month: 'May', value2025: 95, value2024: 85 },
-      { month: 'Jun', value2025: 91, value2024: 82 },
-      { month: 'Jul', value2025: 89, value2024: 78 },
-    ],
-  },
-};
-
-export const AllVariants: Story = {
-  name: 'All Variants',
+export const SideBySide: Story = {
+  name: 'Side by Side (Like Figma Canvas)',
   render: () => (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '24px', padding: '24px', background: '#f8fafc', borderRadius: '16px', width: '680px' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '30px', padding: '40px 20px', background: '#1c1c1e', borderRadius: '12px', alignItems: 'center' }}>
       <div>
-        <div style={{ fontSize: '12px', fontWeight: 600, color: '#94a3b8', marginBottom: '8px' }}>Default</div>
+        <div style={{ color: '#94a3b8', fontSize: '11px', marginBottom: '8px', textAlign: 'center' }}>Variant: Property 1=Default</div>
         <EfficiencyTrends Property_1="Default" />
       </div>
       <div>
-        <div style={{ fontSize: '12px', fontWeight: 600, color: '#94a3b8', marginBottom: '8px' }}>Hover</div>
+        <div style={{ color: '#94a3b8', fontSize: '11px', marginBottom: '8px', textAlign: 'center' }}>Variant: Property 1=hover</div>
         <EfficiencyTrends Property_1="hover" />
       </div>
     </div>
