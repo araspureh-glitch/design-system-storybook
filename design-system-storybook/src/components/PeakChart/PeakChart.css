@@ -1,0 +1,8 @@
+.peakchart-container {
+  background-color: var(--uedp-slate-800, #1e293b);
+  border-radius: 5px;
+  padding: var(--uedp-padding-4, 16px);
+  box-sizing: border-box;
+  color: var(--uedp-base-white, #ffffff);
+  font-family: Inter, sans-serif;
+}

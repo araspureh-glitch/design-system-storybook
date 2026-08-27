@@ -1,0 +1,8 @@
+{
+  "version": 2,
+  "outputDirectory": "storybook-static",
+  "routes": [
+    { "handle": "filesystem" },
+    { "src": "/.*", "dest": "/index.html" }
+  ]
+}
