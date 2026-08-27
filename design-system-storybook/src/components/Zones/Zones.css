@@ -1,8 +1,27 @@
-.zones-container {
-  background-color: var(--uedp-slate-800, #1e293b);
-  border-radius: 5px;
-  padding: var(--uedp-padding-4, 16px);
-  box-sizing: border-box;
-  color: var(--uedp-base-white, #ffffff);
-  font-family: Inter, sans-serif;
+/* ========================================================
+   Zones Dropdown — Figma Node 4:590 Styles
+   ======================================================== */
+
+.zones-btn:hover {
+  filter: brightness(0.98);
+}
+
+.zones-btn:active {
+  transform: scale(0.97);
+}
+
+.zones-dropdown-item:hover {
+  background-color: #dfedf0 !important; /* light minty/teal hover background */
+  color: #018793 !important; /* dark teal text color on hover */
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

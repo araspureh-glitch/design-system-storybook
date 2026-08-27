@@ -1,105 +1,148 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './Zones.css';
 
 export interface ZonesProps {
+  /** Figma variant property: 'Frame 601' (light collapsed), 'Frame 602' (dark collapsed), 'Frame 604' (dark open) */
   Property_1?: 'Frame 601' | 'Frame 602' | 'Frame 604';
   className?: string;
   style?: React.CSSProperties;
 }
 
 /**
- * **Preserved Figma Layer Name**: `zones`
- * Page: `components`
- * Type: `COMPONENT_SET`
- * ID: `4:590`
+ * **Zones Dropdown Component** (Figma Node: 4:590)
+ * 
+ * Renders a premium zone-selection dropdown component supporting collapsed (light/dark)
+ * and open states, matching the exact spacing, colors, and layout from the design.
  */
 export const Zones: React.FC<ZonesProps> = ({
-  Property_1 = "Frame 601",
+  Property_1 = 'Frame 601',
   className = '',
   style = {},
-  ...props
 }) => {
+  const [isOpen, setIsOpen] = useState(Property_1 === 'Frame 604');
+  const [selectedZone, setSelectedZone] = useState('City Center');
+
+  // Sync state with prop updates in Storybook
+  useEffect(() => {
+    setIsOpen(Property_1 === 'Frame 604');
+  }, [Property_1]);
+
+  const toggleDropdown = () => {
+    setIsOpen(!isOpen);
+  };
+
+  const selectZone = (zone: string) => {
+    setSelectedZone(zone);
+    setIsOpen(false);
+  };
+
+  const isLight = Property_1 === 'Frame 601';
+  const buttonBgColor = isLight ? '#dfedf0' : '#018793';
+  const textColor = isLight ? '#000000' : '#ffffff';
+  const arrowColor = isLight ? '#018793' : '#ffffff';
+
+  const zonesList = ['City Center', 'Industrial', 'Residental', 'Public'];
+
   return (
-    <div 
-      className={`zones-container ${className}`}
-      style={style}
-      data-figma-layer="zones"
-      data-figma-page="components"
-      {...props}
+    <div
+      className={`zones-wrapper ${className}`}
+      style={{
+        position: 'relative',
+        display: 'inline-block',
+        fontFamily: 'Inter, sans-serif',
+        userSelect: 'none',
+        ...style
+      }}
+      data-figma-node="4:590"
+      data-property-1={Property_1}
     >
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px', borderBottom: '1px solid rgba(255,255,255,0.1)', paddingBottom: '6px' }}>
-        <span style={{ fontSize: '12px', fontWeight: 600, color: 'var(--uedp-slate-400, #94a3b8)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-          components / zones
-        </span>
-        <span style={{ fontSize: '10px', background: 'rgba(255,255,255,0.1)', padding: '2px 6px', borderRadius: '4px', fontFamily: 'monospace' }}>
-          4:590
-        </span>
+      {/* Dropdown Trigger Button */}
+      <div
+        className={`zones-btn ${isLight ? 'zones-btn--light' : 'zones-btn--dark'}`}
+        onClick={toggleDropdown}
+        style={{
+          width: '130px',
+          height: '44px',
+          backgroundColor: buttonBgColor,
+          color: textColor,
+          borderRadius: '22px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          padding: '0 20px',
+          cursor: 'pointer',
+          fontSize: '15px',
+          fontWeight: '600',
+          boxSizing: 'border-box',
+          boxShadow: isLight ? 'none' : '0 4px 10px rgba(1, 135, 147, 0.2)',
+          transition: 'background-color 0.2s ease, transform 0.1s ease',
+        }}
+      >
+        <span>Zone</span>
+        
+        {/* SVG Arrow Icon */}
+        <svg
+          width="12"
+          height="8"
+          viewBox="0 0 12 8"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          style={{
+            transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)',
+            transition: 'transform 0.2s ease',
+          }}
+        >
+          <path
+            d="M1 1.5L6 6.5L11 1.5"
+            stroke={arrowColor}
+            strokeWidth="2.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
       </div>
 
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-        <div style={{ border: '1px solid rgba(255,255,255,0.08)', borderRadius: '8px', padding: '12px', marginBottom: '8px', background: 'rgba(15,23,42,0.4)' }}>
-            <div style={{ fontSize: '11px', fontWeight: 600, color: '#38bdf8', marginBottom: '8px' }}>Variant: Property 1=Frame 601</div>
-            <div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '31.596271514892578px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '31.596271514892578px', background: 'rgb(223, 240, 243)', alignItems: 'center' }}>
-<span style={{ fontSize: '11px', color: 'var(--uedp-slate-400, #94a3b8)' }}>Rectangle 16</span>
-</div>
-</div>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<span style={{ fontSize: '14.744926452636719px', fontWeight: 600, color: 'rgb(0, 0, 0)', display: 'inline-block' }}>Zone</span>
-</div>
-</div>
-<div style={{ width: '16px', height: '16px', borderRadius: '50%', background: 'rgb(1, 135, 147)', display: 'inline-block', flexShrink: 0 }} />
-</div>
-          </div>
-<div style={{ border: '1px solid rgba(255,255,255,0.08)', borderRadius: '8px', padding: '12px', marginBottom: '8px', background: 'rgba(15,23,42,0.4)' }}>
-            <div style={{ fontSize: '11px', fontWeight: 600, color: '#38bdf8', marginBottom: '8px' }}>Variant: Property 1=Frame 602</div>
-            <div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '31.596271514892578px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '31.596271514892578px', background: 'rgb(1, 135, 147)', alignItems: 'center' }}>
-<span style={{ fontSize: '11px', color: 'var(--uedp-slate-400, #94a3b8)' }}>Rectangle 16</span>
-</div>
-</div>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<span style={{ fontSize: '14.744926452636719px', fontWeight: 600, color: 'rgb(255, 255, 255)', display: 'inline-block' }}>Zone</span>
-</div>
-</div>
-<div style={{ width: '16px', height: '16px', borderRadius: '50%', background: 'rgb(255, 255, 255)', display: 'inline-block', flexShrink: 0 }} />
-</div>
-          </div>
-<div style={{ border: '1px solid rgba(255,255,255,0.08)', borderRadius: '8px', padding: '12px', marginBottom: '8px', background: 'rgba(15,23,42,0.4)' }}>
-            <div style={{ fontSize: '11px', fontWeight: 600, color: '#38bdf8', marginBottom: '8px' }}>Variant: Property 1=Frame 604</div>
-            <div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '15px', background: 'rgb(255, 255, 255)', alignItems: 'center' }}>
-<span style={{ fontSize: '11px', color: 'var(--uedp-slate-400, #94a3b8)' }}>Rectangle 16</span>
-</div>
-<span style={{ fontSize: '16px', fontWeight: 400, color: 'rgb(0, 0, 0)', display: 'inline-block' }}>Public</span>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '31.596271514892578px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '31.596271514892578px', background: 'rgb(1, 135, 147)', alignItems: 'center' }}>
-<span style={{ fontSize: '11px', color: 'var(--uedp-slate-400, #94a3b8)' }}>Rectangle 16</span>
-</div>
-</div>
-<span style={{ fontSize: '16px', fontWeight: 400, color: 'rgb(0, 0, 0)', display: 'inline-block' }}>City Center</span>
-<span style={{ fontSize: '16px', fontWeight: 400, color: 'rgb(0, 0, 0)', display: 'inline-block' }}>Industrial</span>
-<span style={{ fontSize: '16px', fontWeight: 400, color: 'rgb(0, 0, 0)', display: 'inline-block' }}>Residental</span>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<span style={{ fontSize: '14.744926452636719px', fontWeight: 600, color: 'rgb(255, 255, 255)', display: 'inline-block' }}>Zone</span>
-</div>
-</div>
-<div style={{ width: '16px', height: '16px', borderRadius: '50%', background: 'rgb(255, 255, 255)', display: 'inline-block', flexShrink: 0 }} />
-</div>
-          </div>
-      </div>
-
-      <div style={{ marginTop: '12px', display: 'flex', flexWrap: 'wrap', gap: '8px', fontSize: '11px', borderTop: '1px dashed rgba(255,255,255,0.1)', paddingTop: '8px' }}>
-        <div style={{ background: 'rgba(0,0,0,0.3)', padding: '4px 8px', borderRadius: '4px' }}>
-          <span style={{ color: 'var(--uedp-slate-400, #94a3b8)' }}>Property_1: </span>
-          <span style={{ color: '#38bdf8', fontWeight: 600 }}>{String(Property_1)}</span>
+      {/* Dropdown Menu */}
+      {isOpen && (
+        <div
+          className="zones-dropdown-menu"
+          style={{
+            position: 'absolute',
+            top: '52px',
+            left: '0',
+            width: '180px',
+            backgroundColor: '#ffffff',
+            borderRadius: '16px',
+            boxShadow: '0 10px 25px rgba(0, 0, 0, 0.15)',
+            padding: '12px 0',
+            zIndex: 100,
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '2px',
+            boxSizing: 'border-box',
+            border: '1px solid rgba(0, 0, 0, 0.05)',
+            animation: 'fadeInUp 0.15s ease-out',
+          }}
+        >
+          {zonesList.map((zone) => (
+            <div
+              key={zone}
+              className="zones-dropdown-item"
+              onClick={() => selectZone(zone)}
+              style={{
+                padding: '10px 20px',
+                fontSize: '15px',
+                fontWeight: '500',
+                color: '#000000',
+                cursor: 'pointer',
+                transition: 'background-color 0.2s ease, color 0.2s ease',
+              }}
+            >
+              {zone}
+            </div>
+          ))}
         </div>
-      </div>
+      )}
     </div>
   );
 };
