@@ -1,8 +1,186 @@
-.component336-container {
-  background-color: var(--uedp-slate-800, #1e293b);
-  border-radius: 5px;
-  padding: var(--uedp-padding-4, 16px);
+/* ============================================
+   Component 336 — Renewable vs Non Renewable Energy Card
+   Figma: cards / Component 336 | Node: 4:639
+   ============================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+/* ---- Card Container ---- */
+.c336-card {
+  width: 436px;
+  background-color: #ffffff;
+  border-radius: 28px;
+  padding: 26px 24px 26px 24px;
   box-sizing: border-box;
-  color: var(--uedp-base-white, #ffffff);
-  font-family: Inter, sans-serif;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  /* Figma shadow: Rectangle 688 drop-shadow y=30 blur=40 */
+  box-shadow: 0 4px 24px rgba(112, 144, 176, 0.08);
+  transition: box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  user-select: none;
+  position: relative;
+}
+
+.c336-card-elevated,
+.c336-card:hover {
+  box-shadow: 0 30px 40px rgba(112, 144, 176, 0.12);
+}
+
+/* ---- Left Column ---- */
+.c336-left-section {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+  max-width: 245px;
+}
+
+/* Title: Figma font=Inter 600 18px, color=rgb(0,60,66), lh=1.2 */
+.c336-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #003c42;
+  margin: 0 0 18px 0;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+
+/* ---- Legend List ---- */
+.c336-legend-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Legend Row: Figma — Rectangle 692/693 (bg=rgba(229,244,246,0.5), radius=10) */
+.c336-legend-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(229, 244, 246, 0.5);
+  border-radius: 10px;
+  padding: 10px 12px;
+  cursor: pointer;
+  transition: background 0.2s ease, box-shadow 0.2s ease, transform 0.15s ease;
+  outline: none;
+  border: none;
+}
+
+.c336-legend-item:focus-visible {
+  box-shadow: 0 0 0 2px #30848d;
+}
+
+/* Active item: Figma — Rectangle 692 (elevated) gets drop-shadow y=4 blur=10 */
+.c336-legend-item:hover,
+.c336-legend-item.c336-item-active {
+  background: #ffffff;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  transform: translateY(-1px);
+}
+
+/* Left part of each legend row */
+.c336-item-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+/* Color Indicator Pill — Figma: Rectangle 682/690 (radius≈5.16, w=17, h=17) */
+.c336-indicator-pill {
+  width: 17px;
+  height: 17px;
+  border-radius: 5px;
+  flex-shrink: 0;
+  display: block;
+}
+
+.c336-indicator-renewable {
+  background-color: #67b7be;
+}
+
+.c336-indicator-non-renewable {
+  background-color: #30848d;
+}
+
+/* Item text block */
+.c336-item-details {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+/* Label: Figma font=Inter 400 ~12.9px color=rgb(19,25,39) */
+.c336-item-label {
+  font-size: 13px;
+  font-weight: 400;
+  color: #131927;
+  line-height: 1.3;
+  white-space: nowrap;
+}
+
+/* kWh value: Figma font=Inter 500 12px color=rgb(0,60,66) */
+.c336-item-value {
+  font-size: 12px;
+  font-weight: 500;
+  color: #003c42;
+  line-height: 1.3;
+}
+
+/* Right side: percentage */
+.c336-item-right {
+  flex-shrink: 0;
+  margin-left: 8px;
+}
+
+/* Percentage: Figma font=Inter 600 16px color=rgb(0,60,66) */
+.c336-item-percent {
+  font-size: 16px;
+  font-weight: 600;
+  color: #003c42;
+  letter-spacing: -0.01em;
+}
+
+/* ---- Right Column: SVG Donut Chart ---- */
+.c336-right-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-left: 4px;
+}
+
+.c336-donut-svg {
+  display: block;
+  overflow: visible;
+}
+
+/* Smooth transition on donut segments when percentages change */
+.c336-donut-segment {
+  transition: stroke-dasharray 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+              stroke-dashoffset 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.c336-dotted-ring {
+  opacity: 0.9;
+}
+
+/* Center badge texts */
+.c336-center-value {
+  font-size: 15px;
+  font-weight: 600;
+  font-family: 'Inter', sans-serif;
+  letter-spacing: -0.02em;
+}
+
+.c336-center-month {
+  font-size: 8.5px;
+  font-weight: 500;
+  font-family: 'Inter', sans-serif;
+  letter-spacing: 0.01em;
 }
