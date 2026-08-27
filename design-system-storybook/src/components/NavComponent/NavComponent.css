@@ -21,5 +21,15 @@
 }
 
 .nav-item--inactive:hover {
-  background-color: rgba(255, 255, 255, 0.04);
+  background-color: rgba(255, 255, 255, 0.95); /* turns into soft white card on hover */
+  box-shadow: 0 4px 16px rgba(13, 148, 136, 0.05);
 }
+
+.nav-item--inactive:hover span {
+  color: #0d9488 !important;
+}
+
+.nav-item--inactive:hover svg {
+  stroke: #0d9488 !important;
+}
+
