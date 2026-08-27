@@ -32,7 +32,7 @@ export const CurrentEfficiencyMetricsCard: React.FC<CurrentEfficiencyMetricsCard
       className={`current-efficiency-card ${className}`}
       style={{
         backgroundColor: '#ffffff',
-        borderRadius: '28px',
+        borderRadius: '18px',
         padding: '32px 40px',
         boxShadow: '0 10px 30px rgba(0, 0, 0, 0.04)',
         display: 'flex',
@@ -40,7 +40,7 @@ export const CurrentEfficiencyMetricsCard: React.FC<CurrentEfficiencyMetricsCard
         gap: '24px',
         fontFamily: 'Inter, sans-serif',
         width: '100%',
-        maxWidth: '732px',
+        maxWidth: '758px',
         height: '608px',
         boxSizing: 'border-box',
         ...style
