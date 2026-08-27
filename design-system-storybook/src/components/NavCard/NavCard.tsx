@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './NavCard.css';
+import { NavLine } from '../NavLine/NavLine';
 
 export interface NavCardProps {
   /** Title text */
@@ -36,18 +37,12 @@ export const NavCard: React.FC<NavCardProps> = ({
   style = {},
   onTabChange,
 }) => {
-  const [activeTab, setActiveTab] = useState<'Overview' | 'Efficiency' | 'Peak Analysis' | 'Trends'>(defaultActiveTab);
-
-  const tabs: ('Overview' | 'Efficiency' | 'Peak Analysis' | 'Trends')[] = [
-    'Overview',
-    'Efficiency',
-    'Peak Analysis',
-    'Trends',
-  ];
-
-  const handleTabClick = (tab: 'Overview' | 'Efficiency' | 'Peak Analysis' | 'Trends') => {
-    setActiveTab(tab);
-    onTabChange?.(tab);
+  // Map defaultActiveTab to Property_1 of NavLine
+  // defaultActiveTab === 'Efficiency' -> Default (hover) or Variant3 (selected)
+  // Let's use Variant3 to indicate Selected state
+  const getNavLineVariant = () => {
+    if (defaultActiveTab === 'Efficiency') return 'Variant3';
+    return 'Variant2';
   };
 
   return (
@@ -131,50 +126,11 @@ export const NavCard: React.FC<NavCardProps> = ({
       </div>
 
       {/* Bottom Segment Control Tabs */}
-      <div
-        className="nav-card-tabs-track"
-        style={{
-          display: 'flex',
-          backgroundColor: '#e5f2f5', // light mint/cyan background track
-          borderRadius: '9999px',
-          padding: '4px',
-          height: '48px',
-          alignItems: 'center',
-          boxSizing: 'border-box',
-          width: '100%',
-        }}
-      >
-        {tabs.map((tab) => {
-          const isActive = activeTab === tab;
-          return (
-            <button
-              key={tab}
-              onClick={() => handleTabClick(tab)}
-              className={`nav-card-tab-btn ${isActive ? 'nav-card-tab-btn--active' : ''}`}
-              style={{
-                flex: 1,
-                border: 'none',
-                height: '100%',
-                backgroundColor: isActive ? '#ffffff' : 'transparent',
-                borderRadius: '9999px',
-                color: isActive ? '#105e68' : '#275259',
-                fontSize: '15px',
-                fontWeight: '600',
-                cursor: 'pointer',
-                transition: 'all 0.25s cubic-bezier(0.4, 0, 0.2, 1)',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                boxShadow: isActive ? '0 2px 8px rgba(16, 94, 104, 0.08)' : 'none',
-                outline: 'none',
-                userSelect: 'none',
-              }}
-            >
-              {tab}
-            </button>
-          );
-        })}
-      </div>
+      <NavLine
+        Property_1={getNavLineVariant()}
+        onTabChange={onTabChange}
+        style={{ width: '100%' }}
+      />
     </div>
   );
 };

@@ -1,8 +1,21 @@
-.nav-container {
-  background-color: var(--uedp-slate-800, #1e293b);
-  border-radius: 5px;
-  padding: var(--uedp-padding-4, 16px);
+/* ============================================
+   Nav Tab — Figma Node 181:4800 Styles
+   ============================================ */
+
+.nav-tab-item {
   box-sizing: border-box;
-  color: var(--uedp-base-white, #ffffff);
-  font-family: Inter, sans-serif;
+}
+
+.nav-tab-item--blank:hover {
+  background-color: rgba(255, 255, 255, 0.4) !important;
+  color: #105e68 !important;
+}
+
+.nav-tab-item--hover:hover {
+  transform: translateY(-0.5px);
+}
+
+.nav-tab-item--selected:hover {
+  transform: translateY(-0.5px);
+  background-color: #0f766e !important;
 }
