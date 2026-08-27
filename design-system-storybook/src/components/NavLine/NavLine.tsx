@@ -65,13 +65,15 @@ export const NavLine: React.FC<NavLineProps> = ({
       style={{
         display: 'inline-flex',
         backgroundColor: '#e5f2f5', // light mint/cyan background track
-        borderRadius: '24px',
-        padding: '4px',
+        borderRadius: '18px',
+        padding: '5px 6px',
         width: '100%',
-        height: '48px',
+        maxWidth: '1412px',
+        height: '50px',
         alignItems: 'center',
+        justifyContent: 'space-between',
         boxSizing: 'border-box',
-        gap: '8px',
+        gap: '69px',
         ...style
       }}
       data-figma-node="181:4808"
@@ -91,10 +93,9 @@ export const NavLine: React.FC<NavLineProps> = ({
             Property_1={stateVal}
             onClick={() => handleTabClick(tab)}
             style={{
-              flex: 1,
               height: '39px',
               borderRadius: '13px',
-              maxWidth: '308px',
+              width: '308px',
             }}
           />
         );
