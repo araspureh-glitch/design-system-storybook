@@ -33,11 +33,11 @@ export const CurrentEfficiencyMetricsCard: React.FC<CurrentEfficiencyMetricsCard
       style={{
         backgroundColor: '#ffffff',
         borderRadius: '18px',
-        padding: '32px 40px',
+        padding: '21px 23px 23px 44px', // Figma Auto Layout: Top 21, Right 23, Bottom 23, Left 44
         boxShadow: '0 10px 30px rgba(0, 0, 0, 0.04)',
         display: 'flex',
         flexDirection: 'column',
-        gap: '24px',
+        gap: '22px', // Figma Auto Layout gap: 22px
         fontFamily: 'Inter, sans-serif',
         width: '100%',
         maxWidth: '758px',
@@ -68,7 +68,7 @@ export const CurrentEfficiencyMetricsCard: React.FC<CurrentEfficiencyMetricsCard
         style={{
           display: 'flex',
           flexDirection: 'column',
-          gap: '20px',
+          gap: '22px',
           overflowY: 'auto',
           flex: 1,
           paddingRight: '4px',
