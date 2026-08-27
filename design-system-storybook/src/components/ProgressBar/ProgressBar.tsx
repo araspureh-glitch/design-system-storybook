@@ -17,8 +17,10 @@ export interface ProgressBarProps {
 /**
  * **Progress Bar** component (Figma Node: 181:6689)
  * 
- * A horizontal progress bar displaying status fill (0% to 100%) in dark teal,
- * with optional right-aligned percentage text labels.
+ * Renders a premium horizontal 5-segmented progress bar:
+ * - Divides progress into 5 equal pill segments (representing 20% chunks).
+ * - Active segments are filled with dark teal.
+ * - Inactive segments are filled with light mint grey.
  */
 export const ProgressBar: React.FC<ProgressBarProps> = ({
   Procent_104_26 = true,
@@ -30,6 +32,9 @@ export const ProgressBar: React.FC<ProgressBarProps> = ({
 }) => {
   const percentValue = parseInt(Procent.replace('%', ''), 10) || 0;
   const isDisabled = State === 'Disabled';
+
+  // Define thresholds for the 5 segmented blocks (20%, 40%, 60%, 80%, 100%)
+  const segmentThresholds = [20, 40, 60, 80, 100];
 
   return (
     <div
@@ -46,29 +51,39 @@ export const ProgressBar: React.FC<ProgressBarProps> = ({
       data-property-state={State}
       data-property-procent={Procent}
     >
-      {/* Progress Track */}
+      {/* 5-Segmented Progress Track */}
       <div
-        className="pb-track"
+        className="pb-track-segmented"
         style={{
           flex: 1,
+          display: 'flex',
+          gap: '8px',
           height: '8px',
-          backgroundColor: '#ffffff',
-          borderRadius: '9999px',
-          overflow: 'hidden',
-          position: 'relative',
+          boxSizing: 'border-box',
         }}
       >
-        {/* Progress Fill */}
-        <div
-          className="pb-fill"
-          style={{
-            height: '100%',
-            width: `${percentValue}%`,
-            backgroundColor: isDisabled ? '#cbd5e1' : '#0d9488',
-            borderRadius: '9999px',
-            transition: 'width 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
-          }}
-        />
+        {segmentThresholds.map((threshold, index) => {
+          const isFilled = percentValue >= threshold;
+          
+          let fillColor = '#dfedf0'; // Inactive segment color (light mint/grey)
+          if (isFilled) {
+            fillColor = isDisabled ? '#cbd5e1' : '#0d9488'; // Active segment color
+          }
+
+          return (
+            <div
+              key={index}
+              className={`pb-segment pb-segment-${index + 1}`}
+              style={{
+                flex: 1,
+                height: '8px',
+                backgroundColor: fillColor,
+                borderRadius: '4px', // rounded corners for each segment block
+                transition: 'background-color 0.3s ease',
+              }}
+            />
+          );
+        })}
       </div>
 
       {/* Percentage Label */}
@@ -77,10 +92,11 @@ export const ProgressBar: React.FC<ProgressBarProps> = ({
           className="pb-label"
           style={{
             fontSize: '14px',
-            fontWeight: '500',
+            fontWeight: '600',
             color: isDisabled ? '#94a3b8' : '#334155',
             minWidth: '38px',
             textAlign: 'right',
+            userSelect: 'none',
           }}
         >
           {Procent}
