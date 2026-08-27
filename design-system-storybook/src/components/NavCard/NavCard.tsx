@@ -58,7 +58,7 @@ export const NavCard: React.FC<NavCardProps> = ({
         gap: '24px',
         fontFamily: 'Inter, sans-serif',
         width: '100%',
-        maxWidth: '860px',
+        maxWidth: '1504px',
         boxSizing: 'border-box',
         ...style
       }}
