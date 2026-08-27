@@ -1,8 +1,23 @@
-.datefilters-container {
-  background-color: var(--uedp-slate-800, #1e293b);
-  border-radius: 5px;
-  padding: var(--uedp-padding-4, 16px);
-  box-sizing: border-box;
-  color: var(--uedp-base-white, #ffffff);
-  font-family: Inter, sans-serif;
+/* ============================================
+   DateFilters — Figma Node 181:6006 Styles
+   ============================================ */
+
+.date-filters-trigger-btn:hover {
+  transform: translateY(-0.5px);
+  background-color: #deeff1 !important;
+}
+
+.date-filters-popover-card {
+  transform-origin: top right;
+}
+
+@keyframes dateFiltersFade {
+  from {
+    opacity: 0;
+    transform: scale(0.96) translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
 }
