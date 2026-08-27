@@ -1,8 +1,27 @@
-.view-container {
-  background-color: var(--uedp-slate-800, #1e293b);
-  border-radius: 5px;
-  padding: var(--uedp-padding-4, 16px);
-  box-sizing: border-box;
-  color: var(--uedp-base-white, #ffffff);
-  font-family: Inter, sans-serif;
+/* ============================================
+   View — Figma Node 181:6775 Styles
+   ============================================ */
+
+.view-trigger-btn {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.view-trigger-btn:hover {
+  transform: translateY(-0.5px);
+  box-shadow: 0 6px 18px rgba(13, 148, 136, 0.08);
+}
+
+.view-dropdown-card {
+  transform-origin: top center;
+}
+
+@keyframes viewDropdownFade {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) scale(0.96) translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) scale(1) translateY(0);
+  }
 }
