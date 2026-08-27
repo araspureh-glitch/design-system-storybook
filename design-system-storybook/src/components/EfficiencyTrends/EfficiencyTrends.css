@@ -1,8 +1,129 @@
-.efficiencytrends-container {
-  background-color: var(--uedp-slate-800, #1e293b);
-  border-radius: 5px;
-  padding: var(--uedp-padding-4, 16px);
+/* ============================================
+   EfficiencyTrends — Figma Node 180:4420
+   Grouped bar chart: 2025 (light teal) + 2024 (dark teal)
+   ============================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+/* Card */
+.et-card {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 24px 20px 16px 20px;
   box-sizing: border-box;
-  color: var(--uedp-base-white, #ffffff);
-  font-family: Inter, sans-serif;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.06);
+  transition: box-shadow 0.25s ease;
+  width: 100%;
+  max-width: 620px;
+}
+
+.et-card--hover,
+.et-card:hover {
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.10);
+}
+
+/* Header */
+.et-header {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.et-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #1a2332;
+  margin: 0;
+  line-height: 1.2;
+}
+
+/* Legend */
+.et-legend {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+}
+
+.et-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #64748b;
+}
+
+.et-legend-dot {
+  width: 28px;
+  height: 14px;
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+
+.et-legend-dot--2025 {
+  background-color: #a8d8dc;
+}
+
+.et-legend-dot--2024 {
+  background-color: #0d9488;
+}
+
+/* SVG Chart */
+.et-svg {
+  display: block;
+  overflow: visible;
+}
+
+/* Gridlines */
+.et-gridline {
+  stroke: #e2e8f0;
+  stroke-width: 1;
+  stroke-dasharray: 4 4;
+}
+
+.et-axis-line {
+  stroke: #e2e8f0;
+  stroke-width: 1;
+}
+
+/* Axis labels */
+.et-axis-label {
+  font-size: 11px;
+  font-family: 'Inter', sans-serif;
+  fill: #94a3b8;
+  font-weight: 400;
+}
+
+.et-axis-label--x {
+  font-size: 11px;
+  fill: #64748b;
+}
+
+/* Bars */
+.et-bar {
+  transition: opacity 0.2s ease, filter 0.2s ease;
+  cursor: pointer;
+}
+
+.et-bar--2025 {
+  fill: #a8d8dc;
+}
+
+.et-bar--2024 {
+  fill: #0d9488;
+}
+
+.et-bar--hovered {
+  filter: brightness(1.1);
+  opacity: 0.9;
+}
+
+/* Tooltip */
+.et-tooltip-text {
+  font-size: 11px;
+  font-family: 'Inter', sans-serif;
+  fill: #ffffff;
+  font-weight: 600;
 }
