@@ -313,7 +313,7 @@ export const Filters: React.FC<FiltersProps> = ({
               </div>
 
               {/* Days grid */}
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', rowGap: '8px', textAlign: 'center' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', rowGap: '6px', textAlign: 'center' }}>
                 {calendarDays.map((day) => {
                   const isFrom = day === fromDate;
                   const isTo = day === toDate;
@@ -324,32 +324,90 @@ export const Filters: React.FC<FiltersProps> = ({
                       key={day}
                       onClick={() => handleDateClick(day)}
                       style={{
+                        position: 'relative',
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        height: '34px',
+                        height: '38px',
                         cursor: 'pointer',
-                        fontSize: '13px',
-                        fontWeight: (isFrom || isTo) ? '700' : '500',
-                        transition: 'all 0.2s ease',
-                        position: 'relative',
-                        color: (isFrom || isTo) ? '#ffffff' : '#1e293b',
-                        ...(isWithinRange && {
-                          backgroundColor: '#e5f2f5', // highlighted range background
-                          color: '#105e68',
-                        }),
-                        ...(isFrom && {
-                          backgroundColor: '#0d9488',
-                          borderRadius: '50%',
-                        }),
-                        ...(isTo && {
-                          backgroundColor: '#0d9488',
-                          borderRadius: '50%',
-                        })
+                        fontSize: '14px',
+                        userSelect: 'none',
                       }}
                       className={(isFrom || isTo) ? '' : 'calendar-day-hover'}
                     >
-                      {day}
+                      {/* Light range background connector */}
+                      {isWithinRange && (
+                        <div
+                          style={{
+                            position: 'absolute',
+                            left: 0,
+                            right: 0,
+                            top: '4px',
+                            bottom: '4px',
+                            backgroundColor: '#e5f2f5',
+                            zIndex: 1,
+                          }}
+                        />
+                      )}
+                      {isFrom && (
+                        <div
+                          style={{
+                            position: 'absolute',
+                            left: '50%',
+                            right: 0,
+                            top: '4px',
+                            bottom: '4px',
+                            backgroundColor: '#e5f2f5',
+                            zIndex: 1,
+                          }}
+                        />
+                      )}
+                      {isTo && (
+                        <div
+                          style={{
+                            position: 'absolute',
+                            left: 0,
+                            right: '50%',
+                            top: '4px',
+                            bottom: '4px',
+                            backgroundColor: '#e5f2f5',
+                            zIndex: 1,
+                          }}
+                        />
+                      )}
+
+                      {/* Circle highlight for endpoints */}
+                      {(isFrom || isTo) ? (
+                        <div
+                          style={{
+                            position: 'absolute',
+                            width: '30px',
+                            height: '30px',
+                            borderRadius: '50%',
+                            backgroundColor: '#0d9488',
+                            zIndex: 2,
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            color: '#ffffff',
+                            fontWeight: '700',
+                            fontFamily: 'Inter, sans-serif',
+                          }}
+                        >
+                          {day}
+                        </div>
+                      ) : (
+                        <span
+                          style={{
+                            position: 'relative',
+                            zIndex: 2,
+                            color: isWithinRange ? '#105e68' : '#1e293b',
+                            fontWeight: isWithinRange ? '600' : '500',
+                          }}
+                        >
+                          {day}
+                        </span>
+                      )}
                     </div>
                   );
                 })}
