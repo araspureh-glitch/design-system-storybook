@@ -1,8 +1,25 @@
-.navcomponent-container {
-  background-color: var(--uedp-slate-800, #1e293b);
-  border-radius: 5px;
-  padding: var(--uedp-padding-4, 16px);
-  box-sizing: border-box;
-  color: var(--uedp-base-white, #ffffff);
-  font-family: Inter, sans-serif;
+/* ============================================
+   NavComponent — Figma Node 181:4854 Styles
+   ============================================ */
+
+.nav-item-container {
+  transition: background-color 0.25s ease, box-shadow 0.25s ease, transform 0.2s ease;
+}
+
+.nav-item--active {
+  background-color: #ffffff;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+.nav-item--active:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 24px rgba(13, 148, 136, 0.08);
+}
+
+.nav-item--inactive {
+  background-color: transparent;
+}
+
+.nav-item--inactive:hover {
+  background-color: rgba(255, 255, 255, 0.04);
 }
