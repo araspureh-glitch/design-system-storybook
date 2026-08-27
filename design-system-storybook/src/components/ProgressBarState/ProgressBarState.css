@@ -1,8 +1,12 @@
-.progressbarstate-container {
-  background-color: var(--uedp-slate-800, #1e293b);
-  border-radius: 5px;
-  padding: var(--uedp-padding-4, 16px);
+/* ============================================
+   ProgressBarState — Figma Node 181:6746 Styles
+   ============================================ */
+
+.pb-state-wrap {
   box-sizing: border-box;
-  color: var(--uedp-base-white, #ffffff);
-  font-family: Inter, sans-serif;
+  transition: transform 0.2s ease;
+}
+
+.pb-state-wrap:hover .pb-state-label {
+  color: #0d9488 !important;
 }
