@@ -65,12 +65,13 @@ export const NavLine: React.FC<NavLineProps> = ({
       style={{
         display: 'inline-flex',
         backgroundColor: '#e5f2f5', // light mint/cyan background track
-        borderRadius: '9999px',
-        padding: '4px',
-        height: '48px',
+        borderRadius: '13px',
+        padding: '3px',
+        width: '308px',
+        height: '39px',
         alignItems: 'center',
         boxSizing: 'border-box',
-        gap: '4px',
+        gap: '2px',
         ...style
       }}
       data-figma-node="181:4808"
@@ -80,7 +81,6 @@ export const NavLine: React.FC<NavLineProps> = ({
         // Determine whether tab is active based on state or figma default variant override
         let stateVal: 'hover' | 'blank' | 'selected' = 'blank';
         if (activeTab === tab) {
-          // If interactive click occurred, use selected style. Else follow initial state configuration
           stateVal = activeTab === getInitialActiveTab() ? getInitialStateForTab(tab) : 'selected';
         }
 
@@ -90,6 +90,13 @@ export const NavLine: React.FC<NavLineProps> = ({
             label={tab}
             Property_1={stateVal}
             onClick={() => handleTabClick(tab)}
+            style={{
+              height: '100%',
+              padding: '0 4px',
+              fontSize: '11px',
+              borderRadius: '10px',
+              flex: 1,
+            }}
           />
         );
       })}
