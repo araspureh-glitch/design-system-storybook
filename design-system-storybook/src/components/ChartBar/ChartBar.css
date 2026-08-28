@@ -5,22 +5,15 @@
   align-items: flex-end;
   gap: 0;
   height: 280px;
+  width: 38px;
   position: relative;
   font-family: 'Inter', sans-serif;
   user-select: none;
 }
 
 /* Columns */
-.chart-bar-static-col {
+.chart-bar-col {
   width: 38px;
-  height: 229px;
-  background-color: rgba(255, 255, 255, 0.08);
-  border-radius: 11.4px;
-  flex-shrink: 0;
-}
-
-.chart-bar-active-col {
-  width: 0;
   height: 229px;
   background-color: rgba(255, 255, 255, 0.08);
   border-radius: 11.4px;
@@ -29,18 +22,7 @@
   flex-direction: column;
   justify-content: flex-end;
   overflow: visible;
-  opacity: 0;
-  margin-left: 0;
   flex-shrink: 0;
-  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1), margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-/* Show active/second column when container is hovered or active variant is selected */
-.chart-bar-container:hover .chart-bar-active-col,
-.chart-bar-active-col.is-active {
-  width: 38px;
-  opacity: 1;
-  margin-left: 12px;
 }
 
 /* Gradient fill inside active bar */
@@ -48,7 +30,14 @@
   width: 100%;
   border-radius: 11.4px;
   background: linear-gradient(180deg, #67b7be 0%, #30848d 100%);
-  transition: height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  opacity: 0;
+  transition: opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1), height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Show active/second column when container is hovered or active variant is selected */
+.chart-bar-container:hover .chart-bar-active-fill,
+.chart-bar-col.is-active .chart-bar-active-fill {
+  opacity: 1;
 }
 
 /* Knob wrapper positioned absolute along the height */
@@ -68,7 +57,7 @@
 
 /* Show when component is hovered or has the explicit active class */
 .chart-bar-container:hover .chart-bar-knob-wrapper,
-.chart-bar-active-col.is-active .chart-bar-knob-wrapper {
+.chart-bar-col.is-active .chart-bar-knob-wrapper {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;

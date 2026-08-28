@@ -23,11 +23,8 @@ export const ChartBar: React.FC<ChartBarProps> = ({
 
   return (
     <div className="chart-bar-container">
-      {/* Left Static Column */}
-      <div className="chart-bar-static-col" />
-
-      {/* Right Active Column */}
-      <div className={`chart-bar-active-col ${isActive ? 'is-active' : ''}`}>
+      {/* Single merged bar column */}
+      <div className={`chart-bar-col ${isActive ? 'is-active' : ''}`}>
         <div className="chart-bar-active-fill" style={{ height: fillHeight }} />
 
         {/* Knob and tooltip details */}
