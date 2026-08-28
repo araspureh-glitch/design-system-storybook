@@ -8,6 +8,65 @@ export interface Card1Props {
   style?: React.CSSProperties;
 }
 
+const AlertIcon: React.FC = () => (
+  <svg 
+    width="20" 
+    height="20" 
+    viewBox="0 0 20 20" 
+    fill="none" 
+    xmlns="http://www.w3.org/2000/svg"
+    style={{ display: 'block' }}
+  >
+    <path 
+      d="M10 3.3L2.5 16.5H17.5L10 3.3Z" 
+      stroke="#c92a2a" 
+      strokeWidth="1.73" 
+      strokeLinecap="round" 
+      strokeLinejoin="round"
+    />
+    <path 
+      d="M10 7.5V11.5" 
+      stroke="#c92a2a" 
+      strokeWidth="1.73" 
+      strokeLinecap="round"
+    />
+    <circle cx="10" cy="14" r="0.87" fill="#c92a2a" />
+  </svg>
+);
+
+interface CardContentProps {
+  variant: 'active' | 'hover' | 'selected' | 'default';
+}
+
+const CardContent: React.FC<CardContentProps> = ({ variant }) => {
+  return (
+    <div className={`card1-card ${variant}`}>
+      {/* Header Row */}
+      <div className="card1-header">
+        <h3 className="card1-title">Air Quality Index</h3>
+        <div className="card1-alert-icon">
+          <AlertIcon />
+        </div>
+      </div>
+      
+      {/* Content Group */}
+      <div className="card1-content-group">
+        <div className="card1-aqi-row">
+          <span className="card1-aqi-value">43.50</span>
+          <span className="card1-aqi-label">AQI</span>
+        </div>
+        <p className="card1-energy">Renewable Energy: 54.86%</p>
+        <div className="card1-badge-row">
+          <div className="card1-badge">
+            <span className="card1-badge-text">-8.4%</span>
+          </div>
+          <span className="card1-vs-text">vs Last Month</span>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 /**
  * **Preserved Figma Layer Name**: `card 1`
  * Page: `cards`
@@ -39,114 +98,25 @@ export const Card1: React.FC<Card1Props> = ({
       </div>
 
       <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-        <div style={{ border: '1px solid rgba(255,255,255,0.08)', borderRadius: '8px', padding: '12px', marginBottom: '8px', background: 'rgba(15,23,42,0.4)' }}>
-            <div style={{ fontSize: '11px', fontWeight: 600, color: '#38bdf8', marginBottom: '8px' }}>Variant: Property 1=active</div>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '43px', padding: '34px 10px 28px 20px', borderRadius: '27.848594665527344px', background: 'rgb(255, 255, 255)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '26px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<span style={{ fontSize: '18px', fontWeight: 600, color: 'rgb(4, 47, 46)', display: 'inline-block' }}>Air Quality Index</span>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgb(255, 255, 255)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<div style={{ width: '16px', height: '16px', borderRadius: '50%', background: 'rgba(0, 0, 0, 0)', display: 'inline-block', flexShrink: 0 }} />
-<div style={{ width: '16px', height: '16px', borderRadius: '50%', background: 'rgba(0, 0, 0, 0)', display: 'inline-block', flexShrink: 0 }} />
-</div>
-</div>
-</div>
-<div style={{ display: 'flex', flexDirection: 'column', gap: '9px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<span style={{ fontSize: '27.34333038330078px', fontWeight: 700, color: 'rgb(19, 25, 39)', display: 'inline-block' }}>43.50 AQI</span>
-</div>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '10px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<span style={{ fontSize: '14.102218627929688px', fontWeight: 400, color: 'rgb(156, 163, 175)', display: 'inline-block' }}>Renewable Energy: 54.86%</span>
-</div>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'column', gap: '10px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '53.84061813354492px', background: 'rgb(187, 247, 208)', alignItems: 'center' }}>
-
-</div>
-</div>
-<span style={{ fontSize: '11.458052635192871px', fontWeight: 400, color: 'rgb(113, 113, 122)', display: 'inline-block' }}>vs Last Month</span>
-</div>
-</div>
-</div>
-          </div>
-<div style={{ border: '1px solid rgba(255,255,255,0.08)', borderRadius: '8px', padding: '12px', marginBottom: '8px', background: 'rgba(15,23,42,0.4)' }}>
-            <div style={{ fontSize: '11px', fontWeight: 600, color: '#38bdf8', marginBottom: '8px' }}>Variant: Property 1=hover</div>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '43px', padding: '34px 10px 28px 20px', borderRadius: '27.848594665527344px', background: 'rgb(226, 232, 240)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '26px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<span style={{ fontSize: '18px', fontWeight: 600, color: 'rgb(4, 47, 46)', display: 'inline-block' }}>Air Quality Index</span>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgb(255, 255, 255)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<div style={{ width: '16px', height: '16px', borderRadius: '50%', background: 'rgba(0, 0, 0, 0)', display: 'inline-block', flexShrink: 0 }} />
-<div style={{ width: '16px', height: '16px', borderRadius: '50%', background: 'rgba(0, 0, 0, 0)', display: 'inline-block', flexShrink: 0 }} />
-</div>
-</div>
-</div>
-<div style={{ display: 'flex', flexDirection: 'column', gap: '9px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<span style={{ fontSize: '27.34333038330078px', fontWeight: 700, color: 'rgb(19, 25, 39)', display: 'inline-block' }}>43.50 AQI</span>
-<span style={{ fontSize: '14.102218627929688px', fontWeight: 400, color: 'rgb(156, 163, 175)', display: 'inline-block' }}>Renewable Energy: 54.86%</span>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'column', gap: '10px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '53.84061813354492px', background: 'rgb(187, 247, 208)', alignItems: 'center' }}>
-
-</div>
-</div>
-<span style={{ fontSize: '11.458052635192871px', fontWeight: 400, color: 'rgb(113, 113, 122)', display: 'inline-block' }}>vs Last Month</span>
-</div>
-</div>
-</div>
-          </div>
-<div style={{ border: '1px solid rgba(255,255,255,0.08)', borderRadius: '8px', padding: '12px', marginBottom: '8px', background: 'rgba(15,23,42,0.4)' }}>
-            <div style={{ fontSize: '11px', fontWeight: 600, color: '#38bdf8', marginBottom: '8px' }}>Variant: Property 1=selected</div>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '43px', padding: '34px 10px 28px 20px', borderRadius: '27.848594665527344px', background: 'rgb(255, 255, 255)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '26px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<span style={{ fontSize: '18px', fontWeight: 600, color: 'rgb(4, 47, 46)', display: 'inline-block' }}>Air Quality Index</span>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgb(255, 255, 255)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<div style={{ width: '16px', height: '16px', borderRadius: '50%', background: 'rgba(0, 0, 0, 0)', display: 'inline-block', flexShrink: 0 }} />
-<div style={{ width: '16px', height: '16px', borderRadius: '50%', background: 'rgba(0, 0, 0, 0)', display: 'inline-block', flexShrink: 0 }} />
-</div>
-</div>
-</div>
-<div style={{ display: 'flex', flexDirection: 'column', gap: '9px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<span style={{ fontSize: '27.34333038330078px', fontWeight: 700, color: 'rgb(19, 25, 39)', display: 'inline-block' }}>43.50 AQI</span>
-<span style={{ fontSize: '14.102218627929688px', fontWeight: 400, color: 'rgb(156, 163, 175)', display: 'inline-block' }}>Renewable Energy: 54.86%</span>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'column', gap: '10px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '53.84061813354492px', background: 'rgb(187, 247, 208)', alignItems: 'center' }}>
-
-</div>
-</div>
-<span style={{ fontSize: '11.458052635192871px', fontWeight: 400, color: 'rgb(113, 113, 122)', display: 'inline-block' }}>vs Last Month</span>
-</div>
-</div>
-</div>
-          </div>
-<div style={{ border: '1px solid rgba(255,255,255,0.08)', borderRadius: '8px', padding: '12px', marginBottom: '8px', background: 'rgba(15,23,42,0.4)' }}>
-            <div style={{ fontSize: '11px', fontWeight: 600, color: '#38bdf8', marginBottom: '8px' }}>Variant: Property 1=default</div>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '43px', padding: '34px 10px 28px 20px', borderRadius: '27.848594665527344px', background: 'rgb(255, 255, 255)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '26px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<span style={{ fontSize: '18px', fontWeight: 600, color: 'rgb(4, 47, 46)', display: 'inline-block' }}>Air Quality Index</span>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgb(255, 255, 255)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<div style={{ width: '16px', height: '16px', borderRadius: '50%', background: 'rgba(0, 0, 0, 0)', display: 'inline-block', flexShrink: 0 }} />
-<div style={{ width: '16px', height: '16px', borderRadius: '50%', background: 'rgba(0, 0, 0, 0)', display: 'inline-block', flexShrink: 0 }} />
-</div>
-</div>
-</div>
-<div style={{ display: 'flex', flexDirection: 'column', gap: '9px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<span style={{ fontSize: '27.34333038330078px', fontWeight: 700, color: 'rgb(19, 25, 39)', display: 'inline-block' }}>43.50 AQI</span>
-<span style={{ fontSize: '14.102218627929688px', fontWeight: 400, color: 'rgb(156, 163, 175)', display: 'inline-block' }}>Renewable Energy: 54.86%</span>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'column', gap: '10px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '53.84061813354492px', background: 'rgb(187, 247, 208)', alignItems: 'center' }}>
-
-</div>
-</div>
-<span style={{ fontSize: '11.458052635192871px', fontWeight: 400, color: 'rgb(113, 113, 122)', display: 'inline-block' }}>vs Last Month</span>
-</div>
-</div>
-</div>
-          </div>
+        <div className="card1-variant-wrapper">
+          <div className="card1-variant-label">Variant: Property 1=active</div>
+          <CardContent variant="active" />
+        </div>
+        
+        <div className="card1-variant-wrapper">
+          <div className="card1-variant-label">Variant: Property 1=hover</div>
+          <CardContent variant="hover" />
+        </div>
+        
+        <div className="card1-variant-wrapper">
+          <div className="card1-variant-label">Variant: Property 1=selected</div>
+          <CardContent variant="selected" />
+        </div>
+        
+        <div className="card1-variant-wrapper">
+          <div className="card1-variant-label">Variant: Property 1=default</div>
+          <CardContent variant="default" />
+        </div>
       </div>
 
       <div style={{ marginTop: '12px', display: 'flex', flexWrap: 'wrap', gap: '8px', fontSize: '11px', borderTop: '1px dashed rgba(255,255,255,0.1)', paddingTop: '8px' }}>

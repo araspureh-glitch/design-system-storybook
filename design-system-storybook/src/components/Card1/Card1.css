@@ -6,3 +6,153 @@
   color: var(--uedp-base-white, #ffffff);
   font-family: Inter, sans-serif;
 }
+
+.card1-variant-wrapper {
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 8px;
+  background: rgba(15, 23, 42, 0.4);
+}
+
+.card1-variant-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: #38bdf8;
+  margin-bottom: 8px;
+}
+
+/* The actual Card component */
+.card1-card {
+  width: 232px;
+  height: 214px;
+  box-sizing: border-box;
+  border-radius: 27.848594665527344px;
+  padding: 34px 10px 28px 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 43px;
+  align-items: flex-start;
+}
+
+.card1-card.active {
+  background-color: rgb(255, 255, 255);
+  border: none;
+}
+
+.card1-card.hover {
+  background-color: rgb(226, 232, 240);
+  border: none;
+}
+
+.card1-card.selected {
+  background-color: rgb(255, 255, 255);
+  border: 2px solid rgb(13, 148, 136);
+}
+
+.card1-card.default {
+  background-color: rgb(255, 255, 255);
+  border: none;
+}
+
+.card1-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 202px;
+  height: 22px;
+}
+
+.card1-title {
+  font-family: 'Inter', sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  color: rgb(4, 47, 46);
+  line-height: 21.6px;
+  margin: 0;
+}
+
+.card1-alert-icon {
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card1-content-group {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  width: 202px;
+  height: 93px;
+}
+
+.card1-aqi-row {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  height: 29px;
+}
+
+.card1-aqi-value {
+  font-family: 'Inter', sans-serif;
+  font-size: 27.34px;
+  font-weight: 700;
+  color: rgb(19, 25, 39);
+  line-height: 27.34px;
+}
+
+.card1-aqi-label {
+  font-family: 'Inter', sans-serif;
+  font-size: 17.3px;
+  font-weight: 400;
+  color: rgb(113, 113, 122);
+  margin-left: 6px;
+}
+
+.card1-energy {
+  font-family: 'Roboto', sans-serif;
+  font-size: 14.1px;
+  font-weight: 400;
+  color: rgb(156, 163, 175);
+  line-height: 22.28px;
+  height: 23px;
+  margin: 0;
+}
+
+.card1-badge-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  height: 23px;
+}
+
+.card1-badge {
+  background-color: rgb(187, 247, 208);
+  border-radius: 53.84px;
+  width: 57px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card1-badge-text {
+  font-family: 'Inter', sans-serif;
+  font-size: 11.46px;
+  font-weight: 700;
+  color: rgb(34, 197, 94);
+  margin: 0;
+}
+
+.card1-vs-text {
+  font-family: 'Inter', sans-serif;
+  font-size: 11.46px;
+  font-weight: 400;
+  color: rgb(113, 113, 122);
+  margin: 0;
+}
