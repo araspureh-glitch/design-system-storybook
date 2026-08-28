@@ -46,8 +46,8 @@ export const ChartBar: React.FC<ChartBarProps> = ({
                 Status: <span>{status}</span>
               </div>
             </div>
-            <div className="chart-bar-tooltip-arrow" />
           </div>
+          <div className="chart-bar-tooltip-arrow" />
         </div>
       </div>
     </div>
