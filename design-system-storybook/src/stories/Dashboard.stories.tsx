@@ -133,6 +133,29 @@ const DashboardComponent: React.FC = () => {
   const [activeMenu, setActiveMenu] = useState<'Dashboard' | 'Sustainability' | 'Energy Grid' | 'Smart Systems' | 'Reports' | 'Settings'>('Dashboard');
   const [activeZone, setActiveZone] = useState<'City Center' | 'Industrial' | 'Residential'>('City Center');
 
+  // Subtle click sound using Web Audio API (no external files)
+  const playClickSound = () => {
+    try {
+      const ctx = new (window.AudioContext || (window as any).webkitAudioContext)();
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(1200, ctx.currentTime);
+      osc.frequency.exponentialRampToValueAtTime(800, ctx.currentTime + 0.03);
+      gain.gain.setValueAtTime(0.08, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.06);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start(ctx.currentTime);
+      osc.stop(ctx.currentTime + 0.06);
+    } catch { /* silently ignore if audio not supported */ }
+  };
+
+  const handleMenuClick = (name: string) => {
+    playClickSound();
+    setActiveMenu(name as any);
+  };
+
   // Interactive dummy data linked to active view state
   const dataMap: Record<string, KPIState> = {
     'Dashboard': {
@@ -230,7 +253,7 @@ const DashboardComponent: React.FC = () => {
               return (
                 <button
                   key={item.name}
-                  onClick={() => setActiveMenu(item.name as any)}
+                  onClick={() => handleMenuClick(item.name)}
                   style={{
                     display: 'flex',
                     alignItems: 'center',
@@ -308,6 +331,7 @@ const DashboardComponent: React.FC = () => {
           {/* Card 1 */}
           <div 
             className="kpi-card"
+            onClick={playClickSound}
             style={{
               backgroundColor: '#0a0e1a',
               border: '1px solid rgba(255, 255, 255, 0.04)',
@@ -334,6 +358,7 @@ const DashboardComponent: React.FC = () => {
           {/* Card 2 */}
           <div 
             className="kpi-card"
+            onClick={playClickSound}
             style={{
               backgroundColor: '#0a0e1a',
               border: '1px solid rgba(255, 255, 255, 0.04)',
@@ -360,6 +385,7 @@ const DashboardComponent: React.FC = () => {
           {/* Card 3 */}
           <div 
             className="kpi-card"
+            onClick={playClickSound}
             style={{
               backgroundColor: '#0a0e1a',
               border: '1px solid rgba(255, 255, 255, 0.04)',
