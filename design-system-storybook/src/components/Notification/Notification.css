@@ -6,3 +6,105 @@
   color: var(--uedp-base-white, #ffffff);
   font-family: Inter, sans-serif;
 }
+
+.notification-variant-wrapper {
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 8px;
+  background: rgba(15, 23, 42, 0.4);
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.notification-variant-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: #38bdf8;
+}
+
+/* The actual Circular Button */
+.notification-btn {
+  position: relative;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  user-select: none;
+  border: none;
+  outline: none;
+}
+
+/* NORMAL and input state: white background */
+.notification-btn.NORMAL,
+.notification-btn.input {
+  background-color: #ffffff;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.04);
+}
+
+.notification-btn.NORMAL:hover,
+.notification-btn.input:hover {
+  background-color: #f8fafc;
+  transform: translateY(-1.5px);
+  box-shadow: 0 6px 14px rgba(15, 118, 110, 0.12);
+}
+
+/* selected state: teal background */
+.notification-btn.selected {
+  background-color: #0f766e;
+}
+
+.notification-btn.selected:hover {
+  background-color: #0d6d66;
+  transform: translateY(-1.5px);
+  box-shadow: 0 6px 14px rgba(15, 118, 110, 0.25);
+}
+
+/* hover state: off-white background with teal border */
+.notification-btn.hover {
+  background-color: #f8fafc;
+  border: 1.5px solid #0f766e;
+}
+
+.notification-btn.hover:hover {
+  background-color: #f1f5f9;
+  transform: translateY(-1.5px);
+}
+
+/* disable state: off-white background, no hover activity */
+.notification-btn.disable {
+  background-color: #f8fafc;
+  cursor: not-allowed;
+}
+
+/* Red Notification Dot */
+.notification-badge-dot {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: #dc2626;
+  border: 2px solid #ffffff;
+  box-sizing: border-box;
+}
+
+/* Icon Styles */
+.notification-icon-svg {
+  display: block;
+  width: 24px;
+  height: 24px;
+  transition: transform 0.2s ease;
+}
+
+.notification-btn:not(.disable):hover .notification-icon-svg {
+  transform: rotate(15deg);
+}

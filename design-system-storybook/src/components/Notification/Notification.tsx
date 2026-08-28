@@ -5,7 +5,58 @@ export interface NotificationProps {
   Property_1?: 'NORMAL' | 'selected' | 'hover' | 'disable' | 'input';
   className?: string;
   style?: React.CSSProperties;
+  onClick?: () => void;
 }
+
+const BellIcon: React.FC<{ color: string }> = ({ color }) => (
+  <svg 
+    width="24" 
+    height="24" 
+    viewBox="0 0 24 24" 
+    fill={color} 
+    xmlns="http://www.w3.org/2000/svg"
+    className="notification-icon-svg"
+  >
+    <path 
+      d="M12 2C10.3 2 9 3.3 9 5V5.2C6.2 6 4 8.5 4 11.5V17L2 19V20H22V19L20 17V11.5C20 8.5 17.8 6 15 5.2V5C15 3.3 13.7 2 12 2ZM12 22C13.7 22 15 20.7 15 19H9C9 20.7 10.3 22 12 22Z"
+    />
+  </svg>
+);
+
+interface NotificationButtonProps {
+  state: 'NORMAL' | 'selected' | 'hover' | 'disable' | 'input';
+  onClick?: () => void;
+}
+
+const NotificationButton: React.FC<NotificationButtonProps> = ({ state, onClick }) => {
+  const getBellColor = () => {
+    switch (state) {
+      case 'selected':
+        return '#ffffff';
+      case 'hover':
+        return '#0d9488';
+      case 'disable':
+        return '#a1a1aa';
+      case 'NORMAL':
+      case 'input':
+      default:
+        return '#0f766e';
+    }
+  };
+
+  return (
+    <button 
+      className={`notification-btn ${state}`} 
+      onClick={state === 'disable' ? undefined : onClick}
+      disabled={state === 'disable'}
+      type="button"
+      aria-label="Notification Bell"
+    >
+      <BellIcon color={getBellColor()} />
+      {state === 'input' && <div className="notification-badge-dot" />}
+    </button>
+  );
+};
 
 /**
  * **Preserved Figma Layer Name**: `Notification`
@@ -17,6 +68,7 @@ export const Notification: React.FC<NotificationProps> = ({
   Property_1 = "NORMAL",
   className = '',
   style = {},
+  onClick,
   ...props
 }) => {
   return (
@@ -27,6 +79,7 @@ export const Notification: React.FC<NotificationProps> = ({
       data-figma-page="components"
       {...props}
     >
+      {/* Header Info */}
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px', borderBottom: '1px solid rgba(255,255,255,0.1)', paddingBottom: '6px' }}>
         <span style={{ fontSize: '12px', fontWeight: 600, color: 'var(--uedp-slate-400, #94a3b8)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
           components / Notification
@@ -36,54 +89,15 @@ export const Notification: React.FC<NotificationProps> = ({
         </span>
       </div>
 
+      {/* Button Render */}
       <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-        <div style={{ border: '1px solid rgba(255,255,255,0.08)', borderRadius: '8px', padding: '12px', marginBottom: '8px', background: 'rgba(15,23,42,0.4)' }}>
-            <div style={{ fontSize: '11px', fontWeight: 600, color: '#38bdf8', marginBottom: '8px' }}>Variant: Property 1=NORMAL</div>
-            <div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '31.596271514892578px', background: 'rgb(255, 255, 255)', alignItems: 'center' }}>
-<span style={{ fontSize: '11px', color: 'var(--uedp-slate-400, #94a3b8)' }}>Rectangle 15</span>
-</div>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '31.595306396484375px', background: 'rgb(255, 255, 255)', alignItems: 'center' }}>
-<div style={{ width: '16px', height: '16px', borderRadius: '50%', background: 'rgb(15, 118, 110)', display: 'inline-block', flexShrink: 0 }} />
-</div>
-</div>
-</div>
-          </div>
-<div style={{ border: '1px solid rgba(255,255,255,0.08)', borderRadius: '8px', padding: '12px', marginBottom: '8px', background: 'rgba(15,23,42,0.4)' }}>
-            <div style={{ fontSize: '11px', fontWeight: 600, color: '#38bdf8', marginBottom: '8px' }}>Variant: Property 1=input</div>
-            <div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '31.596271514892578px', background: 'rgb(255, 255, 255)', alignItems: 'center' }}>
-<span style={{ fontSize: '11px', color: 'var(--uedp-slate-400, #94a3b8)' }}>Rectangle 15</span>
-</div>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '31.595306396484375px', background: 'rgb(255, 255, 255)', alignItems: 'center' }}>
-<div style={{ width: '16px', height: '16px', borderRadius: '50%', background: 'rgb(15, 118, 110)', display: 'inline-block', flexShrink: 0 }} />
-</div>
-</div>
-<div style={{ width: '16px', height: '16px', borderRadius: '50%', background: 'rgb(220, 38, 38)', display: 'inline-block', flexShrink: 0 }} />
-</div>
-          </div>
-<div style={{ border: '1px solid rgba(255,255,255,0.08)', borderRadius: '8px', padding: '12px', marginBottom: '8px', background: 'rgba(15,23,42,0.4)' }}>
-            <div style={{ fontSize: '11px', fontWeight: 600, color: '#38bdf8', marginBottom: '8px' }}>Variant: Property 1=selected</div>
-            <div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '31.596271514892578px', background: 'rgb(15, 118, 110)', alignItems: 'center' }}>
-<span style={{ fontSize: '11px', color: 'var(--uedp-slate-400, #94a3b8)' }}>Rectangle 662</span>
-</div>
-<div style={{ width: '16px', height: '16px', borderRadius: '50%', background: 'rgb(255, 255, 255)', display: 'inline-block', flexShrink: 0 }} />
-</div>
-          </div>
-<div style={{ border: '1px solid rgba(255,255,255,0.08)', borderRadius: '8px', padding: '12px', marginBottom: '8px', background: 'rgba(15,23,42,0.4)' }}>
-            <div style={{ fontSize: '11px', fontWeight: 600, color: '#38bdf8', marginBottom: '8px' }}>Variant: Property 1=hover</div>
-            <div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '31.596271514892578px', background: 'rgb(248, 250, 252)', alignItems: 'center' }}>
-<span style={{ fontSize: '11px', color: 'var(--uedp-slate-400, #94a3b8)' }}>Rectangle 662</span>
-</div>
-<div style={{ width: '16px', height: '16px', borderRadius: '50%', background: 'rgb(13, 148, 136)', display: 'inline-block', flexShrink: 0 }} />
-</div>
-          </div>
+        <div className="notification-variant-wrapper">
+          <div className="notification-variant-label">Variant: Property 1={Property_1}</div>
+          <NotificationButton state={Property_1} onClick={onClick} />
+        </div>
       </div>
 
+      {/* Debug Properties Footer */}
       <div style={{ marginTop: '12px', display: 'flex', flexWrap: 'wrap', gap: '8px', fontSize: '11px', borderTop: '1px dashed rgba(255,255,255,0.1)', paddingTop: '8px' }}>
         <div style={{ background: 'rgba(0,0,0,0.3)', padding: '4px 8px', borderRadius: '4px' }}>
           <span style={{ color: 'var(--uedp-slate-400, #94a3b8)' }}>Property_1: </span>
