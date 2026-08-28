@@ -44,7 +44,6 @@ export { Component343 } from './components/Component343/Component343';
 export { Component424 } from './components/Component424/Component424';
 export { Component336 } from './components/Component336/Component336';
 export { SiAlertDuotone } from './components/SiAlertDuotone/SiAlertDuotone';
-export { Frame1171276099 } from './components/Frame1171276099/Frame1171276099';
 export { Component350Frame1171275911 } from './components/Component350Frame1171275911/Component350Frame1171275911';
 export { Card1 } from './components/Card1/Card1';
 export { Card2 } from './components/Card2/Card2';
