@@ -7,6 +7,13 @@ export interface Card1Props {
   Property_1?: 'active' | 'hover' | 'selected' | 'default';
   className?: string;
   style?: React.CSSProperties;
+  title?: string;
+  aqiValue?: string;
+  aqiLabel?: string;
+  subHeading?: string;
+  badgeVariant?: 'safe' | 'alert' | 'warning' | 'b warning' | 'b alert' | 'b safe';
+  badgeText?: string;
+  vsText?: string;
 }
 
 const AlertIcon: React.FC = () => (
@@ -38,14 +45,31 @@ const AlertIcon: React.FC = () => (
 interface CardContentProps {
   variant: 'active' | 'hover' | 'selected' | 'default';
   showIcon?: boolean;
+  title?: string;
+  aqiValue?: string;
+  aqiLabel?: string;
+  subHeading?: string;
+  badgeVariant?: 'safe' | 'alert' | 'warning' | 'b warning' | 'b alert' | 'b safe';
+  badgeText?: string;
+  vsText?: string;
 }
 
-const CardContent: React.FC<CardContentProps> = ({ variant, showIcon = true }) => {
+const CardContent: React.FC<CardContentProps> = ({ 
+  variant, 
+  showIcon = true,
+  title = "Air Quality Index",
+  aqiValue = "43.50",
+  aqiLabel = "AQI",
+  subHeading = "Renewable Energy: 54.86%",
+  badgeVariant = "safe",
+  badgeText,
+  vsText = "vs Last Month"
+}) => {
   return (
     <div className={`card1-card ${variant}`}>
       {/* Header Row */}
       <div className="card1-header">
-        <h3 className="card1-title">Air Quality Index</h3>
+        <h3 className="card1-title">{title}</h3>
         {showIcon && (
           <div className="card1-alert-icon">
             <AlertIcon />
@@ -56,13 +80,13 @@ const CardContent: React.FC<CardContentProps> = ({ variant, showIcon = true }) =
       {/* Content Group */}
       <div className="card1-content-group">
         <div className="card1-aqi-row">
-          <span className="card1-aqi-value">43.50</span>
-          <span className="card1-aqi-label">AQI</span>
+          <span className="card1-aqi-value">{aqiValue}</span>
+          <span className="card1-aqi-label">{aqiLabel}</span>
         </div>
-        <p className="card1-energy">Renewable Energy: 54.86%</p>
+        <p className="card1-energy">{subHeading}</p>
         <div className="card1-badge-row">
-          <BadgeContent variant="safe" />
-          <span className="card1-vs-text">vs Last Month</span>
+          <BadgeContent variant={badgeVariant} labelText={badgeText} />
+          <span className="card1-vs-text">{vsText}</span>
         </div>
       </div>
     </div>
@@ -80,6 +104,13 @@ export const Card1: React.FC<Card1Props> = ({
   Property_1 = "active",
   className = '',
   style = {},
+  title,
+  aqiValue,
+  aqiLabel,
+  subHeading,
+  badgeVariant,
+  badgeText,
+  vsText,
   ...props
 }) => {
   return (
@@ -102,7 +133,17 @@ export const Card1: React.FC<Card1Props> = ({
       <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
         <div className="card1-variant-wrapper">
           <div className="card1-variant-label">Variant: Property 1={Property_1}</div>
-          <CardContent variant={Property_1} showIcon={Boolean_18_13} />
+          <CardContent 
+            variant={Property_1} 
+            showIcon={Boolean_18_13}
+            title={title}
+            aqiValue={aqiValue}
+            aqiLabel={aqiLabel}
+            subHeading={subHeading}
+            badgeVariant={badgeVariant}
+            badgeText={badgeText}
+            vsText={vsText}
+          />
         </div>
       </div>
 

@@ -27,6 +27,35 @@ const meta: Meta<typeof Card1> = {
         "default"
       ],
       "description": "Figma property: Property 1"
+    },
+    "title": {
+      "control": "text",
+      "description": "Main Title (Heading 1)"
+    },
+    "aqiValue": {
+      "control": "text",
+      "description": "AQI Value"
+    },
+    "aqiLabel": {
+      "control": "text",
+      "description": "AQI Unit Label"
+    },
+    "subHeading": {
+      "control": "text",
+      "description": "Sub-heading text"
+    },
+    "badgeVariant": {
+      "control": "select",
+      "options": ["safe", "alert", "warning", "b warning", "b alert", "b safe"],
+      "description": "Badge design state"
+    },
+    "badgeText": {
+      "control": "text",
+      "description": "Override text inside badge"
+    },
+    "vsText": {
+      "control": "text",
+      "description": "Comparison label text"
     }
   },
 };
@@ -37,27 +66,51 @@ type Story = StoryObj<typeof Card1>;
 export const Active: Story = {
   args: {
     "Boolean_18_13": true,
-    "Property_1": "active"
+    "Property_1": "active",
+    "title": "Air Quality Index",
+    "aqiValue": "43.50",
+    "aqiLabel": "AQI",
+    "subHeading": "Renewable Energy: 54.86%",
+    "badgeVariant": "safe",
+    "vsText": "vs Last Month"
   },
 };
 
 export const Hover: Story = {
   args: {
     "Boolean_18_13": true,
-    "Property_1": "hover"
+    "Property_1": "hover",
+    "title": "Air Quality Index",
+    "aqiValue": "43.50",
+    "aqiLabel": "AQI",
+    "subHeading": "Renewable Energy: 54.86%",
+    "badgeVariant": "safe",
+    "vsText": "vs Last Month"
   },
 };
 
 export const Selected: Story = {
   args: {
     "Boolean_18_13": true,
-    "Property_1": "selected"
+    "Property_1": "selected",
+    "title": "Air Quality Index",
+    "aqiValue": "43.50",
+    "aqiLabel": "AQI",
+    "subHeading": "Renewable Energy: 54.86%",
+    "badgeVariant": "safe",
+    "vsText": "vs Last Month"
   },
 };
 
 export const Default: Story = {
   args: {
     "Boolean_18_13": true,
-    "Property_1": "default"
+    "Property_1": "default",
+    "title": "Air Quality Index",
+    "aqiValue": "43.50",
+    "aqiLabel": "AQI",
+    "subHeading": "Renewable Energy: 54.86%",
+    "badgeVariant": "safe",
+    "vsText": "vs Last Month"
   },
 };

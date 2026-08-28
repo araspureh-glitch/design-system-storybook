@@ -10,36 +10,39 @@ export interface AlertsStateProps {
 
 interface BadgeContentProps {
   variant: 'safe' | 'alert' | 'warning' | 'b warning' | 'b alert' | 'b safe';
+  labelText?: string;
 }
 
-export const BadgeContent: React.FC<BadgeContentProps> = ({ variant }) => {
+export const BadgeContent: React.FC<BadgeContentProps> = ({ variant, labelText }) => {
   const cssClass = variant.replace(' ', '_');
   
-  let labelText = '';
-  switch (variant) {
-    case 'safe':
-      labelText = '-8.4%';
-      break;
-    case 'b safe':
-      labelText = 'Low';
-      break;
-    case 'alert':
-      labelText = '+2.11%';
-      break;
-    case 'b alert':
-      labelText = 'High';
-      break;
-    case 'warning':
-      labelText = '+0.11%';
-      break;
-    case 'b warning':
-      labelText = 'Medium';
-      break;
+  let finalLabelText = labelText;
+  if (!finalLabelText) {
+    switch (variant) {
+      case 'safe':
+        finalLabelText = '-8.4%';
+        break;
+      case 'b safe':
+        finalLabelText = 'Low';
+        break;
+      case 'alert':
+        finalLabelText = '+2.11%';
+        break;
+      case 'b alert':
+        finalLabelText = 'High';
+        break;
+      case 'warning':
+        finalLabelText = '+0.11%';
+        break;
+      case 'b warning':
+        finalLabelText = 'Medium';
+        break;
+    }
   }
 
   return (
     <div className={`alertsstate-badge ${cssClass}`}>
-      <span className={`alertsstate-text ${cssClass}`}>{labelText}</span>
+      <span className={`alertsstate-text ${cssClass}`}>{finalLabelText}</span>
     </div>
   );
 };
