@@ -323,4 +323,29 @@
   --uedp-max-w-max-w-screen-lg: 1024px;
   --uedp-max-w-max-w-screen-xl: 1280px;
   --uedp-max-w-max-w-screen-2xl: 1536px;
+
+  /* Semantic Alert / State Colors */
+  --uedp-semantic-color: var(--uedp-red-600, #DC2626);
+  --uedp-semantic-color-3: var(--uedp-red-400, #F87171);
+  --uedp-semantic-color-2: var(--uedp-red-200, #FECACA);
+  --uedp-semantic-color-4: var(--uedp-base-white, #FFFFFF);
+  --uedp-semantic-color-5: var(--uedp-amber-100, #FEF3C7);
+  --uedp-semantic-color-6: var(--uedp-amber-200, #FDE68A);
+  --uedp-semantic-color-7: var(--uedp-amber-300, #FCD34D);
+  --uedp-semantic-color-8: var(--uedp-green-100, #DCFCE7);
+  --uedp-semantic-color-10: var(--uedp-green-300, #86EFAC);
+  --uedp-semantic-color-9: var(--uedp-green-500, #22C55E);
+
+  /* Button Semantic Colors */
+  --uedp-button-color-8: var(--uedp-base-white, #FFFFFF);
+  --uedp-button-color-11: #83A4A3;
+  --uedp-button-primary: var(--uedp-teal-100, #CCFBF1);
+  --uedp-button-secondary: var(--uedp-teal-200, #99F6E4);
+  --uedp-button-color: var(--uedp-teal-300, #5EEAD4);
+  --uedp-button-color-3: var(--uedp-teal-500, #14B8A6);
+  --uedp-button-color-2: var(--uedp-teal-600, #0D9488);
+  --uedp-button-color-4: var(--uedp-teal-700, #0F766E);
+  --uedp-button-color-5: var(--uedp-teal-800, #115E59);
+  --uedp-button-color-6: var(--uedp-teal-900, #134E4A);
+  --uedp-button-color-7: var(--uedp-teal-950, #042F2E);
 }

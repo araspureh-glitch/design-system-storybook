@@ -1267,6 +1267,31 @@ const colorFamilies = {
       "cssVarName": "--uedp-rose-950",
       "hex": "#4C0519"
     }
+  ],
+  "semanticAlerts": [
+    { "name": "Color (Alert Danger)", "cssVarName": "--uedp-semantic-color", "hex": "#DC2626" },
+    { "name": "Color 3 (Alert Light Danger)", "cssVarName": "--uedp-semantic-color-3", "hex": "#F87171" },
+    { "name": "Color 2 (Alert Soft Danger)", "cssVarName": "--uedp-semantic-color-2", "hex": "#FECACA" },
+    { "name": "Color 4 (Alert White)", "cssVarName": "--uedp-semantic-color-4", "hex": "#FFFFFF" },
+    { "name": "Color 5 (Alert Light Warning)", "cssVarName": "--uedp-semantic-color-5", "hex": "#FEF3C7" },
+    { "name": "Color 6 (Alert Soft Warning)", "cssVarName": "--uedp-semantic-color-6", "hex": "#FDE68A" },
+    { "name": "Color 7 (Alert Warning)", "cssVarName": "--uedp-semantic-color-7", "hex": "#FCD34D" },
+    { "name": "Color 8 (Alert Light Success)", "cssVarName": "--uedp-semantic-color-8", "hex": "#DCFCE7" },
+    { "name": "Color 10 (Alert Soft Success)", "cssVarName": "--uedp-semantic-color-10", "hex": "#86EFAC" },
+    { "name": "Color 9 (Alert Success)", "cssVarName": "--uedp-semantic-color-9", "hex": "#22C55E" }
+  ],
+  "buttonSemantic": [
+    { "name": "Color 8 (Button White)", "cssVarName": "--uedp-button-color-8", "hex": "#FFFFFF" },
+    { "name": "Color 11 (Button Muted Teal)", "cssVarName": "--uedp-button-color-11", "hex": "#83A4A3" },
+    { "name": "Primary (Button Light Teal)", "cssVarName": "--uedp-button-primary", "hex": "#CCFBF1" },
+    { "name": "Secondary (Button Teal)", "cssVarName": "--uedp-button-secondary", "hex": "#99F6E4" },
+    { "name": "Color (Button Medium Teal)", "cssVarName": "--uedp-button-color", "hex": "#5EEAD4" },
+    { "name": "Color 3 (Button Dark Teal)", "cssVarName": "--uedp-button-color-3", "hex": "#14B8A6" },
+    { "name": "Color 2 (Button Deep Teal)", "cssVarName": "--uedp-button-color-2", "hex": "#0D9488" },
+    { "name": "Color 4 (Button Shadow Teal)", "cssVarName": "--uedp-button-color-4", "hex": "#0F766E" },
+    { "name": "Color 5 (Button Darkest Teal)", "cssVarName": "--uedp-button-color-5", "hex": "#115E59" },
+    { "name": "Color 6 (Button Deepest Teal)", "cssVarName": "--uedp-button-color-6", "hex": "#134E4A" },
+    { "name": "Color 7 (Button Midnight Teal)", "cssVarName": "--uedp-button-color-7", "hex": "#042F2E" }
   ]
 };
 
