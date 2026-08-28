@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useCallback } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { Icons } from '../components/Icons/Icons';
 import { Lable } from '../components/Lable/Lable';
@@ -133,23 +133,54 @@ const DashboardComponent: React.FC = () => {
   const [activeMenu, setActiveMenu] = useState<'Dashboard' | 'Sustainability' | 'Energy Grid' | 'Smart Systems' | 'Reports' | 'Settings'>('Dashboard');
   const [activeZone, setActiveZone] = useState<'City Center' | 'Industrial' | 'Residential'>('City Center');
 
-  // Subtle click sound using Web Audio API (no external files)
-  const playClickSound = () => {
+  // ---- Click Sound Engine (singleton AudioContext) ----
+  const audioCtxRef = useRef<AudioContext | null>(null);
+
+  const getAudioCtx = useCallback(() => {
+    if (!audioCtxRef.current) {
+      audioCtxRef.current = new (window.AudioContext || (window as any).webkitAudioContext)();
+    }
+    return audioCtxRef.current;
+  }, []);
+
+  const playClickSound = useCallback(() => {
     try {
-      const ctx = new (window.AudioContext || (window as any).webkitAudioContext)();
-      const osc = ctx.createOscillator();
-      const gain = ctx.createGain();
-      osc.type = 'triangle';
-      osc.frequency.setValueAtTime(1200, ctx.currentTime);
-      osc.frequency.exponentialRampToValueAtTime(800, ctx.currentTime + 0.03);
-      gain.gain.setValueAtTime(0.08, ctx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.06);
-      osc.connect(gain);
-      gain.connect(ctx.destination);
-      osc.start(ctx.currentTime);
-      osc.stop(ctx.currentTime + 0.06);
-    } catch { /* silently ignore if audio not supported */ }
-  };
+      const ctx = getAudioCtx();
+      // Resume suspended context (browser autoplay policy)
+      if (ctx.state === 'suspended') {
+        ctx.resume();
+      }
+      const now = ctx.currentTime;
+
+      // Layer 1: Sharp attack "tick" (high freq, fast decay)
+      const osc1 = ctx.createOscillator();
+      const gain1 = ctx.createGain();
+      osc1.type = 'square';
+      osc1.frequency.setValueAtTime(1800, now);
+      osc1.frequency.exponentialRampToValueAtTime(600, now + 0.04);
+      gain1.gain.setValueAtTime(0.35, now);
+      gain1.gain.exponentialRampToValueAtTime(0.001, now + 0.08);
+      osc1.connect(gain1);
+      gain1.connect(ctx.destination);
+      osc1.start(now);
+      osc1.stop(now + 0.08);
+
+      // Layer 2: Warm body "pop" (lower freq, slightly longer)
+      const osc2 = ctx.createOscillator();
+      const gain2 = ctx.createGain();
+      osc2.type = 'sine';
+      osc2.frequency.setValueAtTime(600, now);
+      osc2.frequency.exponentialRampToValueAtTime(200, now + 0.06);
+      gain2.gain.setValueAtTime(0.2, now);
+      gain2.gain.exponentialRampToValueAtTime(0.001, now + 0.1);
+      osc2.connect(gain2);
+      gain2.connect(ctx.destination);
+      osc2.start(now);
+      osc2.stop(now + 0.1);
+    } catch (e) {
+      // Silently ignore if Web Audio not supported
+    }
+  }, [getAudioCtx]);
 
   const handleMenuClick = (name: string) => {
     playClickSound();
