@@ -12,33 +12,68 @@ const meta: Meta<typeof AlertsState> = {
     },
   },
   argTypes: {
-  "Boolean_53_0": {
-    "control": "boolean",
-    "description": "Figma property: Boolean#53:0"
-  },
-  "Property_1": {
-    "control": {
-      "type": "select"
+    "Boolean_53_0": {
+      "control": "boolean",
+      "description": "Figma property: Boolean#53:0"
     },
-    "options": [
-      "safe",
-      "alert",
-      "warning",
-      "b warning",
-      "b alert",
-      "b safe"
-    ],
-    "description": "Figma property: Property 1"
-  }
-},
+    "Property_1": {
+      "control": {
+        "type": "select"
+      },
+      "options": [
+        "safe",
+        "alert",
+        "warning",
+        "b warning",
+        "b alert",
+        "b safe"
+      ],
+      "description": "Figma property: Property 1"
+    }
+  },
 };
 
 export default meta;
 type Story = StoryObj<typeof AlertsState>;
 
-export const Primary: Story = {
+export const Safe: Story = {
   args: {
-  "Boolean_53_0": true,
-  "Property_1": "safe"
-},
+    "Boolean_53_0": true,
+    "Property_1": "safe"
+  },
+};
+
+export const BSafe: Story = {
+  args: {
+    "Boolean_53_0": true,
+    "Property_1": "b safe"
+  },
+};
+
+export const Alert: Story = {
+  args: {
+    "Boolean_53_0": true,
+    "Property_1": "alert"
+  },
+};
+
+export const BAlert: Story = {
+  args: {
+    "Boolean_53_0": true,
+    "Property_1": "b alert"
+  },
+};
+
+export const Warning: Story = {
+  args: {
+    "Boolean_53_0": true,
+    "Property_1": "warning"
+  },
+};
+
+export const BWarning: Story = {
+  args: {
+    "Boolean_53_0": true,
+    "Property_1": "b warning"
+  },
 };

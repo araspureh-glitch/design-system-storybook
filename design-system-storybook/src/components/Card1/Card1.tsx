@@ -1,5 +1,6 @@
 import React from 'react';
 import './Card1.css';
+import { BadgeContent } from '../AlertsState/AlertsState';
 
 export interface Card1Props {
   Boolean_18_13?: boolean;
@@ -60,9 +61,7 @@ const CardContent: React.FC<CardContentProps> = ({ variant, showIcon = true }) =
         </div>
         <p className="card1-energy">Renewable Energy: 54.86%</p>
         <div className="card1-badge-row">
-          <div className="card1-badge">
-            <span className="card1-badge-text">-8.4%</span>
-          </div>
+          <BadgeContent variant="safe" />
           <span className="card1-vs-text">vs Last Month</span>
         </div>
       </div>

@@ -8,6 +8,42 @@ export interface AlertsStateProps {
   style?: React.CSSProperties;
 }
 
+interface BadgeContentProps {
+  variant: 'safe' | 'alert' | 'warning' | 'b warning' | 'b alert' | 'b safe';
+}
+
+export const BadgeContent: React.FC<BadgeContentProps> = ({ variant }) => {
+  const cssClass = variant.replace(' ', '_');
+  
+  let labelText = '';
+  switch (variant) {
+    case 'safe':
+      labelText = '-8.4%';
+      break;
+    case 'b safe':
+      labelText = 'Low';
+      break;
+    case 'alert':
+      labelText = '+2.11%';
+      break;
+    case 'b alert':
+      labelText = 'High';
+      break;
+    case 'warning':
+      labelText = '+0.11%';
+      break;
+    case 'b warning':
+      labelText = 'Medium';
+      break;
+  }
+
+  return (
+    <div className={`alertsstate-badge ${cssClass}`}>
+      <span className={`alertsstate-text ${cssClass}`}>{labelText}</span>
+    </div>
+  );
+};
+
 /**
  * **Preserved Figma Layer Name**: `alerts state `
  * Page: `cards`
@@ -39,38 +75,10 @@ export const AlertsState: React.FC<AlertsStateProps> = ({
       </div>
 
       <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-        <div style={{ border: '1px solid rgba(255,255,255,0.08)', borderRadius: '8px', padding: '12px', marginBottom: '8px', background: 'rgba(15,23,42,0.4)' }}>
-            <div style={{ fontSize: '11px', fontWeight: 600, color: '#38bdf8', marginBottom: '8px' }}>Variant: Property 1=safe</div>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '53.84061813354492px', background: 'rgb(187, 247, 208)', alignItems: 'center' }}>
-<span style={{ fontSize: '11.458052635192871px', fontWeight: 600, color: 'rgb(34, 197, 94)', display: 'inline-block' }}>-8.4%</span>
-</div>
-</div>
-          </div>
-<div style={{ border: '1px solid rgba(255,255,255,0.08)', borderRadius: '8px', padding: '12px', marginBottom: '8px', background: 'rgba(15,23,42,0.4)' }}>
-            <div style={{ fontSize: '11px', fontWeight: 600, color: '#38bdf8', marginBottom: '8px' }}>Variant: Property 1=b safe</div>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '37px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '53.84061813354492px', background: 'rgb(187, 247, 208)', alignItems: 'center' }}>
-<span style={{ fontSize: '16px', fontWeight: 500, color: 'rgb(34, 197, 94)', display: 'inline-block' }}>Low</span>
-</div>
-</div>
-          </div>
-<div style={{ border: '1px solid rgba(255,255,255,0.08)', borderRadius: '8px', padding: '12px', marginBottom: '8px', background: 'rgba(15,23,42,0.4)' }}>
-            <div style={{ fontSize: '11px', fontWeight: 600, color: '#38bdf8', marginBottom: '8px' }}>Variant: Property 1=alert</div>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '53.84061813354492px', background: 'rgb(254, 202, 202)', alignItems: 'center' }}>
-<span style={{ fontSize: '11.458052635192871px', fontWeight: 600, color: 'rgb(220, 38, 38)', display: 'inline-block' }}>+2.11%</span>
-</div>
-</div>
-          </div>
-<div style={{ border: '1px solid rgba(255,255,255,0.08)', borderRadius: '8px', padding: '12px', marginBottom: '8px', background: 'rgba(15,23,42,0.4)' }}>
-            <div style={{ fontSize: '11px', fontWeight: 600, color: '#38bdf8', marginBottom: '8px' }}>Variant: Property 1=b alert</div>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '37px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '53.84061813354492px', background: 'rgb(254, 202, 202)', alignItems: 'center' }}>
-<span style={{ fontSize: '16px', fontWeight: 500, color: 'rgb(220, 38, 38)', display: 'inline-block' }}>High</span>
-</div>
-</div>
-          </div>
+        <div className="alertsstate-variant-wrapper">
+          <div className="alertsstate-variant-label">Variant: Property 1={Property_1}</div>
+          <BadgeContent variant={Property_1} />
+        </div>
       </div>
 
       <div style={{ marginTop: '12px', display: 'flex', flexWrap: 'wrap', gap: '8px', fontSize: '11px', borderTop: '1px dashed rgba(255,255,255,0.1)', paddingTop: '8px' }}>

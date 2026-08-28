@@ -6,3 +6,96 @@
   color: var(--uedp-base-white, #ffffff);
   font-family: Inter, sans-serif;
 }
+
+.alertsstate-variant-wrapper {
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 8px;
+  background: rgba(15, 23, 42, 0.4);
+}
+
+.alertsstate-variant-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: #38bdf8;
+  margin-bottom: 8px;
+}
+
+/* The actual Badge component */
+.alertsstate-badge {
+  border-radius: 53.84px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+/* Small badges */
+.alertsstate-badge.safe,
+.alertsstate-badge.alert,
+.alertsstate-badge.warning {
+  width: 57px;
+  height: 22px;
+}
+
+/* Big badges */
+.alertsstate-badge.b_safe,
+.alertsstate-badge.b_alert,
+.alertsstate-badge.b_warning {
+  width: 94px;
+  height: 34px;
+}
+
+/* Backgrounds */
+.alertsstate-badge.safe,
+.alertsstate-badge.b_safe {
+  background-color: rgb(187, 247, 208);
+}
+
+.alertsstate-badge.alert,
+.alertsstate-badge.b_alert {
+  background-color: rgb(254, 202, 202);
+}
+
+.alertsstate-badge.warning,
+.alertsstate-badge.b_warning {
+  background-color: rgb(254, 243, 199);
+}
+
+/* Texts */
+.alertsstate-text {
+  font-family: 'Inter', sans-serif;
+  margin: 0;
+  text-align: center;
+}
+
+.alertsstate-text.safe,
+.alertsstate-text.b_safe {
+  color: rgb(34, 197, 94);
+}
+
+.alertsstate-text.alert,
+.alertsstate-text.b_alert {
+  color: rgb(220, 38, 38);
+}
+
+.alertsstate-text.warning,
+.alertsstate-text.b_warning {
+  color: rgb(249, 115, 22);
+}
+
+/* Font styles */
+.alertsstate-text.safe,
+.alertsstate-text.alert,
+.alertsstate-text.warning {
+  font-size: 11.46px;
+  font-weight: 700;
+}
+
+.alertsstate-text.b_safe,
+.alertsstate-text.b_alert,
+.alertsstate-text.b_warning {
+  font-size: 16px;
+  font-weight: 500;
+}
