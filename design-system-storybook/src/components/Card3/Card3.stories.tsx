@@ -12,24 +12,74 @@ const meta: Meta<typeof Card3> = {
     },
   },
   argTypes: {
-  "Property_1": {
-    "control": {
-      "type": "select"
+    "Property_1": {
+      "control": {
+        "type": "select"
+      },
+      "options": [
+        "Default",
+        "hover"
+      ],
+      "description": "Figma property: Property 1"
     },
-    "options": [
-      "Default",
-      "hover"
-    ],
-    "description": "Figma property: Property 1"
-  }
-},
+    "title": {
+      "control": "text",
+      "description": "Main Title (District Name)"
+    },
+    "subHeading": {
+      "control": "text",
+      "description": "District Type Sub-heading"
+    },
+    "description": {
+      "control": "text",
+      "description": "Description paragraph"
+    },
+    "valueText": {
+      "control": "text",
+      "description": "Power capacity value text"
+    },
+    "leftBadgeVariant": {
+      "control": "select",
+      "options": ["safe", "alert", "warning", "b warning", "b alert", "b safe"],
+      "description": "Left badge design state"
+    },
+    "leftBadgeText": {
+      "control": "text",
+      "description": "Left badge text override"
+    },
+    "rightBadgeVariant": {
+      "control": "select",
+      "options": ["safe", "alert", "warning", "b warning", "b alert", "b safe"],
+      "description": "Right badge design state"
+    },
+    "rightBadgeText": {
+      "control": "text",
+      "description": "Right badge text override"
+    }
+  },
 };
 
 export default meta;
 type Story = StoryObj<typeof Card3>;
 
-export const Primary: Story = {
+export const Default: Story = {
   args: {
-  "Property_1": "Default"
-},
+    "Property_1": "Default",
+    "title": "Westpark-West (Green & Recreational District)",
+    "subHeading": "Green & Recreational District",
+    "description": "Mix of university campuses, museums, and cafes moderate daytime peaks.",
+    "valueText": "~1050MW",
+    "leftBadgeVariant": "alert"
+  },
+};
+
+export const Hover: Story = {
+  args: {
+    "Property_1": "hover",
+    "title": "Westpark-West (Green & Recreational District)",
+    "subHeading": "Green & Recreational District",
+    "description": "Mix of university campuses, museums, and cafes moderate daytime peaks.",
+    "valueText": "~1050MW",
+    "leftBadgeVariant": "alert"
+  },
 };
