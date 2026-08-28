@@ -11,7 +11,6 @@ export { Component317 } from './components/Component317/Component317';
 export { Component318 } from './components/Component318/Component318';
 export { Component319 } from './components/Component319/Component319';
 export { Zones } from './components/Zones/Zones';
-export { Map } from './components/Map/Map';
 export { Notification } from './components/Notification/Notification';
 export { Radio } from './components/Radio/Radio';
 export { Lable } from './components/Lable/Lable';
