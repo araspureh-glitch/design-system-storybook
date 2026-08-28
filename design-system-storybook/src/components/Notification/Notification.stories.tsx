@@ -11,53 +11,12 @@ const meta: Meta<typeof Notification> = {
       },
     },
   },
-  argTypes: {
-    "Property_1": {
-      "control": {
-        "type": "select"
-      },
-      "options": [
-        "NORMAL",
-        "selected",
-        "hover",
-        "disable",
-        "input"
-      ],
-      "description": "Figma variant state property"
-    }
-  },
+  argTypes: {},
 };
 
 export default meta;
 type Story = StoryObj<typeof Notification>;
 
-export const Normal: Story = {
-  args: {
-    "Property_1": "NORMAL"
-  },
-};
-
-export const Selected: Story = {
-  args: {
-    "Property_1": "selected"
-  },
-};
-
-export const Hover: Story = {
-  args: {
-    "Property_1": "hover"
-  },
-};
-
-export const Disabled: Story = {
-  args: {
-    "Property_1": "disable"
-  },
-};
-
-export const WithBadge: Story = {
-  name: "With Badge (Input)",
-  args: {
-    "Property_1": "input"
-  },
+export const Default: Story = {
+  args: {},
 };

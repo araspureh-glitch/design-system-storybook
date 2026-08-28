@@ -89,12 +89,14 @@ export const Notification: React.FC<NotificationProps> = ({
         </span>
       </div>
 
-      {/* Button Render */}
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-        <div className="notification-variant-wrapper">
-          <div className="notification-variant-label">Variant: Property 1={Property_1}</div>
-          <NotificationButton state={Property_1} onClick={onClick} />
-        </div>
+      {/* Button Render - Displaying all states in one component */}
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+        {(['NORMAL', 'input', 'selected', 'hover', 'disable'] as const).map((state) => (
+          <div key={state} className="notification-variant-wrapper" style={{ margin: 0 }}>
+            <div className="notification-variant-label">Variant: Property 1={state}</div>
+            <NotificationButton state={state} onClick={onClick} />
+          </div>
+        ))}
       </div>
 
       {/* Debug Properties Footer */}
