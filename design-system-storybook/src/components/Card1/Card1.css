@@ -22,7 +22,6 @@
   margin-bottom: 8px;
 }
 
-/* The actual Card component */
 .card1-card {
   width: 232px;
   height: 214px;
@@ -34,11 +33,17 @@
   justify-content: flex-start;
   gap: 43px;
   align-items: flex-start;
+  transition: background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
 }
 
 .card1-card.active {
   background-color: rgb(255, 255, 255);
   border: none;
+}
+
+.card1-card.active:hover {
+  background-color: rgb(226, 232, 240);
 }
 
 .card1-card.hover {
@@ -51,9 +56,17 @@
   border: 2px solid rgb(13, 148, 136);
 }
 
+.card1-card.selected:hover {
+  background-color: rgb(240, 244, 248);
+}
+
 .card1-card.default {
   background-color: rgb(255, 255, 255);
   border: none;
+}
+
+.card1-card.default:hover {
+  background-color: rgb(226, 232, 240);
 }
 
 .card1-header {

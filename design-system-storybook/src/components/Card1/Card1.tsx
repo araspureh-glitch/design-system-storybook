@@ -36,17 +36,20 @@ const AlertIcon: React.FC = () => (
 
 interface CardContentProps {
   variant: 'active' | 'hover' | 'selected' | 'default';
+  showIcon?: boolean;
 }
 
-const CardContent: React.FC<CardContentProps> = ({ variant }) => {
+const CardContent: React.FC<CardContentProps> = ({ variant, showIcon = true }) => {
   return (
     <div className={`card1-card ${variant}`}>
       {/* Header Row */}
       <div className="card1-header">
         <h3 className="card1-title">Air Quality Index</h3>
-        <div className="card1-alert-icon">
-          <AlertIcon />
-        </div>
+        {showIcon && (
+          <div className="card1-alert-icon">
+            <AlertIcon />
+          </div>
+        )}
       </div>
       
       {/* Content Group */}
@@ -100,22 +103,22 @@ export const Card1: React.FC<Card1Props> = ({
       <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
         <div className="card1-variant-wrapper">
           <div className="card1-variant-label">Variant: Property 1=active</div>
-          <CardContent variant="active" />
+          <CardContent variant="active" showIcon={Boolean_18_13} />
         </div>
         
         <div className="card1-variant-wrapper">
           <div className="card1-variant-label">Variant: Property 1=hover</div>
-          <CardContent variant="hover" />
+          <CardContent variant="hover" showIcon={Boolean_18_13} />
         </div>
         
         <div className="card1-variant-wrapper">
           <div className="card1-variant-label">Variant: Property 1=selected</div>
-          <CardContent variant="selected" />
+          <CardContent variant="selected" showIcon={Boolean_18_13} />
         </div>
         
         <div className="card1-variant-wrapper">
           <div className="card1-variant-label">Variant: Property 1=default</div>
-          <CardContent variant="default" />
+          <CardContent variant="default" showIcon={Boolean_18_13} />
         </div>
       </div>
 
