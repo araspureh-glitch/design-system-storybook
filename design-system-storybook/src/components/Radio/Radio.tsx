@@ -7,7 +7,6 @@ export interface RadioProps {
   className?: string;
   style?: React.CSSProperties;
   label?: string;
-  showText?: boolean;
   Boolean_23_2297?: boolean;
 }
 
@@ -62,7 +61,6 @@ export const Radio: React.FC<RadioProps> = ({
   className = '',
   style = {},
   label = "This Week",
-  showText = true,
   Boolean_23_2297 = true,
   ...props
 }) => {
@@ -90,7 +88,7 @@ export const Radio: React.FC<RadioProps> = ({
             state={State} 
             label={label} 
             showIcon={Left_Icon_80_2} 
-            showText={showText && Boolean_23_2297} 
+            showText={Boolean_23_2297} 
           />
         </div>
       </div>
