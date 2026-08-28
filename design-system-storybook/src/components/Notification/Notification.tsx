@@ -89,14 +89,27 @@ export const Notification: React.FC<NotificationProps> = ({
         </span>
       </div>
 
-      {/* Button Render - Displaying all states in one component */}
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-        {(['NORMAL', 'input', 'selected', 'hover', 'disable'] as const).map((state) => (
-          <div key={state} className="notification-variant-wrapper" style={{ margin: 0 }}>
-            <div className="notification-variant-label">Variant: Property 1={state}</div>
-            <NotificationButton state={state} onClick={onClick} />
-          </div>
-        ))}
+      {/* Section 1: Single Selected State Preview */}
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginBottom: '24px' }}>
+        <div className="notification-variant-wrapper" style={{ margin: 0 }}>
+          <div className="notification-variant-label">Active State Preview (Property_1 = {Property_1})</div>
+          <NotificationButton state={Property_1} onClick={onClick} />
+        </div>
+      </div>
+
+      {/* Section 2: All States Combined View */}
+      <div style={{ borderTop: '1px dashed rgba(255,255,255,0.15)', paddingTop: '20px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
+        <div style={{ fontSize: '11px', fontWeight: 600, color: 'var(--uedp-slate-400, #94a3b8)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+          All States Combined Showcase
+        </div>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px', alignItems: 'center' }}>
+          {(['NORMAL', 'input', 'selected', 'hover', 'disable'] as const).map((state) => (
+            <div key={state} className="notification-variant-wrapper" style={{ margin: 0 }}>
+              <div className="notification-variant-label">State: {state}</div>
+              <NotificationButton state={state} onClick={onClick} />
+            </div>
+          ))}
+        </div>
       </div>
 
       {/* Debug Properties Footer */}
