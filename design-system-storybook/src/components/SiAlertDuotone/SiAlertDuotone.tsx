@@ -8,6 +8,36 @@ export interface SiAlertDuotoneProps {
   style?: React.CSSProperties;
 }
 
+interface AlertIconSvgProps {
+  color: string;
+}
+
+export const AlertIconSvg: React.FC<AlertIconSvgProps> = ({ color }) => (
+  <svg 
+    width="20" 
+    height="20" 
+    viewBox="0 0 20 20" 
+    fill="none" 
+    xmlns="http://www.w3.org/2000/svg"
+    style={{ display: 'block' }}
+  >
+    <path 
+      d="M10 3.3L2.5 16.5H17.5L10 3.3Z" 
+      stroke={color} 
+      strokeWidth="1.73" 
+      strokeLinecap="round" 
+      strokeLinejoin="round"
+    />
+    <path 
+      d="M10 7.5V11.5" 
+      stroke={color} 
+      strokeWidth="1.73" 
+      strokeLinecap="round"
+    />
+    <circle cx="10" cy="14" r="0.87" fill={color} />
+  </svg>
+);
+
 /**
  * **Preserved Figma Layer Name**: `si:alert-duotone`
  * Page: `cards`
@@ -21,6 +51,8 @@ export const SiAlertDuotone: React.FC<SiAlertDuotoneProps> = ({
   style = {},
   ...props
 }) => {
+  const color = Property_1 === 'yellow' ? 'rgb(242, 177, 41)' : 'rgb(201, 42, 42)';
+
   return (
     <div 
       className={`sialertduotone-container ${className}`}
@@ -39,24 +71,10 @@ export const SiAlertDuotone: React.FC<SiAlertDuotoneProps> = ({
       </div>
 
       <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-        <div style={{ border: '1px solid rgba(255,255,255,0.08)', borderRadius: '8px', padding: '12px', marginBottom: '8px', background: 'rgba(15,23,42,0.4)' }}>
-            <div style={{ fontSize: '11px', fontWeight: 600, color: '#38bdf8', marginBottom: '8px' }}>Variant: Property 1=yellow</div>
-            <div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgb(255, 255, 255)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<div style={{ width: '16px', height: '16px', borderRadius: '50%', background: 'rgba(0, 0, 0, 0)', display: 'inline-block', flexShrink: 0 }} />
-<div style={{ width: '16px', height: '16px', borderRadius: '50%', background: 'rgba(0, 0, 0, 0)', display: 'inline-block', flexShrink: 0 }} />
-</div>
-</div>
-          </div>
-<div style={{ border: '1px solid rgba(255,255,255,0.08)', borderRadius: '8px', padding: '12px', marginBottom: '8px', background: 'rgba(15,23,42,0.4)' }}>
-            <div style={{ fontSize: '11px', fontWeight: 600, color: '#38bdf8', marginBottom: '8px' }}>Variant: Property 1=red</div>
-            <div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgb(255, 255, 255)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<div style={{ width: '16px', height: '16px', borderRadius: '50%', background: 'rgba(0, 0, 0, 0)', display: 'inline-block', flexShrink: 0 }} />
-<div style={{ width: '16px', height: '16px', borderRadius: '50%', background: 'rgba(0, 0, 0, 0)', display: 'inline-block', flexShrink: 0 }} />
-</div>
-</div>
-          </div>
+        <div style={{ border: '1px solid rgba(255,255,255,0.08)', borderRadius: '8px', padding: '12px', background: 'rgba(15,23,42,0.4)', display: 'inline-flex', flexDirection: 'column', gap: '8px', alignItems: 'flex-start' }}>
+          <div style={{ fontSize: '11px', fontWeight: 600, color: '#38bdf8' }}>Variant: Property 1={Property_1}</div>
+          {Boolean_18_10 && <AlertIconSvg color={color} />}
+        </div>
       </div>
 
       <div style={{ marginTop: '12px', display: 'flex', flexWrap: 'wrap', gap: '8px', fontSize: '11px', borderTop: '1px dashed rgba(255,255,255,0.1)', paddingTop: '8px' }}>

@@ -12,29 +12,36 @@ const meta: Meta<typeof SiAlertDuotone> = {
     },
   },
   argTypes: {
-  "Boolean_18_10": {
-    "control": "boolean",
-    "description": "Figma property: Boolean#18:10"
-  },
-  "Property_1": {
-    "control": {
-      "type": "select"
+    "Boolean_18_10": {
+      "control": "boolean",
+      "description": "Figma property: Boolean#18:10"
     },
-    "options": [
-      "yellow",
-      "red"
-    ],
-    "description": "Figma property: Property 1"
-  }
-},
+    "Property_1": {
+      "control": {
+        "type": "select"
+      },
+      "options": [
+        "yellow",
+        "red"
+      ],
+      "description": "Figma property: Property 1"
+    }
+  },
 };
 
 export default meta;
 type Story = StoryObj<typeof SiAlertDuotone>;
 
-export const Primary: Story = {
+export const Red: Story = {
   args: {
-  "Boolean_18_10": true,
-  "Property_1": "red"
-},
+    "Boolean_18_10": true,
+    "Property_1": "red"
+  },
+};
+
+export const Yellow: Story = {
+  args: {
+    "Boolean_18_10": true,
+    "Property_1": "yellow"
+  },
 };
