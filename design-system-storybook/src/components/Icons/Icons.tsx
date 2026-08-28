@@ -25,8 +25,9 @@ export const SingleIcon: React.FC<SingleIconProps> = ({ type }) => {
       return (
         <svg width="34" height="34" viewBox="0 0 34 34" fill="none" stroke="#018793" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="icon-display-svg">
           <path d="M17 2L20.5 7.5L27 6L25.5 12.5L31 16L25.5 19.5L27 26L20.5 24.5L17 30L13.5 24.5L7 26L8.5 19.5L3 16L8.5 12.5L7 6L13.5 7.5Z" fill="#018793" stroke="none" />
-          <path d="M17 10C13 10 12 14 12 18C12 21 15 22 17 22C19 22 22 21 22 18C22 14 21 10 17 10Z" stroke="#ffffff" strokeWidth="1.5" />
-          <path d="M18 12L15 17H18L16 20" stroke="#ffffff" strokeWidth="1.5" />
+          <path d="M14 21C13.2 19.5 13.5 17.5 15 16C16.5 14.5 18.5 13.2 21 12.5C20.3 15 19 17 17.5 18.5C16 20 14.5 20.3 14 21Z" stroke="#ffffff" strokeWidth="1.75" strokeLinejoin="round" />
+          <path d="M14 21L12 23" stroke="#ffffff" strokeWidth="1.75" />
+          <path d="M18.5 13.5L15 17.5H18L16.5 20.5" stroke="#ffffff" strokeWidth="1.5" strokeLinejoin="round" />
         </svg>
       );
     case 'Energy Grid':
