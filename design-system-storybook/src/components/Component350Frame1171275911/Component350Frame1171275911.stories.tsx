@@ -11,12 +11,34 @@ const meta: Meta<typeof Component350Frame1171275911> = {
       },
     },
   },
-  argTypes: {},
+  argTypes: {
+    "title": {
+      "control": "text",
+      "description": "Card Heading Title"
+    },
+    "percent": {
+      "control": {
+        "type": "range",
+        "min": 0,
+        "max": 100,
+        "step": 1
+      },
+      "description": "Progress Percentage (0-100)"
+    },
+    "showIcon": {
+      "control": "boolean",
+      "description": "Show Health Plus Icon"
+    }
+  },
 };
 
 export default meta;
 type Story = StoryObj<typeof Component350Frame1171275911>;
 
-export const Primary: Story = {
-  args: {},
+export const Default: Story = {
+  args: {
+    "title": "Smart City Health Score",
+    "percent": 82,
+    "showIcon": true
+  },
 };
