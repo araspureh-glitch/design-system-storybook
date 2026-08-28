@@ -13,7 +13,6 @@ export { Component319 } from './components/Component319/Component319';
 export { Zones } from './components/Zones/Zones';
 export { Map } from './components/Map/Map';
 export { Notification } from './components/Notification/Notification';
-export { RadioT } from './components/RadioT/RadioT';
 export { Radio } from './components/Radio/Radio';
 export { Lable } from './components/Lable/Lable';
 export { Icons } from './components/Icons/Icons';
