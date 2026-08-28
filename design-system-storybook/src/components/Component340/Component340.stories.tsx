@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { Component340 } from './Component340';
 
 const meta: Meta<typeof Component340> = {
-  title: "components/Component 340",
+  title: "charts/Component 340",
   component: Component340,
   parameters: {
     docs: {
