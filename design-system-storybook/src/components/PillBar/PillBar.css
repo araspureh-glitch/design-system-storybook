@@ -1,0 +1,73 @@
+.pill-bar-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  width: 60px;
+  position: relative;
+  font-family: 'Inter', sans-serif;
+  user-select: none;
+}
+
+/* Badge (60x34px) */
+.pill-bar-badge {
+  width: 60px;
+  height: 34px;
+  border-radius: 17px;
+  background: linear-gradient(180deg, #67b7be 0%, #30848d 100%);
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(48, 132, 141, 0.2);
+  box-sizing: border-box;
+  
+  /* Animation states */
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(5px);
+  transition: opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.25s cubic-bezier(0.4, 0, 0.2, 1), transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Show badge on hover or if is-active */
+.pill-bar-container:hover .pill-bar-badge,
+.pill-bar-badge.is-active {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+/* Merged Column */
+.pill-bar-col {
+  width: 60px;
+  background-color: rgb(222, 239, 241); /* Light blue reference background */
+  border-radius: 30px;
+  position: relative;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+/* Active Gradient Fill Overlay inside the same column */
+.pill-bar-active-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 30px;
+  background: linear-gradient(180deg, #67b7be 0%, #30848d 100%);
+  box-sizing: border-box;
+  
+  /* Animation states */
+  opacity: 0;
+  transition: opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Show fill overlay on hover or if is-active */
+.pill-bar-container:hover .pill-bar-active-fill,
+.pill-bar-col.is-active .pill-bar-active-fill {
+  opacity: 1;
+}

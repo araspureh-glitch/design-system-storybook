@@ -16,6 +16,7 @@ export { Radio } from './components/Radio/Radio';
 export { Lable } from './components/Lable/Lable';
 export { Icons } from './components/Icons/Icons';
 export { ChartBar } from './components/ChartBar/ChartBar';
+export { PillBar } from './components/PillBar/PillBar';
 export { Filters } from './components/Filters/Filters';
 export { View } from './components/View/View';
 export { Date } from './components/Date/Date';
