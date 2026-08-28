@@ -12,31 +12,52 @@ const meta: Meta<typeof Card1> = {
     },
   },
   argTypes: {
-  "Boolean_18_13": {
-    "control": "boolean",
-    "description": "Figma property: Boolean#18:13"
-  },
-  "Property_1": {
-    "control": {
-      "type": "select"
+    "Boolean_18_13": {
+      "control": "boolean",
+      "description": "Figma property: Boolean#18:13"
     },
-    "options": [
-      "active",
-      "hover",
-      "selected",
-      "default"
-    ],
-    "description": "Figma property: Property 1"
-  }
-},
+    "Property_1": {
+      "control": {
+        "type": "select"
+      },
+      "options": [
+        "active",
+        "hover",
+        "selected",
+        "default"
+      ],
+      "description": "Figma property: Property 1"
+    }
+  },
 };
 
 export default meta;
 type Story = StoryObj<typeof Card1>;
 
-export const Primary: Story = {
+export const Active: Story = {
   args: {
-  "Boolean_18_13": true,
-  "Property_1": "active"
-},
+    "Boolean_18_13": true,
+    "Property_1": "active"
+  },
+};
+
+export const Hover: Story = {
+  args: {
+    "Boolean_18_13": true,
+    "Property_1": "hover"
+  },
+};
+
+export const Selected: Story = {
+  args: {
+    "Boolean_18_13": true,
+    "Property_1": "selected"
+  },
+};
+
+export const Default: Story = {
+  args: {
+    "Boolean_18_13": true,
+    "Property_1": "default"
+  },
 };

@@ -102,23 +102,8 @@ export const Card1: React.FC<Card1Props> = ({
 
       <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
         <div className="card1-variant-wrapper">
-          <div className="card1-variant-label">Variant: Property 1=active</div>
-          <CardContent variant="active" showIcon={Boolean_18_13} />
-        </div>
-        
-        <div className="card1-variant-wrapper">
-          <div className="card1-variant-label">Variant: Property 1=hover</div>
-          <CardContent variant="hover" showIcon={Boolean_18_13} />
-        </div>
-        
-        <div className="card1-variant-wrapper">
-          <div className="card1-variant-label">Variant: Property 1=selected</div>
-          <CardContent variant="selected" showIcon={Boolean_18_13} />
-        </div>
-        
-        <div className="card1-variant-wrapper">
-          <div className="card1-variant-label">Variant: Property 1=default</div>
-          <CardContent variant="default" showIcon={Boolean_18_13} />
+          <div className="card1-variant-label">Variant: Property 1={Property_1}</div>
+          <CardContent variant={Property_1} showIcon={Boolean_18_13} />
         </div>
       </div>
 
