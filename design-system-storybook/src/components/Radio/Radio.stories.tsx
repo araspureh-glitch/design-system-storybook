@@ -14,7 +14,7 @@ const meta: Meta<typeof Radio> = {
   argTypes: {
     "Left_Icon_80_2": {
       "control": "boolean",
-      "description": "Figma property: Left Icon#80:2 (Show Checkmark)"
+      "description": "Figma property: Left Icon#80:2 (Show Checkbox Box)"
     },
     "State": {
       "control": {
@@ -34,7 +34,11 @@ const meta: Meta<typeof Radio> = {
     },
     "showText": {
       "control": "boolean",
-      "description": "Show Label Text"
+      "description": "Show Label Text (custom prop)"
+    },
+    "Boolean_23_2297": {
+      "control": "boolean",
+      "description": "Figma property: Boolean_23_2297 (Show Label Text)"
     }
   },
 };
@@ -47,7 +51,8 @@ export const Default: Story = {
     "Left_Icon_80_2": true,
     "State": "Default",
     "label": "This Week",
-    "showText": true
+    "showText": true,
+    "Boolean_23_2297": true
   },
 };
 
@@ -56,7 +61,8 @@ export const Hover: Story = {
     "Left_Icon_80_2": true,
     "State": "Hover",
     "label": "This Week",
-    "showText": true
+    "showText": true,
+    "Boolean_23_2297": true
   },
 };
 
@@ -65,7 +71,8 @@ export const Selected: Story = {
     "Left_Icon_80_2": true,
     "State": "Selected",
     "label": "This Week",
-    "showText": true
+    "showText": true,
+    "Boolean_23_2297": true
   },
 };
 
@@ -74,6 +81,7 @@ export const Disabled: Story = {
     "Left_Icon_80_2": true,
     "State": "Disabled",
     "label": "This Week",
-    "showText": true
+    "showText": true,
+    "Boolean_23_2297": true
   },
 };

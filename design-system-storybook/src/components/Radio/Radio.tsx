@@ -8,6 +8,7 @@ export interface RadioProps {
   style?: React.CSSProperties;
   label?: string;
   showText?: boolean;
+  Boolean_23_2297?: boolean;
 }
 
 const CheckIcon: React.FC = () => (
@@ -39,9 +40,11 @@ interface RadioContentProps {
 const RadioContent: React.FC<RadioContentProps> = ({ state, label, showIcon = true, showText = true }) => {
   return (
     <div className={`radio-row ${state === 'Disabled' ? 'disabled' : ''}`}>
-      <div className={`radio-box ${state}`}>
-        {state === 'Selected' && showIcon && <CheckIcon />}
-      </div>
+      {showIcon && (
+        <div className={`radio-box ${state}`}>
+          {state === 'Selected' && <CheckIcon />}
+        </div>
+      )}
       {showText && <span className={`radio-label ${state}`}>{label}</span>}
     </div>
   );
@@ -60,6 +63,7 @@ export const Radio: React.FC<RadioProps> = ({
   style = {},
   label = "This Week",
   showText = true,
+  Boolean_23_2297 = true,
   ...props
 }) => {
   return (
@@ -82,7 +86,12 @@ export const Radio: React.FC<RadioProps> = ({
       <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
         <div className="radio-variant-wrapper">
           <div className="radio-variant-label">Variant: State={State}</div>
-          <RadioContent state={State} label={label} showIcon={Left_Icon_80_2} showText={showText} />
+          <RadioContent 
+            state={State} 
+            label={label} 
+            showIcon={Left_Icon_80_2} 
+            showText={showText && Boolean_23_2297} 
+          />
         </div>
       </div>
 
@@ -90,6 +99,10 @@ export const Radio: React.FC<RadioProps> = ({
         <div style={{ background: 'rgba(0,0,0,0.3)', padding: '4px 8px', borderRadius: '4px' }}>
           <span style={{ color: 'var(--uedp-slate-400, #94a3b8)' }}>Left_Icon_80_2: </span>
           <span style={{ color: '#38bdf8', fontWeight: 600 }}>{String(Left_Icon_80_2)}</span>
+        </div>
+        <div style={{ background: 'rgba(0,0,0,0.3)', padding: '4px 8px', borderRadius: '4px' }}>
+          <span style={{ color: 'var(--uedp-slate-400, #94a3b8)' }}>Boolean_23_2297: </span>
+          <span style={{ color: '#38bdf8', fontWeight: 600 }}>{String(Boolean_23_2297)}</span>
         </div>
         <div style={{ background: 'rgba(0,0,0,0.3)', padding: '4px 8px', borderRadius: '4px' }}>
           <span style={{ color: 'var(--uedp-slate-400, #94a3b8)' }}>State: </span>
