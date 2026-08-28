@@ -57,6 +57,7 @@
 }
 
 /* Hover State Avatar gets gray border */
+.lable-row:hover .lable-avatar,
 .lable-avatar.hover {
   border: 2px solid rgb(82, 82, 91);
 }
