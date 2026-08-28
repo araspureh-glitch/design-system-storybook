@@ -7,29 +7,35 @@ const meta: Meta<typeof Component316> = {
   parameters: {
     docs: {
       description: {
-        component: "Figma Layer: Component 316 | Page: components | Node ID: 4:541 | Type: COMPONENT_SET",
+        component: "Figma Layer: Component 316 | ID: 4:541",
       },
     },
   },
   argTypes: {
-  "Property_1": {
-    "control": {
-      "type": "select"
-    },
-    "options": [
-      "Frame 601",
-      "Frame 602"
-    ],
-    "description": "Figma property: Property 1"
-  }
-},
+    "Property_1": {
+      "control": {
+        "type": "select"
+      },
+      "options": [
+        "Frame 601",
+        "Frame 602"
+      ],
+      "description": "Figma variant state property"
+    }
+  },
 };
 
 export default meta;
 type Story = StoryObj<typeof Component316>;
 
-export const Primary: Story = {
+export const Active: Story = {
   args: {
-  "Property_1": "Frame 602"
-},
+    "Property_1": "Frame 601"
+  },
+};
+
+export const Inactive: Story = {
+  args: {
+    "Property_1": "Frame 602"
+  },
 };

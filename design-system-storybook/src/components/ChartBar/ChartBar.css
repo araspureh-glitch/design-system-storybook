@@ -1,0 +1,122 @@
+/* Chart Bar Container */
+.chart-bar-container {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  gap: 12px;
+  height: 160px;
+  position: relative;
+  font-family: 'Inter', sans-serif;
+  user-select: none;
+}
+
+/* Columns */
+.chart-bar-static-col {
+  width: 24px;
+  height: 120px;
+  background-color: rgba(255, 255, 255, 0.08);
+  border-radius: 6px;
+}
+
+.chart-bar-active-col {
+  width: 24px;
+  height: 120px;
+  background-color: rgba(255, 255, 255, 0.08);
+  border-radius: 6px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  overflow: visible;
+}
+
+/* Gradient fill inside active bar */
+.chart-bar-active-fill {
+  width: 100%;
+  border-radius: 6px;
+  background: linear-gradient(180deg, #67b7be 0%, #30848d 100%);
+  transition: height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Knob wrapper positioned absolute along the height */
+.chart-bar-knob-wrapper {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, 50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  transition: bottom 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Knob circle */
+.chart-bar-knob {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background-color: #349fa9;
+  border: 2px solid #ffffff;
+  box-shadow: 0 0 10px rgba(52, 159, 169, 0.5);
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.chart-bar-knob:hover {
+  transform: scale(1.2);
+}
+
+/* Tooltip Badge Overlay */
+.chart-bar-tooltip {
+  position: absolute;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 180px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 60, 66, 0.15);
+  border: 1px solid rgba(188, 223, 227, 0.4);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  pointer-events: none;
+}
+
+.chart-bar-tooltip-header {
+  background-color: #cde4e7;
+  padding: 6px 12px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #003c42;
+  text-align: center;
+}
+
+.chart-bar-tooltip-content {
+  padding: 8px 12px;
+  font-size: 11px;
+  font-weight: 500;
+  color: #003c42;
+  line-height: 1.4;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.chart-bar-tooltip-status span {
+  font-weight: 600;
+  color: #349fa9;
+}
+
+/* Downwards arrow for tooltip */
+.chart-bar-tooltip-arrow {
+  position: absolute;
+  bottom: -6px;
+  left: 50%;
+  transform: translateX(-50%) rotate(45deg);
+  width: 10px;
+  height: 10px;
+  background-color: #ffffff;
+  border-right: 1px solid rgba(188, 223, 227, 0.4);
+  border-bottom: 1px solid rgba(188, 223, 227, 0.4);
+}
