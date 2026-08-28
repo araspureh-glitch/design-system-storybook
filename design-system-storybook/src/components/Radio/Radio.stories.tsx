@@ -31,6 +31,10 @@ const meta: Meta<typeof Radio> = {
     "label": {
       "control": "text",
       "description": "Checkbox/Radio label text"
+    },
+    "showText": {
+      "control": "boolean",
+      "description": "Show Label Text"
     }
   },
 };
@@ -42,7 +46,8 @@ export const Default: Story = {
   args: {
     "Left_Icon_80_2": true,
     "State": "Default",
-    "label": "This Week"
+    "label": "This Week",
+    "showText": true
   },
 };
 
@@ -50,7 +55,8 @@ export const Hover: Story = {
   args: {
     "Left_Icon_80_2": true,
     "State": "Hover",
-    "label": "This Week"
+    "label": "This Week",
+    "showText": true
   },
 };
 
@@ -58,7 +64,8 @@ export const Selected: Story = {
   args: {
     "Left_Icon_80_2": true,
     "State": "Selected",
-    "label": "This Week"
+    "label": "This Week",
+    "showText": true
   },
 };
 
@@ -66,6 +73,7 @@ export const Disabled: Story = {
   args: {
     "Left_Icon_80_2": true,
     "State": "Disabled",
-    "label": "This Week"
+    "label": "This Week",
+    "showText": true
   },
 };

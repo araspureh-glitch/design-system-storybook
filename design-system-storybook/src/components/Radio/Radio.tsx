@@ -7,6 +7,7 @@ export interface RadioProps {
   className?: string;
   style?: React.CSSProperties;
   label?: string;
+  showText?: boolean;
 }
 
 const CheckIcon: React.FC = () => (
@@ -32,15 +33,16 @@ interface RadioContentProps {
   state: 'Default' | 'Hover' | 'Selected' | 'Disabled';
   label: string;
   showIcon?: boolean;
+  showText?: boolean;
 }
 
-const RadioContent: React.FC<RadioContentProps> = ({ state, label, showIcon = true }) => {
+const RadioContent: React.FC<RadioContentProps> = ({ state, label, showIcon = true, showText = true }) => {
   return (
     <div className={`radio-row ${state === 'Disabled' ? 'disabled' : ''}`}>
       <div className={`radio-box ${state}`}>
         {state === 'Selected' && showIcon && <CheckIcon />}
       </div>
-      <span className={`radio-label ${state}`}>{label}</span>
+      {showText && <span className={`radio-label ${state}`}>{label}</span>}
     </div>
   );
 };
@@ -57,6 +59,7 @@ export const Radio: React.FC<RadioProps> = ({
   className = '',
   style = {},
   label = "This Week",
+  showText = true,
   ...props
 }) => {
   return (
@@ -79,7 +82,7 @@ export const Radio: React.FC<RadioProps> = ({
       <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
         <div className="radio-variant-wrapper">
           <div className="radio-variant-label">Variant: State={State}</div>
-          <RadioContent state={State} label={label} showIcon={Left_Icon_80_2} />
+          <RadioContent state={State} label={label} showIcon={Left_Icon_80_2} showText={showText} />
         </div>
       </div>
 
