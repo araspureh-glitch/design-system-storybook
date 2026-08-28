@@ -6,7 +6,38 @@ export interface LableProps {
   Property_1?: 'Default' | 'hover';
   className?: string;
   style?: React.CSSProperties;
+  title?: string;
+  subtitle?: string;
+  avatarLetter?: string;
 }
+
+interface LableContentProps {
+  state: 'Default' | 'hover';
+  title: string;
+  subtitle: string;
+  avatarLetter: string;
+  showSubtitle?: boolean;
+}
+
+const LableContent: React.FC<LableContentProps> = ({ 
+  state, 
+  title, 
+  subtitle, 
+  avatarLetter, 
+  showSubtitle = true 
+}) => {
+  return (
+    <div className="lable-row">
+      <div className={`lable-avatar ${state}`}>
+        <span className="lable-avatar-text">{avatarLetter}</span>
+      </div>
+      <div className="lable-details">
+        <h4 className="lable-title">{title}</h4>
+        {showSubtitle && <p className="lable-subtitle">{subtitle}</p>}
+      </div>
+    </div>
+  );
+};
 
 /**
  * **Preserved Figma Layer Name**: `lable`
@@ -19,6 +50,9 @@ export const Lable: React.FC<LableProps> = ({
   Property_1 = "Default",
   className = '',
   style = {},
+  title = "High Spike Detected",
+  subtitle = "Zone 2 – Industrial Area",
+  avatarLetter = "P",
   ...props
 }) => {
   return (
@@ -29,6 +63,7 @@ export const Lable: React.FC<LableProps> = ({
       data-figma-page="components"
       {...props}
     >
+      {/* Header Info */}
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px', borderBottom: '1px solid rgba(255,255,255,0.1)', paddingBottom: '6px' }}>
         <span style={{ fontSize: '12px', fontWeight: 600, color: 'var(--uedp-slate-400, #94a3b8)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
           components / lable
@@ -38,35 +73,42 @@ export const Lable: React.FC<LableProps> = ({
         </span>
       </div>
 
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-        <div style={{ border: '1px solid rgba(255,255,255,0.08)', borderRadius: '8px', padding: '12px', marginBottom: '8px', background: 'rgba(15,23,42,0.4)' }}>
-            <div style={{ fontSize: '11px', fontWeight: 600, color: '#38bdf8', marginBottom: '8px' }}>Variant: Property 1=Default</div>
-            <div style={{ display: 'flex', flexDirection: 'row', gap: '12px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<div style={{ width: '16px', height: '16px', borderRadius: '50%', background: 'rgb(1, 135, 147)', display: 'inline-block', flexShrink: 0 }} />
-<span style={{ fontSize: '20px', fontWeight: 600, color: 'rgb(255, 255, 255)', display: 'inline-block' }}>P</span>
-</div>
-<div style={{ display: 'flex', flexDirection: 'column', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<span style={{ fontSize: '16px', fontWeight: 700, color: 'rgb(39, 39, 42)', display: 'inline-block' }}>High Spike Detected</span>
-<span style={{ fontSize: '16.85134506225586px', fontWeight: 400, color: 'rgb(19, 78, 74)', display: 'inline-block' }}>Zone 2 – Industrial Area</span>
-</div>
-</div>
-          </div>
-<div style={{ border: '1px solid rgba(255,255,255,0.08)', borderRadius: '8px', padding: '12px', marginBottom: '8px', background: 'rgba(15,23,42,0.4)' }}>
-            <div style={{ fontSize: '11px', fontWeight: 600, color: '#38bdf8', marginBottom: '8px' }}>Variant: Property 1=hover</div>
-            <div style={{ display: 'flex', flexDirection: 'row', gap: '12px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<div style={{ width: '16px', height: '16px', borderRadius: '50%', background: 'rgb(1, 135, 147)', display: 'inline-block', flexShrink: 0 }} />
-<span style={{ fontSize: '20px', fontWeight: 600, color: 'rgb(255, 255, 255)', display: 'inline-block' }}>P</span>
-</div>
-<div style={{ display: 'flex', flexDirection: 'column', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<span style={{ fontSize: '16px', fontWeight: 700, color: 'rgb(39, 39, 42)', display: 'inline-block' }}>High Spike Detected</span>
-<span style={{ fontSize: '16.85134506225586px', fontWeight: 400, color: 'rgb(19, 78, 74)', display: 'inline-block' }}>Zone 2 – Industrial Area</span>
-</div>
-</div>
-          </div>
+      {/* Section 1: Single Selected State Preview */}
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginBottom: '24px' }}>
+        <div className="lable-variant-wrapper" style={{ margin: 0 }}>
+          <div className="lable-variant-label">Active State Preview (Property_1 = {Property_1})</div>
+          <LableContent 
+            state={Property_1} 
+            title={title} 
+            subtitle={subtitle} 
+            avatarLetter={avatarLetter} 
+            showSubtitle={Boolean_35_8}
+          />
+        </div>
       </div>
 
+      {/* Section 2: All States Combined View */}
+      <div style={{ borderTop: '1px dashed rgba(255,255,255,0.15)', paddingTop: '20px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
+        <div style={{ fontSize: '11px', fontWeight: 600, color: 'var(--uedp-slate-400, #94a3b8)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+          All States Combined Showcase
+        </div>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+          {(['Default', 'hover'] as const).map((state) => (
+            <div key={state} className="lable-variant-wrapper" style={{ margin: 0 }}>
+              <div className="lable-variant-label">State: {state}</div>
+              <LableContent 
+                state={state} 
+                title={title} 
+                subtitle={subtitle} 
+                avatarLetter={avatarLetter} 
+                showSubtitle={Boolean_35_8}
+              />
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Debug Properties Footer */}
       <div style={{ marginTop: '12px', display: 'flex', flexWrap: 'wrap', gap: '8px', fontSize: '11px', borderTop: '1px dashed rgba(255,255,255,0.1)', paddingTop: '8px' }}>
         <div style={{ background: 'rgba(0,0,0,0.3)', padding: '4px 8px', borderRadius: '4px' }}>
           <span style={{ color: 'var(--uedp-slate-400, #94a3b8)' }}>Boolean_35_8: </span>

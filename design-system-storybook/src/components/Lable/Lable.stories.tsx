@@ -12,29 +12,54 @@ const meta: Meta<typeof Lable> = {
     },
   },
   argTypes: {
-  "Boolean_35_8": {
-    "control": "boolean",
-    "description": "Figma property: Boolean#35:8"
-  },
-  "Property_1": {
-    "control": {
-      "type": "select"
+    "Boolean_35_8": {
+      "control": "boolean",
+      "description": "Figma property: Boolean#35:8 (Show Subtitle)"
     },
-    "options": [
-      "Default",
-      "hover"
-    ],
-    "description": "Figma property: Property 1"
-  }
-},
+    "Property_1": {
+      "control": {
+        "type": "select"
+      },
+      "options": [
+        "Default",
+        "hover"
+      ],
+      "description": "Figma variant state property for the Active State Preview"
+    },
+    "title": {
+      "control": "text",
+      "description": "Alert Row main title"
+    },
+    "subtitle": {
+      "control": "text",
+      "description": "Alert Row sub heading details"
+    },
+    "avatarLetter": {
+      "control": "text",
+      "description": "Single letter displayed inside circular avatar"
+    }
+  },
 };
 
 export default meta;
 type Story = StoryObj<typeof Lable>;
 
-export const Primary: Story = {
+export const Default: Story = {
   args: {
-  "Boolean_35_8": true,
-  "Property_1": "Default"
-},
+    "Boolean_35_8": true,
+    "Property_1": "Default",
+    "title": "High Spike Detected",
+    "subtitle": "Zone 2 – Industrial Area",
+    "avatarLetter": "P"
+  },
+};
+
+export const Hover: Story = {
+  args: {
+    "Boolean_35_8": true,
+    "Property_1": "hover",
+    "title": "High Spike Detected",
+    "subtitle": "Zone 2 – Industrial Area",
+    "avatarLetter": "P"
+  },
 };

@@ -6,3 +6,80 @@
   color: var(--uedp-base-white, #ffffff);
   font-family: Inter, sans-serif;
 }
+
+.lable-variant-wrapper {
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 8px;
+  background: rgba(15, 23, 42, 0.4);
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.lable-variant-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: #38bdf8;
+  margin-bottom: 4px;
+}
+
+/* Label Row Layout */
+.lable-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+  user-select: none;
+}
+
+/* Avatar Circle */
+.lable-avatar {
+  width: 47px;
+  height: 47px;
+  border-radius: 50%;
+  background-color: rgb(1, 135, 147);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  flex-shrink: 0;
+}
+
+/* Avatar Text (Letter P) */
+.lable-avatar-text {
+  font-size: 20px;
+  font-weight: 600;
+  color: #ffffff;
+  font-family: 'Inter', sans-serif;
+}
+
+/* Hover State Avatar gets gray border */
+.lable-avatar.hover {
+  border: 2px solid rgb(82, 82, 91);
+}
+
+/* Details Panel */
+.lable-details {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.lable-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: rgb(39, 39, 42);
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+}
+
+.lable-subtitle {
+  font-size: 14.5px;
+  font-weight: 400;
+  color: rgb(19, 78, 74);
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+}
