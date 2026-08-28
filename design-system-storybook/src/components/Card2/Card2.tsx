@@ -1,11 +1,79 @@
 import React from 'react';
 import './Card2.css';
+import { BadgeContent } from '../AlertsState/AlertsState';
 
 export interface Card2Props {
   Property_1?: 'active' | 'hover' | 'selected';
   className?: string;
   style?: React.CSSProperties;
+  showIcon?: boolean;
+  title?: string;
+  subHeading?: string;
+  badgeVariant?: 'safe' | 'alert' | 'warning' | 'b warning' | 'b alert' | 'b safe';
+  badgeText?: string;
 }
+
+const AlertIcon: React.FC = () => (
+  <svg 
+    width="20" 
+    height="20" 
+    viewBox="0 0 20 20" 
+    fill="none" 
+    xmlns="http://www.w3.org/2000/svg"
+    style={{ display: 'block' }}
+  >
+    <path 
+      d="M10 3.3L2.5 16.5H17.5L10 3.3Z" 
+      stroke="#c92a2a" 
+      strokeWidth="1.73" 
+      strokeLinecap="round" 
+      strokeLinejoin="round"
+    />
+    <path 
+      d="M10 7.5V11.5" 
+      stroke="#c92a2a" 
+      strokeWidth="1.73" 
+      strokeLinecap="round"
+    />
+    <circle cx="10" cy="14" r="0.87" fill="#c92a2a" />
+  </svg>
+);
+
+interface CardContentProps {
+  variant: 'active' | 'hover' | 'selected';
+  showIcon?: boolean;
+  title?: string;
+  subHeading?: string;
+  badgeVariant?: 'safe' | 'alert' | 'warning' | 'b warning' | 'b alert' | 'b safe';
+  badgeText?: string;
+}
+
+const CardContent: React.FC<CardContentProps> = ({ 
+  variant, 
+  showIcon = true,
+  title = "High Spike Detected",
+  subHeading = "Zone 2 – Industrial Area",
+  badgeVariant = "alert",
+  badgeText
+}) => {
+  return (
+    <div className={`card2-card ${variant}`}>
+      {/* Top Row */}
+      <div className="card2-header">
+        <div className="card2-alert-icon">
+          {showIcon && <AlertIcon />}
+        </div>
+        <BadgeContent variant={badgeVariant} labelText={badgeText} />
+      </div>
+      
+      {/* Content Group */}
+      <div className="card2-content-group">
+        <h3 className="card2-title">{title}</h3>
+        <p className="card2-subheading">{subHeading}</p>
+      </div>
+    </div>
+  );
+};
 
 /**
  * **Preserved Figma Layer Name**: `card 2 `
@@ -17,6 +85,11 @@ export const Card2: React.FC<Card2Props> = ({
   Property_1 = "active",
   className = '',
   style = {},
+  showIcon = true,
+  title,
+  subHeading,
+  badgeVariant,
+  badgeText,
   ...props
 }) => {
   return (
@@ -37,72 +110,17 @@ export const Card2: React.FC<Card2Props> = ({
       </div>
 
       <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-        <div style={{ border: '1px solid rgba(255,255,255,0.08)', borderRadius: '8px', padding: '12px', marginBottom: '8px', background: 'rgba(15,23,42,0.4)' }}>
-            <div style={{ fontSize: '11px', fontWeight: 600, color: '#38bdf8', marginBottom: '8px' }}>Variant: Property 1=active</div>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '21px', padding: '12px 20px 12px 20px', borderRadius: '21px', background: 'rgb(255, 255, 255)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '118px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgb(255, 255, 255)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<div style={{ width: '16px', height: '16px', borderRadius: '50%', background: 'rgba(0, 0, 0, 0)', display: 'inline-block', flexShrink: 0 }} />
-<div style={{ width: '16px', height: '16px', borderRadius: '50%', background: 'rgba(0, 0, 0, 0)', display: 'inline-block', flexShrink: 0 }} />
-</div>
-</div>
-<div style={{ display: 'flex', flexDirection: 'column', gap: '10px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '53.84061813354492px', background: 'rgb(254, 202, 202)', alignItems: 'center' }}>
-<span style={{ fontSize: '11.458052635192871px', fontWeight: 600, color: 'rgb(220, 38, 38)', display: 'inline-block' }}>+2.11%</span>
-</div>
-</div>
-</div>
-<div style={{ display: 'flex', flexDirection: 'column', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<span style={{ fontSize: '16px', fontWeight: 700, color: 'rgb(39, 39, 42)', display: 'inline-block' }}>High Spike Detected</span>
-<span style={{ fontSize: '16.85134506225586px', fontWeight: 400, color: 'rgb(19, 78, 74)', display: 'inline-block' }}>Zone 2 – Industrial Area</span>
-</div>
-</div>
-          </div>
-<div style={{ border: '1px solid rgba(255,255,255,0.08)', borderRadius: '8px', padding: '12px', marginBottom: '8px', background: 'rgba(15,23,42,0.4)' }}>
-            <div style={{ fontSize: '11px', fontWeight: 600, color: '#38bdf8', marginBottom: '8px' }}>Variant: Property 1=hover</div>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '21px', padding: '12px 20px 12px 20px', borderRadius: '21px', background: 'rgb(226, 232, 240)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '118px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgb(255, 255, 255)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<div style={{ width: '16px', height: '16px', borderRadius: '50%', background: 'rgba(0, 0, 0, 0)', display: 'inline-block', flexShrink: 0 }} />
-<div style={{ width: '16px', height: '16px', borderRadius: '50%', background: 'rgba(0, 0, 0, 0)', display: 'inline-block', flexShrink: 0 }} />
-</div>
-</div>
-<div style={{ display: 'flex', flexDirection: 'column', gap: '10px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '53.84061813354492px', background: 'rgb(254, 202, 202)', alignItems: 'center' }}>
-<span style={{ fontSize: '11.458052635192871px', fontWeight: 600, color: 'rgb(220, 38, 38)', display: 'inline-block' }}>+2.11%</span>
-</div>
-</div>
-</div>
-<div style={{ display: 'flex', flexDirection: 'column', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<span style={{ fontSize: '16px', fontWeight: 700, color: 'rgb(39, 39, 42)', display: 'inline-block' }}>High Spike Detected</span>
-<span style={{ fontSize: '16.85134506225586px', fontWeight: 400, color: 'rgb(19, 78, 74)', display: 'inline-block' }}>Zone 2 – Industrial Area</span>
-</div>
-</div>
-          </div>
-<div style={{ border: '1px solid rgba(255,255,255,0.08)', borderRadius: '8px', padding: '12px', marginBottom: '8px', background: 'rgba(15,23,42,0.4)' }}>
-            <div style={{ fontSize: '11px', fontWeight: 600, color: '#38bdf8', marginBottom: '8px' }}>Variant: Property 1=selected</div>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '21px', padding: '12px 20px 12px 20px', borderRadius: '21px', background: 'rgb(255, 255, 255)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '118px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgb(255, 255, 255)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<div style={{ width: '16px', height: '16px', borderRadius: '50%', background: 'rgba(0, 0, 0, 0)', display: 'inline-block', flexShrink: 0 }} />
-<div style={{ width: '16px', height: '16px', borderRadius: '50%', background: 'rgba(0, 0, 0, 0)', display: 'inline-block', flexShrink: 0 }} />
-</div>
-</div>
-<div style={{ display: 'flex', flexDirection: 'column', gap: '10px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '53.84061813354492px', background: 'rgb(254, 202, 202)', alignItems: 'center' }}>
-<span style={{ fontSize: '11.458052635192871px', fontWeight: 600, color: 'rgb(220, 38, 38)', display: 'inline-block' }}>+2.11%</span>
-</div>
-</div>
-</div>
-<div style={{ display: 'flex', flexDirection: 'column', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<span style={{ fontSize: '16px', fontWeight: 700, color: 'rgb(39, 39, 42)', display: 'inline-block' }}>High Spike Detected</span>
-<span style={{ fontSize: '16.85134506225586px', fontWeight: 400, color: 'rgb(19, 78, 74)', display: 'inline-block' }}>Zone 2 – Industrial Area</span>
-</div>
-</div>
-          </div>
+        <div className="card2-variant-wrapper">
+          <div className="card2-variant-label">Variant: Property 1={Property_1}</div>
+          <CardContent 
+            variant={Property_1} 
+            showIcon={showIcon}
+            title={title}
+            subHeading={subHeading}
+            badgeVariant={badgeVariant}
+            badgeText={badgeText}
+          />
+        </div>
       </div>
 
       <div style={{ marginTop: '12px', display: 'flex', flexWrap: 'wrap', gap: '8px', fontSize: '11px', borderTop: '1px dashed rgba(255,255,255,0.1)', paddingTop: '8px' }}>

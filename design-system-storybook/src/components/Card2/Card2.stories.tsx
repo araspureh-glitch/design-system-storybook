@@ -12,25 +12,70 @@ const meta: Meta<typeof Card2> = {
     },
   },
   argTypes: {
-  "Property_1": {
-    "control": {
-      "type": "select"
+    "Property_1": {
+      "control": {
+        "type": "select"
+      },
+      "options": [
+        "active",
+        "hover",
+        "selected"
+      ],
+      "description": "Figma property: Property 1"
     },
-    "options": [
-      "active",
-      "hover",
-      "selected"
-    ],
-    "description": "Figma property: Property 1"
-  }
-},
+    "showIcon": {
+      "control": "boolean",
+      "description": "Show Alert Warning Icon"
+    },
+    "title": {
+      "control": "text",
+      "description": "Heading text"
+    },
+    "subHeading": {
+      "control": "text",
+      "description": "Sub-heading text"
+    },
+    "badgeVariant": {
+      "control": "select",
+      "options": ["safe", "alert", "warning", "b warning", "b alert", "b safe"],
+      "description": "Badge design variant"
+    },
+    "badgeText": {
+      "control": "text",
+      "description": "Override text inside badge"
+    }
+  },
 };
 
 export default meta;
 type Story = StoryObj<typeof Card2>;
 
-export const Primary: Story = {
+export const Active: Story = {
   args: {
-  "Property_1": "active"
-},
+    "Property_1": "active",
+    "showIcon": true,
+    "title": "High Spike Detected",
+    "subHeading": "Zone 2 – Industrial Area",
+    "badgeVariant": "alert"
+  },
+};
+
+export const Hover: Story = {
+  args: {
+    "Property_1": "hover",
+    "showIcon": true,
+    "title": "High Spike Detected",
+    "subHeading": "Zone 2 – Industrial Area",
+    "badgeVariant": "alert"
+  },
+};
+
+export const Selected: Story = {
+  args: {
+    "Property_1": "selected",
+    "showIcon": true,
+    "title": "High Spike Detected",
+    "subHeading": "Zone 2 – Industrial Area",
+    "badgeVariant": "alert"
+  },
 };
