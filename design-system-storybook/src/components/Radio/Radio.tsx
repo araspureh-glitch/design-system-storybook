@@ -6,7 +6,44 @@ export interface RadioProps {
   State?: 'Default' | 'Hover' | 'Selected' | 'Disabled';
   className?: string;
   style?: React.CSSProperties;
+  label?: string;
 }
+
+const CheckIcon: React.FC = () => (
+  <svg 
+    width="12" 
+    height="12" 
+    viewBox="0 0 12 12" 
+    fill="none" 
+    xmlns="http://www.w3.org/2000/svg"
+    style={{ display: 'block' }}
+  >
+    <path 
+      d="M2.5 6L5 8.5L9.5 3.5" 
+      stroke="#ffffff" 
+      strokeWidth="1.75" 
+      strokeLinecap="round" 
+      strokeLinejoin="round"
+    />
+  </svg>
+);
+
+interface RadioContentProps {
+  state: 'Default' | 'Hover' | 'Selected' | 'Disabled';
+  label: string;
+  showIcon?: boolean;
+}
+
+const RadioContent: React.FC<RadioContentProps> = ({ state, label, showIcon = true }) => {
+  return (
+    <div className={`radio-row ${state === 'Disabled' ? 'disabled' : ''}`}>
+      <div className={`radio-box ${state}`}>
+        {state === 'Selected' && showIcon && <CheckIcon />}
+      </div>
+      <span className={`radio-label ${state}`}>{label}</span>
+    </div>
+  );
+};
 
 /**
  * **Preserved Figma Layer Name**: `radio`
@@ -19,6 +56,7 @@ export const Radio: React.FC<RadioProps> = ({
   State = "Default",
   className = '',
   style = {},
+  label = "This Week",
   ...props
 }) => {
   return (
@@ -39,44 +77,10 @@ export const Radio: React.FC<RadioProps> = ({
       </div>
 
       <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-        <div style={{ border: '1px solid rgba(255,255,255,0.08)', borderRadius: '8px', padding: '12px', marginBottom: '8px', background: 'rgba(15,23,42,0.4)' }}>
-            <div style={{ fontSize: '11px', fontWeight: 600, color: '#38bdf8', marginBottom: '8px' }}>Variant: State=Default</div>
-            <div style={{ display: 'flex', flexDirection: 'row', gap: '16px', padding: '4px 8px', borderRadius: '6px', background: 'rgb(255, 255, 255)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '8px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<span style={{ fontSize: '11px', color: 'var(--uedp-slate-400, #94a3b8)' }}>Component 370</span>
-</div>
-<span style={{ fontSize: '16px', fontWeight: 400, color: 'rgb(19, 78, 74)', display: 'inline-block' }}>This Week</span>
-</div>
-          </div>
-<div style={{ border: '1px solid rgba(255,255,255,0.08)', borderRadius: '8px', padding: '12px', marginBottom: '8px', background: 'rgba(15,23,42,0.4)' }}>
-            <div style={{ fontSize: '11px', fontWeight: 600, color: '#38bdf8', marginBottom: '8px' }}>Variant: State=Hover</div>
-            <div style={{ display: 'flex', flexDirection: 'row', gap: '16px', padding: '4px 8px', borderRadius: '6px', background: 'rgb(255, 255, 255)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '8px', background: 'rgb(237, 239, 254)', alignItems: 'center' }}>
-<span style={{ fontSize: '11px', color: 'var(--uedp-slate-400, #94a3b8)' }}>Component 370</span>
-</div>
-<span style={{ fontSize: '16px', fontWeight: 400, color: 'rgb(19, 78, 74)', display: 'inline-block' }}>This Week</span>
-</div>
-          </div>
-<div style={{ border: '1px solid rgba(255,255,255,0.08)', borderRadius: '8px', padding: '12px', marginBottom: '8px', background: 'rgba(15,23,42,0.4)' }}>
-            <div style={{ fontSize: '11px', fontWeight: 600, color: '#38bdf8', marginBottom: '8px' }}>Variant: State=Selected</div>
-            <div style={{ display: 'flex', flexDirection: 'row', gap: '16px', padding: '4px 8px', borderRadius: '6px', background: 'rgb(255, 255, 255)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '8px', background: 'rgb(13, 148, 136)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '6px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<div style={{ width: '16px', height: '16px', borderRadius: '50%', background: 'var(--uedp-slate-400, #94a3b8)', display: 'inline-block', flexShrink: 0 }} />
-</div>
-</div>
-<span style={{ fontSize: '16px', fontWeight: 400, color: 'rgb(19, 78, 74)', display: 'inline-block' }}>This Week</span>
-</div>
-          </div>
-<div style={{ border: '1px solid rgba(255,255,255,0.08)', borderRadius: '8px', padding: '12px', marginBottom: '8px', background: 'rgba(15,23,42,0.4)' }}>
-            <div style={{ fontSize: '11px', fontWeight: 600, color: '#38bdf8', marginBottom: '8px' }}>Variant: State=Disabled</div>
-            <div style={{ display: 'flex', flexDirection: 'row', gap: '16px', padding: '4px 8px', borderRadius: '6px', background: 'rgb(255, 255, 255)', alignItems: 'center' }}>
-<div style={{ display: 'flex', flexDirection: 'row', gap: '8px', padding: '4px 8px', borderRadius: '8px', background: 'rgba(255,255,255,0.03)', alignItems: 'center' }}>
-<span style={{ fontSize: '11px', color: 'var(--uedp-slate-400, #94a3b8)' }}>Component 370</span>
-</div>
-<span style={{ fontSize: '16px', fontWeight: 400, color: 'rgb(113, 113, 122)', display: 'inline-block' }}>This Week</span>
-</div>
-          </div>
+        <div className="radio-variant-wrapper">
+          <div className="radio-variant-label">Variant: State={State}</div>
+          <RadioContent state={State} label={label} showIcon={Left_Icon_80_2} />
+        </div>
       </div>
 
       <div style={{ marginTop: '12px', display: 'flex', flexWrap: 'wrap', gap: '8px', fontSize: '11px', borderTop: '1px dashed rgba(255,255,255,0.1)', paddingTop: '8px' }}>

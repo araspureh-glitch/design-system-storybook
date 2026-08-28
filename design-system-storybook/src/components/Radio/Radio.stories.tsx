@@ -12,31 +12,60 @@ const meta: Meta<typeof Radio> = {
     },
   },
   argTypes: {
-  "Left_Icon_80_2": {
-    "control": "boolean",
-    "description": "Figma property: Left Icon#80:2"
-  },
-  "State": {
-    "control": {
-      "type": "select"
+    "Left_Icon_80_2": {
+      "control": "boolean",
+      "description": "Figma property: Left Icon#80:2 (Show Checkmark)"
     },
-    "options": [
-      "Default",
-      "Hover",
-      "Selected",
-      "Disabled"
-    ],
-    "description": "Figma property: State"
-  }
-},
+    "State": {
+      "control": {
+        "type": "select"
+      },
+      "options": [
+        "Default",
+        "Hover",
+        "Selected",
+        "Disabled"
+      ],
+      "description": "Figma property: State"
+    },
+    "label": {
+      "control": "text",
+      "description": "Checkbox/Radio label text"
+    }
+  },
 };
 
 export default meta;
 type Story = StoryObj<typeof Radio>;
 
-export const Primary: Story = {
+export const Default: Story = {
   args: {
-  "Left_Icon_80_2": true,
-  "State": "Default"
-},
+    "Left_Icon_80_2": true,
+    "State": "Default",
+    "label": "This Week"
+  },
+};
+
+export const Hover: Story = {
+  args: {
+    "Left_Icon_80_2": true,
+    "State": "Hover",
+    "label": "This Week"
+  },
+};
+
+export const Selected: Story = {
+  args: {
+    "Left_Icon_80_2": true,
+    "State": "Selected",
+    "label": "This Week"
+  },
+};
+
+export const Disabled: Story = {
+  args: {
+    "Left_Icon_80_2": true,
+    "State": "Disabled",
+    "label": "This Week"
+  },
 };
