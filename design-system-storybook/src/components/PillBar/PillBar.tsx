@@ -5,15 +5,20 @@ export interface PillBarProps {
   height: number;
   mwText: string;
   isActive?: boolean;
+  /** Stagger delay for entrance animation, e.g. "0.1s" */
+  animationDelay?: string;
 }
 
 export const PillBar: React.FC<PillBarProps> = ({
   height,
   mwText,
-  isActive = true
+  isActive = true,
+  animationDelay = '0s'
 }) => {
+  const barDelayStyle = animationDelay !== '0s' ? { '--bar-delay': animationDelay } as React.CSSProperties : {};
+
   return (
-    <div className="pill-bar-container" style={{ height: `${height + 46}px` }}>
+    <div className="pill-bar-container" style={{ height: `${height + 46}px`, ...barDelayStyle } as React.CSSProperties}>
       {/* The Badge (60x34px) - displayed above the bar */}
       <div className={`pill-bar-badge ${isActive ? 'is-active' : ''}`}>
         {mwText}

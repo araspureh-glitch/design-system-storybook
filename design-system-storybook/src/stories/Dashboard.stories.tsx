@@ -28,16 +28,88 @@ import { Component343 } from '../components/Component343/Component343';
 // Add keyframe animations dynamically
 const AnimationStyles = () => (
   <style>{`
+    /* ---- Entrance Keyframes ---- */
+    @keyframes dash-fade-in {
+      0% { opacity: 0; transform: translateY(18px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes dash-slide-in-left {
+      0% { opacity: 0; transform: translateX(-32px); }
+      100% { opacity: 1; transform: translateX(0); }
+    }
+    @keyframes dash-scale-in {
+      0% { opacity: 0; transform: scale(0.92); }
+      100% { opacity: 1; transform: scale(1); }
+    }
     @keyframes pulse-glow {
       0%, 100% { box-shadow: 0 0 15px rgba(103, 183, 190, 0.2); }
       50% { box-shadow: 0 0 25px rgba(103, 183, 190, 0.4); }
     }
+
+    /* ---- Sidebar ---- */
+    .dash-sidebar {
+      animation: dash-slide-in-left 0.6s cubic-bezier(0.4, 0, 0.2, 1) both;
+    }
+
+    /* ---- Header ---- */
+    .dash-header {
+      animation: dash-fade-in 0.5s cubic-bezier(0.4, 0, 0.2, 1) 0.15s both;
+    }
+
+    /* ---- KPI Cards ---- */
+    .kpi-card {
+      animation: dash-scale-in 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+    }
+    .kpi-card:nth-child(1) { animation-delay: 0.2s; }
+    .kpi-card:nth-child(2) { animation-delay: 0.3s; }
+    .kpi-card:nth-child(3) { animation-delay: 0.4s; }
     .kpi-card:hover {
       transform: translateY(-4px);
       border-color: rgba(103, 183, 190, 0.25) !important;
       background-color: #121a2b !important;
       box-shadow: 0 10px 20px rgba(0,0,0,0.2) !important;
     }
+
+    /* ---- Chart Section Cards ---- */
+    .dash-chart-card {
+      animation: dash-fade-in 0.6s cubic-bezier(0.4, 0, 0.2, 1) both;
+    }
+    .dash-chart-card:nth-child(1) { animation-delay: 0.45s; }
+    .dash-chart-card:nth-child(2) { animation-delay: 0.55s; }
+
+    /* ---- Staggered bar delays (12 chart bars) ---- */
+    .dash-chart-row > *:nth-child(1)  { --bar-delay: 0.50s; }
+    .dash-chart-row > *:nth-child(2)  { --bar-delay: 0.56s; }
+    .dash-chart-row > *:nth-child(3)  { --bar-delay: 0.62s; }
+    .dash-chart-row > *:nth-child(4)  { --bar-delay: 0.68s; }
+    .dash-chart-row > *:nth-child(5)  { --bar-delay: 0.74s; }
+    .dash-chart-row > *:nth-child(6)  { --bar-delay: 0.80s; }
+    .dash-chart-row > *:nth-child(7)  { --bar-delay: 0.86s; }
+    .dash-chart-row > *:nth-child(8)  { --bar-delay: 0.92s; }
+    .dash-chart-row > *:nth-child(9)  { --bar-delay: 0.98s; }
+    .dash-chart-row > *:nth-child(10) { --bar-delay: 1.04s; }
+    .dash-chart-row > *:nth-child(11) { --bar-delay: 1.10s; }
+    .dash-chart-row > *:nth-child(12) { --bar-delay: 1.16s; }
+
+    /* ---- Staggered pill delays (7 pill bars) ---- */
+    .dash-pill-row > *:nth-child(1) { --bar-delay: 0.55s; }
+    .dash-pill-row > *:nth-child(2) { --bar-delay: 0.63s; }
+    .dash-pill-row > *:nth-child(3) { --bar-delay: 0.71s; }
+    .dash-pill-row > *:nth-child(4) { --bar-delay: 0.79s; }
+    .dash-pill-row > *:nth-child(5) { --bar-delay: 0.87s; }
+    .dash-pill-row > *:nth-child(6) { --bar-delay: 0.95s; }
+    .dash-pill-row > *:nth-child(7) { --bar-delay: 1.03s; }
+
+    /* ---- Sidebar nav links ---- */
+    .sidebar-link-btn {
+      animation: dash-fade-in 0.4s cubic-bezier(0.4, 0, 0.2, 1) both;
+    }
+    .sidebar-link-btn:nth-child(1) { animation-delay: 0.10s; }
+    .sidebar-link-btn:nth-child(2) { animation-delay: 0.16s; }
+    .sidebar-link-btn:nth-child(3) { animation-delay: 0.22s; }
+    .sidebar-link-btn:nth-child(4) { animation-delay: 0.28s; }
+    .sidebar-link-btn:nth-child(5) { animation-delay: 0.34s; }
+    .sidebar-link-btn:nth-child(6) { animation-delay: 0.40s; }
     .sidebar-link-btn:hover {
       background-color: rgba(255, 255, 255, 0.03) !important;
       color: #ffffff !important;
@@ -120,7 +192,7 @@ const DashboardComponent: React.FC = () => {
       <AnimationStyles />
 
       {/* Sidebar Navigation */}
-      <aside style={{
+      <aside className="dash-sidebar" style={{
         width: '265px',
         backgroundColor: '#0a0e1a',
         borderRight: '1px solid rgba(255, 255, 255, 0.04)',
@@ -203,7 +275,7 @@ const DashboardComponent: React.FC = () => {
         height: '100vh'
       }}>
         {/* Top Header Row */}
-        <header style={{
+        <header className="dash-header" style={{
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
@@ -321,7 +393,7 @@ const DashboardComponent: React.FC = () => {
           minHeight: '380px'
         }}>
           {/* 12-Month Performance Chart Card */}
-          <div style={{
+          <div className="dash-chart-card" style={{
             backgroundColor: '#0a0e1a',
             border: '1px solid rgba(255, 255, 255, 0.04)',
             borderRadius: '30px',
@@ -344,7 +416,7 @@ const DashboardComponent: React.FC = () => {
             </div>
 
             {/* Row of 12 month component bars */}
-            <div style={{
+            <div className="dash-chart-row" style={{
               display: 'flex',
               flexDirection: 'row',
               justifyContent: 'space-between',
@@ -369,7 +441,7 @@ const DashboardComponent: React.FC = () => {
           </div>
 
           {/* Active Generation Capacity Card */}
-          <div style={{
+          <div className="dash-chart-card" style={{
             backgroundColor: '#0a0e1a',
             border: '1px solid rgba(255, 255, 255, 0.04)',
             borderRadius: '30px',
@@ -385,7 +457,7 @@ const DashboardComponent: React.FC = () => {
             </div>
 
             {/* Row of 7 pill bar components */}
-            <div style={{
+            <div className="dash-pill-row" style={{
               display: 'flex',
               flexDirection: 'row',
               justifyContent: 'space-around',

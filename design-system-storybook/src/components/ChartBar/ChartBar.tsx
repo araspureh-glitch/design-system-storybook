@@ -8,6 +8,8 @@ export interface ChartBarProps {
   carbonEmissions: string;
   status: string;
   isActive?: boolean;
+  /** Stagger delay for entrance animation, e.g. "0.1s" */
+  animationDelay?: string;
 }
 
 export const ChartBar: React.FC<ChartBarProps> = ({
@@ -16,13 +18,16 @@ export const ChartBar: React.FC<ChartBarProps> = ({
   renewableShare,
   carbonEmissions,
   status,
-  isActive = true
+  isActive = true,
+  animationDelay = '0s'
 }) => {
   // fill height base percentage
   const fillHeight = `${renewableShare}%`;
 
+  const barDelayStyle = animationDelay !== '0s' ? { '--bar-delay': animationDelay } as React.CSSProperties : {};
+
   return (
-    <div className="chart-bar-container">
+    <div className="chart-bar-container" style={barDelayStyle}>
       {/* Single merged bar column */}
       <div className={`chart-bar-col ${isActive ? 'is-active' : ''}`}>
         <div className="chart-bar-active-fill" style={{ height: fillHeight }} />

@@ -9,6 +9,9 @@
   position: relative;
   font-family: 'Inter', sans-serif;
   user-select: none;
+  /* Entrance fade */
+  animation: chartbar-fade-in 0.6s cubic-bezier(0.4, 0, 0.2, 1) both;
+  animation-delay: var(--bar-delay, 0s);
 }
 
 /* Columns */
@@ -23,6 +26,33 @@
   justify-content: flex-end;
   overflow: visible;
   flex-shrink: 0;
+  /* Grow-up entrance animation */
+  animation: chartbar-grow-up 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  animation-delay: var(--bar-delay, 0s);
+  transform-origin: bottom center;
+}
+
+/* ---- Entrance keyframes ---- */
+@keyframes chartbar-grow-up {
+  0% {
+    transform: scaleY(0);
+    opacity: 0.4;
+  }
+  100% {
+    transform: scaleY(1);
+    opacity: 1;
+  }
+}
+
+@keyframes chartbar-fade-in {
+  0% {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* Gradient fill inside active bar */
