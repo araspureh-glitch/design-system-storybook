@@ -38,7 +38,7 @@ export const EfficiencyTrendsLight: React.FC<EfficiencyTrendsLightProps> = ({
         flexDirection: 'column',
         justifyContent: 'flex-end',
         background: '#e5f2f5',
-        borderRadius: `${width / 2}px`,
+        borderRadius: '14px',
         overflow: 'hidden',
         ...style
       }}
@@ -49,7 +49,7 @@ export const EfficiencyTrendsLight: React.FC<EfficiencyTrendsLightProps> = ({
         style={{
           height: `${barHeight}px`,
           backgroundColor: '#7bc1c9',
-          borderRadius: `${width / 2}px`,
+          borderRadius: '14px',
           width: '100%',
           transition: 'height 0.3s ease',
         }}

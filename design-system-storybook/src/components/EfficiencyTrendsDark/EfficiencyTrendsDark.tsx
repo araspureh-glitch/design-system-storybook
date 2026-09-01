@@ -37,7 +37,7 @@ export const EfficiencyTrendsDark: React.FC<EfficiencyTrendsDarkProps> = ({
         flexDirection: 'column',
         justifyContent: 'flex-end',
         background: '#e5f2f5',
-        borderRadius: `${width / 2}px`,
+        borderRadius: '14px',
         overflow: 'hidden',
         ...style
       }}
@@ -48,7 +48,7 @@ export const EfficiencyTrendsDark: React.FC<EfficiencyTrendsDarkProps> = ({
         style={{
           height: `${barHeight}px`,
           backgroundColor: '#0d9488',
-          borderRadius: `${width / 2}px`,
+          borderRadius: '14px',
           width: '100%',
           transition: 'height 0.3s ease',
         }}
