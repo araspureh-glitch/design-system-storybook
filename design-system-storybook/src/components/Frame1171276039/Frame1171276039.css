@@ -6,20 +6,21 @@
   width: 580px;
   background-color: #ffffff;
   border-radius: 28px; /* Rounded corner radius according to image */
-  padding: 30px 24px 24px 24px;
+  padding: 32px 28px 24px 28px;
   box-sizing: border-box;
   box-shadow: 0 4px 24px rgba(112, 144, 176, 0.08);
   font-family: 'Inter', sans-serif;
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 28px;
 }
 
 /* Header */
 .et-card-header {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
 }
 
 .et-card-title {
@@ -31,7 +32,8 @@
 
 .et-card-legend {
   display: flex;
-  gap: 16px;
+  gap: 200px;
+  align-items: center;
 }
 
 .et-card-legend-item {
@@ -41,9 +43,9 @@
 }
 
 .et-card-dot {
-  width: 24px;
+  width: 22px;
   height: 12px;
-  border-radius: 4px;
+  border-radius: 3px;
 }
 
 .et-card-dot--2025 {
@@ -57,7 +59,7 @@
 .et-card-legend-label {
   font-size: 14px;
   color: #000000;
-  font-weight: 500;
+  font-weight: 400;
 }
 
 /* Chart Area */
@@ -87,9 +89,9 @@
 }
 
 .et-card-y-label {
-  width: 28px;
+  width: 24px;
   font-size: 14px;
-  color: #003c42;
+  color: #0b6b68;
   text-align: right;
   margin-right: 12px;
   font-weight: 400;
@@ -98,14 +100,14 @@
 .et-card-grid-line {
   flex: 1;
   height: 1px;
-  border-top: 1px dashed #e2e8f0;
+  border-top: 1px dashed #e5f2f4;
 }
 
 /* Columns */
 .et-card-columns {
   position: absolute;
   top: 0;
-  left: 40px;
+  left: 36px;
   right: 0;
   height: 240px;
   display: flex;
@@ -122,6 +124,6 @@
 
 .et-card-x-label {
   font-size: 14px;
-  color: #003c42;
+  color: #0b6b68;
   font-weight: 400;
 }

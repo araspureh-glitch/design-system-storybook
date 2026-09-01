@@ -34,8 +34,11 @@ export interface EfficiencyTrendsProps {
  */
 export const EfficiencyTrends: React.FC<EfficiencyTrendsProps> = ({
   Property_1 = 'Default',
-  height = 220,
-  width = 52,
+  height = 200,
+  width = 44,
+  val2024,
+  val2025,
+  valBg,
   darkPercent,
   midPercent,
   lightPercent,
@@ -44,26 +47,36 @@ export const EfficiencyTrends: React.FC<EfficiencyTrendsProps> = ({
 }) => {
   const isHover = Property_1 === 'hover';
 
-  // If explicit percentages are not provided, use exact proportions matching the Figma image variants
-  const defaultDark = Property_1 === 'hover' ? 45 : 40;
-  const defaultMid = Property_1 === 'hover' ? 25 : 15;
-  const defaultLight = Property_1 === 'hover' ? 30 : 45;
+  let darkH: number;
+  let midH: number;
+  let bgH: number;
 
-  const actualDark = darkPercent ?? defaultDark;
-  const actualMid = midPercent ?? defaultMid;
-  const actualLight = lightPercent ?? defaultLight;
+  if (val2024 !== undefined || val2025 !== undefined || valBg !== undefined) {
+    const v2024 = val2024 ?? 81;
+    const v2025 = val2025 ?? 90.8;
+    const vBg = valBg ?? 96.5;
 
-  // Clamp percents so they sum to 100
-  const total = actualDark + actualMid + actualLight;
-  const dark  = (actualDark  / total) * 100;
-  const mid   = (actualMid   / total) * 100;
-  const light = (actualLight / total) * 100;
+    const scale = (val: number) => Math.max(0, ((val - 75) / 20) * height);
+    darkH = scale(v2024);
+    midH = scale(v2025);
+    bgH = scale(vBg);
+  } else if (darkPercent !== undefined || midPercent !== undefined || lightPercent !== undefined) {
+    const dp = darkPercent ?? 40;
+    const mp = midPercent ?? 20;
+    const lp = lightPercent ?? 35;
+    const tot = dp + mp + lp;
+    darkH = (dp / tot) * height;
+    midH = ((dp + mp) / tot) * height;
+    bgH = height;
+  } else {
+    darkH = ((81 - 75) / 20) * height;
+    midH = ((90.8 - 75) / 20) * height;
+    bgH = ((96.5 - 75) / 20) * height;
+  }
 
-
+  const rx = width / 2;
   const uniqueId = React.useId().replace(/:/g, '-');
   const clipId = `et-clip-${uniqueId}`;
-  const glowId = `et-glow-${uniqueId}`;
-  const rx = width / 2; // fully rounded pill radius
 
   return (
     <div
@@ -72,7 +85,7 @@ export const EfficiencyTrends: React.FC<EfficiencyTrendsProps> = ({
       data-figma-node="180:4460"
       data-figma-layer="Efficiency trends"
       data-property1={Property_1}
-      aria-label={`Efficiency bar: ${actualDark}% dark, ${actualMid}% mid, ${actualLight}% light`}
+      aria-label={`Efficiency bar: dark ${darkH}px, mid ${midH}px, bg ${bgH}px`}
     >
       <svg
         width={width}
@@ -81,68 +94,48 @@ export const EfficiencyTrends: React.FC<EfficiencyTrendsProps> = ({
         overflow="visible"
       >
         <defs>
-          {/* Clip to pill shape */}
           <clipPath id={clipId}>
             <rect x={0} y={0} width={width} height={height} rx={rx} ry={rx} />
           </clipPath>
-
-          {/* Hover glow filter */}
-          {isHover && (
-            <filter id={glowId} x="-20%" y="-10%" width="140%" height="120%">
-              <feDropShadow dx="0" dy="4" stdDeviation="8" floodColor="#0d9488" floodOpacity="0.35" />
-            </filter>
-          )}
         </defs>
 
-        {/* Outer pill clipping group */}
         <g clipPath={`url(#${clipId})`}>
-          {/* Layer 1: Light mint — TOP */}
+          {/* Layer 1: Background light mint */}
           <rect
             x={0}
-            y={0}
+            y={height - bgH}
             width={width}
-            height={(light / 100) * height}
+            height={bgH}
+            rx={rx}
+            ry={rx}
             fill="#e5f2f5"
             className="et-seg et-seg--light"
           />
 
-          {/* Layer 2: Medium teal — MIDDLE */}
+          {/* Layer 2: 2025 Medium teal */}
           <rect
             x={0}
-            y={(light / 100) * height}
+            y={height - midH}
             width={width}
-            height={(mid / 100) * height}
+            height={midH}
+            rx={rx}
+            ry={rx}
             fill="#7bc1c9"
             className="et-seg et-seg--mid"
           />
 
-          {/* Layer 3: Dark teal — BOTTOM */}
+          {/* Layer 3: 2024 Dark teal */}
           <rect
             x={0}
-            y={((light + mid) / 100) * height}
+            y={height - darkH}
             width={width}
-            height={(dark / 100) * height}
+            height={darkH}
+            rx={rx}
+            ry={rx}
             fill="#0d9488"
             className="et-seg et-seg--dark"
           />
         </g>
-
-        {/* Hover overlay glow */}
-        {isHover && (
-          <rect
-            x={0}
-            y={0}
-            width={width}
-            height={height}
-            rx={rx}
-            ry={rx}
-            fill="none"
-            stroke="#0d9488"
-            strokeWidth={2}
-            opacity={0.5}
-            filter={`url(#${glowId})`}
-          />
-        )}
       </svg>
     </div>
   );

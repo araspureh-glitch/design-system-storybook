@@ -10,13 +10,13 @@ export interface Frame1171276039Props {
 
 // Proportions matching the Figma image values for 2025 (light teal) and 2024 (dark teal)
 const MONTHLY_DATA = [
-  { month: 'Jan', darkPercent: 44, midPercent: 18, lightPercent: 33 }, // total = 95
-  { month: 'Feb', darkPercent: 40, midPercent: 20, lightPercent: 35 }, // total = 95
-  { month: 'Mar', darkPercent: 42, midPercent: 18, lightPercent: 35 }, // total = 95
-  { month: 'Apr', darkPercent: 40, midPercent: 20, lightPercent: 35 }, // total = 95
-  { month: 'May', darkPercent: 40, midPercent: 20, lightPercent: 35 }, // total = 95
-  { month: 'Jun', darkPercent: 40, midPercent: 20, lightPercent: 35 }, // total = 95
-  { month: 'Jul', darkPercent: 40, midPercent: 20, lightPercent: 35 }, // total = 95
+  { month: 'Jan', val2024: 84.2, val2025: 90.8, valBg: 96.5 },
+  { month: 'Feb', val2024: 81.0, val2025: 90.8, valBg: 96.5 },
+  { month: 'Mar', val2024: 82.5, val2025: 90.8, valBg: 96.5 },
+  { month: 'Apr', val2024: 81.0, val2025: 90.8, valBg: 96.5 },
+  { month: 'May', val2024: 81.0, val2025: 90.8, valBg: 96.5 },
+  { month: 'Jun', val2024: 81.0, val2025: 90.8, valBg: 96.5 },
+  { month: 'Jul', val2024: 81.0, val2025: 90.8, valBg: 96.5 },
 ];
 
 /**
@@ -74,10 +74,10 @@ export const Frame1171276039: React.FC<Frame1171276039Props> = ({
             <div key={d.month} className="et-card-column-wrapper">
               <EfficiencyTrends
                 height={200}
-                width={40}
-                darkPercent={d.darkPercent}
-                midPercent={d.midPercent}
-                lightPercent={d.lightPercent}
+                width={44}
+                val2024={d.val2024}
+                val2025={d.val2025}
+                valBg={d.valBg}
               />
               <span className="et-card-x-label">{d.month}</span>
             </div>
