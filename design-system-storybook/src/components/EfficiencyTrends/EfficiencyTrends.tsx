@@ -74,7 +74,7 @@ export const EfficiencyTrends: React.FC<EfficiencyTrendsProps> = ({
     bgH = ((96.5 - 75) / 20) * height;
   }
 
-  const rx = width / 2;
+  const rx = 20;
   const uniqueId = React.useId().replace(/:/g, '-');
   const clipId = `et-clip-${uniqueId}`;
 
