@@ -31,7 +31,7 @@
   (function() {
     let audioCtx = null;
 
-    function getAudioContext() {
+    function initAudio() {
       if (!audioCtx) {
         const AudioContextClass = window.AudioContext || window.webkitAudioContext;
         if (AudioContextClass) {
@@ -39,34 +39,43 @@
         }
       }
       if (audioCtx && audioCtx.state === 'suspended') {
-        audioCtx.resume().catch(() => {});
+        audioCtx.resume();
       }
       return audioCtx;
     }
 
+    ['click', 'keydown', 'touchstart'].forEach(evt => {
+      window.addEventListener(evt, function unlock() {
+        initAudio();
+        window.removeEventListener(evt, unlock);
+      }, { once: true });
+    });
+
     function playClickSound() {
-      const ctx = getAudioContext();
+      const ctx = initAudio();
       if (!ctx) return;
       try {
+        const now = ctx.currentTime;
         const osc = ctx.createOscillator();
         const gain = ctx.createGain();
+
         osc.type = 'sine';
-        osc.frequency.setValueAtTime(850, ctx.currentTime);
-        osc.frequency.exponentialRampToValueAtTime(450, ctx.currentTime + 0.04);
-        gain.gain.setValueAtTime(0.1, ctx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.04);
+        osc.frequency.setValueAtTime(750, now);
+        osc.frequency.exponentialRampToValueAtTime(350, now + 0.07);
+
+        gain.gain.setValueAtTime(0.25, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.07);
+
         osc.connect(gain);
         gain.connect(ctx.destination);
-        osc.start();
-        osc.stop(ctx.currentTime + 0.04);
+
+        osc.start(now);
+        osc.stop(now + 0.07);
       } catch (e) {}
     }
 
-    document.addEventListener('click', function(e) {
-      const target = e.target.closest('button, a, [role="button"], [role="treeitem"], [role="tab"]');
-      if (target) {
-        playClickSound();
-      }
+    document.addEventListener('click', function() {
+      playClickSound();
     }, true);
   })();
 </script>
