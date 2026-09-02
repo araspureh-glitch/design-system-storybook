@@ -151,6 +151,35 @@ class SoundManager {
     } catch (e) {
       // Ignore
     }
+  /** Cute synthesized cat meow sound effect */
+  public playMeow() {
+    if (!this.isEnabled) return;
+    const ctx = this.getAudioContext();
+    if (!ctx) return;
+
+    try {
+      const now = ctx.currentTime;
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+
+      osc.type = 'triangle';
+      // Pitch inflection: Starts ~650Hz, pitch rises up to ~950Hz, then slides down to ~400Hz (me-o-w)
+      osc.frequency.setValueAtTime(650, now);
+      osc.frequency.exponentialRampToValueAtTime(950, now + 0.12);
+      osc.frequency.exponentialRampToValueAtTime(400, now + 0.35);
+
+      gain.gain.setValueAtTime(0.01, now);
+      gain.gain.linearRampToValueAtTime(this.volume * 1.5, now + 0.08);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
+
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+
+      osc.start(now);
+      osc.stop(now + 0.35);
+    } catch (e) {
+      // Ignore
+    }
   }
 }
 

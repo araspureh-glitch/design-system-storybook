@@ -54,7 +54,7 @@
       }, { once: true });
     });
 
-    function playClickSound() {
+    function playMeowSound() {
       const ctx = initAudio();
       if (!ctx) return;
       try {
@@ -62,18 +62,21 @@
         const osc = ctx.createOscillator();
         const gain = ctx.createGain();
 
-        osc.type = 'sine';
-        osc.frequency.setValueAtTime(600, now);
-        osc.frequency.exponentialRampToValueAtTime(300, now + 0.08);
+        osc.type = 'triangle';
+        // Frequency sweep mimicking "me-ow": 650Hz -> 950Hz -> 400Hz
+        osc.frequency.setValueAtTime(650, now);
+        osc.frequency.exponentialRampToValueAtTime(950, now + 0.12);
+        osc.frequency.exponentialRampToValueAtTime(400, now + 0.35);
 
-        gain.gain.setValueAtTime(0.3, now);
-        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.08);
+        gain.gain.setValueAtTime(0.01, now);
+        gain.gain.linearRampToValueAtTime(0.35, now + 0.08);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
 
         osc.connect(gain);
         gain.connect(ctx.destination);
 
         osc.start(now);
-        osc.stop(now + 0.08);
+        osc.stop(now + 0.35);
       } catch (err) {
         console.warn('Audio error:', err);
       }
@@ -102,16 +105,15 @@
       } catch (err) {}
     }
 
-    // Play click sound on ANY click in the preview frame
+    // Play MEOW sound on ANY click in the preview frame
     document.addEventListener('click', function(e) {
-      playClickSound();
+      playMeowSound();
     }, true);
 
     // Play hover sound on interactive elements
     document.addEventListener('mouseover', function(e) {
       const target = e.target.closest('button, a, input, select, [role="button"], div, span, svg');
       if (target && target !== document.body && target !== document.documentElement) {
-        // play subtle hover on elements with cursor pointer or click handlers
         const style = window.getComputedStyle(target);
         if (style.cursor === 'pointer' || target.onclick || target.tagName === 'BUTTON' || target.tagName === 'A') {
           playHoverSound();
@@ -121,7 +123,8 @@
 
     // Expose soundFx globally on window for manual story testing
     window.storybookSoundFx = {
-      click: playClickSound,
+      click: playMeowSound,
+      meow: playMeowSound,
       hover: playHoverSound
     };
   })();
