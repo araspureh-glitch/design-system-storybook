@@ -151,35 +151,43 @@ class SoundManager {
     } catch (e) {
       // Ignore
     }
-  /** Cute synthesized cat meow sound effect */
+  /** Real / Synthesized cat meow sound effect */
   public playMeow() {
     if (!this.isEnabled) return;
+    try {
+      const audio = new Audio('https://cdn.freesound.org/previews/415/415209_5121236-lq.mp3');
+      audio.volume = Math.min(1, this.volume * 3);
+      audio.play().catch(() => {
+        this.playSynthMeow();
+      });
+    } catch (e) {
+      this.playSynthMeow();
+    }
+  }
+
+  private playSynthMeow() {
     const ctx = this.getAudioContext();
     if (!ctx) return;
-
     try {
       const now = ctx.currentTime;
       const osc = ctx.createOscillator();
       const gain = ctx.createGain();
 
       osc.type = 'triangle';
-      // Pitch inflection: Starts ~650Hz, pitch rises up to ~950Hz, then slides down to ~400Hz (me-o-w)
-      osc.frequency.setValueAtTime(650, now);
-      osc.frequency.exponentialRampToValueAtTime(950, now + 0.12);
-      osc.frequency.exponentialRampToValueAtTime(400, now + 0.35);
+      osc.frequency.setValueAtTime(600, now);
+      osc.frequency.exponentialRampToValueAtTime(900, now + 0.15);
+      osc.frequency.exponentialRampToValueAtTime(450, now + 0.4);
 
       gain.gain.setValueAtTime(0.01, now);
-      gain.gain.linearRampToValueAtTime(this.volume * 1.5, now + 0.08);
-      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
+      gain.gain.linearRampToValueAtTime(this.volume * 2, now + 0.1);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.4);
 
       osc.connect(gain);
       gain.connect(ctx.destination);
 
       osc.start(now);
-      osc.stop(now + 0.35);
-    } catch (e) {
-      // Ignore
-    }
+      osc.stop(now + 0.4);
+    } catch (e) {}
   }
 }
 
