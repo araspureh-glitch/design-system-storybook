@@ -106,7 +106,7 @@
 
 .gs-controls-row {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
   gap: 16px;
   align-items: end;
 }
@@ -166,7 +166,7 @@
   color: #f3f4f6;
   padding: 9px 12px;
   border-radius: 8px;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 500;
   outline: none;
   cursor: pointer;
@@ -251,6 +251,7 @@
   display: flex;
   align-items: center;
   gap: 16px;
+  flex-wrap: wrap;
 }
 
 .gs-slider-container {
@@ -333,6 +334,12 @@
   color: #f3f4f6;
   z-index: 5;
   box-shadow: 2px 0 8px rgba(0,0,0,0.5);
+  transition: background-color 0.2s ease;
+}
+
+.gs-string-head:hover {
+  background: #261f1c;
+  color: #00f0ff;
 }
 
 /* Horizontal Guitar String Wire */
@@ -346,6 +353,7 @@
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
   z-index: 1;
   pointer-events: none;
+  transition: transform 0.1s ease;
 }
 
 .gs-string-wire.str-0 { height: 1.5px; } /* High E */
@@ -354,6 +362,20 @@
 .gs-string-wire.str-3 { height: 3.0px; }
 .gs-string-wire.str-4 { height: 3.8px; }
 .gs-string-wire.str-5 { height: 4.8px; } /* Low E */
+
+/* String vibration animation on pluck */
+.gs-string-wire.vibrating {
+  animation: gs-string-vibrate 0.25s linear infinite;
+  box-shadow: 0 0 10px rgba(0, 240, 255, 0.8);
+}
+
+@keyframes gs-string-vibrate {
+  0% { transform: translateY(-50%) translateY(0px); }
+  25% { transform: translateY(-50%) translateY(-2px); }
+  50% { transform: translateY(-50%) translateY(0px); }
+  75% { transform: translateY(-50%) translateY(2px); }
+  100% { transform: translateY(-50%) translateY(0px); }
+}
 
 /* Fret Cell */
 .gs-fret-cell {
@@ -367,10 +389,11 @@
   position: relative;
   z-index: 2;
   cursor: pointer;
+  transition: background 0.15s ease;
 }
 
 .gs-fret-cell:hover {
-  background: rgba(255, 255, 255, 0.04);
+  background: rgba(255, 255, 255, 0.07);
 }
 
 .gs-fret-cell.open-fret {
@@ -449,7 +472,7 @@
   color: #ffffff !important;
   border: 2px solid #ffe4e6 !important;
   box-shadow: 0 0 20px #ff007f, 0 0 30px #ff007f !important;
-  transform: scale(1.3) !important;
+  transform: scale(1.35) !important;
   z-index: 10 !important;
 }
 

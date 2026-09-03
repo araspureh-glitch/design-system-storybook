@@ -3,10 +3,13 @@
  * No external MP3 files needed!
  */
 
+export type GuitarTonePreset = 'acoustic' | 'electric' | 'overdrive' | 'synth';
+
 class SoundManager {
   private ctx: AudioContext | null = null;
   private isEnabled: boolean = true;
-  private volume: number = 0.5; // Default loud audible guitar volume
+  private volume: number = 0.55; // Audible master volume
+  private distortionCurve: Float32Array | null = null;
 
   public getAudioContext(): AudioContext | null {
     if (typeof window === 'undefined') return null;
@@ -49,6 +52,20 @@ class SoundManager {
     return this.volume;
   }
 
+  private getDistortionCurve(amount: number = 50): Float32Array {
+    if (this.distortionCurve) return this.distortionCurve;
+    const k = typeof amount === 'number' ? amount : 50;
+    const n_samples = 44100;
+    const curve = new Float32Array(n_samples);
+    const deg = Math.PI / 180;
+    for (let i = 0; i < n_samples; ++i) {
+      const x = (i * 2) / n_samples - 1;
+      curve[i] = ((3 + k) * x * 20 * deg) / (Math.PI + k * Math.abs(x));
+    }
+    this.distortionCurve = curve;
+    return curve;
+  }
+
   /** Subtle crisp click sound for buttons and navigation */
   public playClick() {
     if (!this.isEnabled) return;
@@ -73,7 +90,7 @@ class SoundManager {
       osc.start();
       osc.stop(ctx.currentTime + 0.04);
     } catch (e) {
-      // Ignore audio autoplay restrictions
+      // Ignore
     }
   }
 
@@ -169,10 +186,14 @@ class SoundManager {
   }
 
   /**
-   * Realistic Plucked Guitar Sound Engine (Web Audio API)
-   * Plays on EVERY click attached to any fret or string!
+   * Plucked Guitar Sound Engine supporting Acoustic, Electric Clean, Overdrive, and Synth presets
    */
-  public playGuitarNote(freqOrMidi: number, duration: number = 2.0, stringIndex: number = 0) {
+  public playGuitarNote(
+    freqOrMidi: number,
+    duration: number = 2.0,
+    stringIndex: number = 0,
+    preset: GuitarTonePreset = 'acoustic'
+  ) {
     if (!this.isEnabled) return;
     const ctx = this.getAudioContext();
     if (!ctx) return;
@@ -188,28 +209,47 @@ class SoundManager {
       // Master output gain
       const masterGain = ctx.createGain();
       const stringVolScale = [1.3, 1.2, 1.1, 1.0, 0.95, 0.9][stringIndex % 6] || 1.0;
-      const effectiveVol = Math.max(0.1, this.volume) * stringVolScale;
+      const effectiveVol = Math.max(0.12, this.volume) * stringVolScale;
 
       masterGain.gain.setValueAtTime(effectiveVol, now);
       masterGain.gain.exponentialRampToValueAtTime(0.0001, now + duration);
 
-      // Lowpass Filter for natural string damping
+      // Lowpass Filter for string damping
       const lowpass = ctx.createBiquadFilter();
       lowpass.type = 'lowpass';
-      lowpass.frequency.setValueAtTime(Math.min(10000, freq * 10), now);
-      lowpass.frequency.exponentialRampToValueAtTime(Math.min(2000, freq * 3), now + Math.min(0.4, duration));
+      const maxCutoff = preset === 'electric' || preset === 'overdrive' ? 14000 : 9000;
+      lowpass.frequency.setValueAtTime(Math.min(maxCutoff, freq * 12), now);
+      lowpass.frequency.exponentialRampToValueAtTime(Math.min(2500, freq * 3), now + Math.min(0.4, duration));
+
+      // Overdrive Distortion Effect Node if preset is overdrive
+      let toneOutputNode: AudioNode = lowpass;
+      if (preset === 'overdrive') {
+        const waveshaper = ctx.createWaveShaper();
+        waveshaper.curve = this.getDistortionCurve(60) as any;
+        waveshaper.oversample = '4x';
+        
+        const cabFilter = ctx.createBiquadFilter();
+        cabFilter.type = 'peaking';
+        cabFilter.frequency.setValueAtTime(3200, now);
+        cabFilter.Q.setValueAtTime(1.2, now);
+        cabFilter.gain.setValueAtTime(6, now);
+
+        lowpass.connect(waveshaper);
+        waveshaper.connect(cabFilter);
+        toneOutputNode = cabFilter;
+      }
 
       // Wooden body resonance filter
       const bodyResonance = ctx.createBiquadFilter();
       bodyResonance.type = 'bandpass';
-      bodyResonance.frequency.setValueAtTime(160, now);
-      bodyResonance.Q.setValueAtTime(2.0, now);
+      bodyResonance.frequency.setValueAtTime(preset === 'electric' ? 400 : 160, now);
+      bodyResonance.Q.setValueAtTime(1.8, now);
 
       const bodyGain = ctx.createGain();
       bodyGain.gain.setValueAtTime(0.3, now);
 
       // 1. Plectrum / Pick Pluck Transient (Attack noise burst)
-      const noiseLen = Math.floor(ctx.sampleRate * 0.015); // 15ms noise attack
+      const noiseLen = Math.floor(ctx.sampleRate * (preset === 'synth' ? 0.005 : 0.015));
       const noiseBuf = ctx.createBuffer(1, noiseLen, ctx.sampleRate);
       const data = noiseBuf.getChannelData(0);
       for (let i = 0; i < noiseLen; i++) {
@@ -219,20 +259,41 @@ class SoundManager {
       noiseNode.buffer = noiseBuf;
 
       const noiseGain = ctx.createGain();
-      noiseGain.gain.setValueAtTime(effectiveVol * 0.5, now);
+      noiseGain.gain.setValueAtTime(effectiveVol * 0.6, now);
       noiseGain.gain.exponentialRampToValueAtTime(0.001, now + 0.02);
 
       noiseNode.connect(noiseGain);
       noiseGain.connect(masterGain);
       noiseNode.start(now);
 
-      // 2. Harmonic Oscillators (Sub-bass, Fundamental, Overtones)
-      const harmonics = [
+      // 2. Harmonic Oscillators based on Tone Preset
+      let harmonics = [
         { ratio: 1.0, type: 'sawtooth' as OscillatorType, vol: 0.8 },
         { ratio: 2.0, type: 'triangle' as OscillatorType, vol: 0.4 },
         { ratio: 3.0, type: 'sine' as OscillatorType, vol: 0.2 },
         { ratio: 4.0, type: 'sine' as OscillatorType, vol: 0.1 },
       ];
+
+      if (preset === 'electric') {
+        harmonics = [
+          { ratio: 1.0, type: 'square' as OscillatorType, vol: 0.6 },
+          { ratio: 2.0, type: 'sawtooth' as OscillatorType, vol: 0.4 },
+          { ratio: 3.0, type: 'sine' as OscillatorType, vol: 0.3 },
+          { ratio: 4.0, type: 'triangle' as OscillatorType, vol: 0.15 },
+        ];
+      } else if (preset === 'overdrive') {
+        harmonics = [
+          { ratio: 1.0, type: 'sawtooth' as OscillatorType, vol: 0.9 },
+          { ratio: 2.0, type: 'square' as OscillatorType, vol: 0.5 },
+          { ratio: 3.0, type: 'sawtooth' as OscillatorType, vol: 0.3 },
+        ];
+      } else if (preset === 'synth') {
+        harmonics = [
+          { ratio: 1.0, type: 'sawtooth' as OscillatorType, vol: 0.7 },
+          { ratio: 2.0, type: 'sine' as OscillatorType, vol: 0.5 },
+          { ratio: 3.0, type: 'square' as OscillatorType, vol: 0.2 },
+        ];
+      }
 
       harmonics.forEach(({ ratio, type, vol: hVol }) => {
         const osc = ctx.createOscillator();
@@ -252,8 +313,8 @@ class SoundManager {
         osc.stop(now + (duration / ratio));
       });
 
-      lowpass.connect(masterGain);
-      lowpass.connect(bodyResonance);
+      toneOutputNode.connect(masterGain);
+      toneOutputNode.connect(bodyResonance);
       bodyResonance.connect(bodyGain);
       bodyGain.connect(masterGain);
 
