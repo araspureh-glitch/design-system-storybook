@@ -325,6 +325,61 @@ class SoundManager {
     }
   }
 
+  /**
+   * Realistic Piano Sound Engine (Web Audio API)
+   * Plucks/strikes piano string with hammer attack envelope & acoustic body dampening
+   */
+  public playPianoNote(freqOrMidi: number, duration: number = 2.5) {
+    if (!this.isEnabled) return;
+    const ctx = this.getAudioContext();
+    if (!ctx) return;
+
+    try {
+      if (ctx.state === 'suspended') ctx.resume();
+      const freq = freqOrMidi < 128 ? 440 * Math.pow(2, (freqOrMidi - 69) / 12) : freqOrMidi;
+      const now = ctx.currentTime;
+
+      const masterGain = ctx.createGain();
+      masterGain.gain.setValueAtTime(this.volume * 0.7, now);
+      masterGain.gain.exponentialRampToValueAtTime(0.0001, now + duration);
+
+      const filter = ctx.createBiquadFilter();
+      filter.type = 'lowpass';
+      filter.frequency.setValueAtTime(Math.min(6000, freq * 6), now);
+      filter.frequency.exponentialRampToValueAtTime(Math.min(1200, freq * 2), now + 0.5);
+
+      const harmonics = [
+        { mult: 1.0, vol: 0.8, type: 'sine' as OscillatorType },
+        { mult: 2.0, vol: 0.35, type: 'triangle' as OscillatorType },
+        { mult: 3.0, vol: 0.15, type: 'sine' as OscillatorType },
+        { mult: 4.0, vol: 0.05, type: 'sine' as OscillatorType },
+      ];
+
+      harmonics.forEach(({ mult, vol: hVol, type }) => {
+        const osc = ctx.createOscillator();
+        const oscGain = ctx.createGain();
+
+        osc.type = type;
+        osc.frequency.setValueAtTime(freq * mult, now);
+
+        oscGain.gain.setValueAtTime(0.001, now);
+        oscGain.gain.linearRampToValueAtTime(hVol, now + 0.002);
+        oscGain.gain.exponentialRampToValueAtTime(0.0001, now + (duration / mult));
+
+        osc.connect(oscGain);
+        oscGain.connect(filter);
+
+        osc.start(now);
+        osc.stop(now + (duration / mult));
+      });
+
+      filter.connect(masterGain);
+      masterGain.connect(ctx.destination);
+    } catch (e) {
+      console.warn('Piano audio error:', e);
+    }
+  }
+
   /** Real / Synthesized cat meow sound effect */
   public playMeow() {
     if (!this.isEnabled) return;

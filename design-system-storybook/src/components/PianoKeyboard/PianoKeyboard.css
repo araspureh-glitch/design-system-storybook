@@ -1,0 +1,133 @@
+/* PianoKeyboard.css - Premium Interactive 2-Octave Web Audio Piano */
+
+.pk-container {
+  font-family: 'Inter', system-ui, sans-serif;
+  background: linear-gradient(135deg, #0d1117 0%, #161b22 100%);
+  border-radius: 16px;
+  padding: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+  max-width: 900px;
+  margin: 0 auto;
+  color: #f0f6fc;
+  user-select: none;
+}
+
+.pk-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.pk-title {
+  font-size: 20px;
+  font-weight: 700;
+  margin: 0;
+  background: linear-gradient(90deg, #38bdf8, #818cf8);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.pk-keyboard-frame {
+  position: relative;
+  height: 180px;
+  background: #090d13;
+  border-radius: 12px;
+  padding: 12px 12px 0 12px;
+  border: 2px solid #21262d;
+  display: flex;
+  box-shadow: inset 0 6px 15px rgba(0, 0, 0, 0.8);
+  overflow: hidden;
+}
+
+.pk-white-keys {
+  display: flex;
+  width: 100%;
+  height: 100%;
+}
+
+.pk-key-white {
+  flex: 1;
+  background: linear-gradient(180deg, #ffffff 0%, #e6e8eb 85%, #d1d5db 100%);
+  border: 1px solid #9ca3af;
+  border-bottom-left-radius: 6px;
+  border-bottom-right-radius: 6px;
+  cursor: pointer;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  padding-bottom: 10px;
+  transition: background 0.1s ease, transform 0.05s ease;
+  z-index: 1;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.pk-key-white:hover {
+  background: linear-gradient(180deg, #ffffff 0%, #bae6fd 100%);
+}
+
+.pk-key-white.active {
+  background: linear-gradient(180deg, #38bdf8 0%, #0284c7 100%) !important;
+  transform: translateY(3px);
+  box-shadow: 0 0 15px rgba(56, 189, 248, 0.8);
+}
+
+.pk-key-white.scale-highlight {
+  background: linear-gradient(180deg, #e0f2fe 0%, #7dd3fc 100%);
+}
+
+.pk-key-black {
+  position: absolute;
+  top: 0;
+  width: 5.5%;
+  height: 60%;
+  background: linear-gradient(180deg, #1f2937 0%, #111827 80%, #000000 100%);
+  border: 1px solid #374151;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+  cursor: pointer;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  padding-bottom: 6px;
+  transition: background 0.1s ease, transform 0.05s ease;
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.8);
+}
+
+.pk-key-black:hover {
+  background: linear-gradient(180deg, #374151 0%, #1f2937 100%);
+}
+
+.pk-key-black.active {
+  background: linear-gradient(180deg, #818cf8 0%, #4338ca 100%) !important;
+  transform: translateY(2px);
+  box-shadow: 0 0 15px rgba(129, 140, 248, 0.9);
+}
+
+.pk-note-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: #374151;
+}
+
+.pk-key-black .pk-note-label {
+  color: #9ca3af;
+  font-size: 9px;
+}
+
+.pk-shortcut-badge {
+  font-size: 9px;
+  font-weight: 800;
+  background: rgba(0, 0, 0, 0.12);
+  padding: 2px 4px;
+  border-radius: 3px;
+  margin-top: 2px;
+  color: #6b7280;
+}
