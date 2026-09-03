@@ -6,7 +6,7 @@
 class SoundManager {
   private ctx: AudioContext | null = null;
   private isEnabled: boolean = true;
-  private volume: number = 0.3; // Default guitar audio volume
+  private volume: number = 0.5; // Default loud audible guitar volume
 
   public getAudioContext(): AudioContext | null {
     if (typeof window === 'undefined') return null;
@@ -56,6 +56,7 @@ class SoundManager {
     if (!ctx) return;
 
     try {
+      if (ctx.state === 'suspended') ctx.resume();
       const osc = ctx.createOscillator();
       const gain = ctx.createGain();
 
@@ -83,6 +84,7 @@ class SoundManager {
     if (!ctx) return;
 
     try {
+      if (ctx.state === 'suspended') ctx.resume();
       const osc = ctx.createOscillator();
       const gain = ctx.createGain();
 
@@ -110,6 +112,7 @@ class SoundManager {
     if (!ctx) return;
 
     try {
+      if (ctx.state === 'suspended') ctx.resume();
       const osc = ctx.createOscillator();
       const gain = ctx.createGain();
 
@@ -140,6 +143,7 @@ class SoundManager {
     if (!ctx) return;
 
     try {
+      if (ctx.state === 'suspended') ctx.resume();
       const now = ctx.currentTime;
       const notes = [523.25, 659.25, 783.99]; // C5, E5, G5 major triad
 
@@ -165,9 +169,8 @@ class SoundManager {
   }
 
   /**
-   * Realistic Guitar String Pluck Synthesizer (Web Audio API)
-   * Simulates guitar acoustics with fundamental pitch, plucked noise transient,
-   * harmonic overtones, lowpass decay damping, and wood body resonance.
+   * Realistic Plucked Guitar Sound Engine (Web Audio API)
+   * Plays on EVERY click attached to any fret or string!
    */
   public playGuitarNote(freqOrMidi: number, duration: number = 2.0, stringIndex: number = 0) {
     if (!this.isEnabled) return;
@@ -182,94 +185,82 @@ class SoundManager {
       const freq = freqOrMidi < 128 ? 440 * Math.pow(2, (freqOrMidi - 69) / 12) : freqOrMidi;
       const now = ctx.currentTime;
 
-      // Master gain for this note
-      const masterNoteGain = ctx.createGain();
-      const stringVolumeMultiplier = [1.2, 1.1, 1.0, 0.95, 0.9, 0.85][stringIndex % 6] || 1.0;
-      masterNoteGain.gain.setValueAtTime(this.volume * stringVolumeMultiplier, now);
-      masterNoteGain.gain.exponentialRampToValueAtTime(0.0001, now + duration);
+      // Master output gain
+      const masterGain = ctx.createGain();
+      const stringVolScale = [1.3, 1.2, 1.1, 1.0, 0.95, 0.9][stringIndex % 6] || 1.0;
+      const effectiveVol = Math.max(0.1, this.volume) * stringVolScale;
 
-      // Body Resonance Filter (simulating guitar wooden body box ~150Hz)
-      const bodyFilter = ctx.createBiquadFilter();
-      bodyFilter.type = 'bandpass';
-      bodyFilter.frequency.setValueAtTime(180, now);
-      bodyFilter.Q.setValueAtTime(1.5, now);
+      masterGain.gain.setValueAtTime(effectiveVol, now);
+      masterGain.gain.exponentialRampToValueAtTime(0.0001, now + duration);
+
+      // Lowpass Filter for natural string damping
+      const lowpass = ctx.createBiquadFilter();
+      lowpass.type = 'lowpass';
+      lowpass.frequency.setValueAtTime(Math.min(10000, freq * 10), now);
+      lowpass.frequency.exponentialRampToValueAtTime(Math.min(2000, freq * 3), now + Math.min(0.4, duration));
+
+      // Wooden body resonance filter
+      const bodyResonance = ctx.createBiquadFilter();
+      bodyResonance.type = 'bandpass';
+      bodyResonance.frequency.setValueAtTime(160, now);
+      bodyResonance.Q.setValueAtTime(2.0, now);
 
       const bodyGain = ctx.createGain();
-      bodyGain.gain.setValueAtTime(0.25, now);
+      bodyGain.gain.setValueAtTime(0.3, now);
 
-      // String Lowpass Damping Filter (higher harmonics decay faster, lower strings last longer)
-      const stringDampFilter = ctx.createBiquadFilter();
-      stringDampFilter.type = 'lowpass';
-      const initialCutoff = Math.min(8000, freq * 8);
-      const endCutoff = Math.min(1500, freq * 2);
-      stringDampFilter.frequency.setValueAtTime(initialCutoff, now);
-      stringDampFilter.frequency.exponentialRampToValueAtTime(endCutoff, now + Math.min(0.5, duration));
-
-      // 1. Pluck Noise Attack Transient (plectrum / pick touch sound)
-      const noiseBuffer = ctx.createBuffer(1, ctx.sampleRate * 0.02, ctx.sampleRate);
-      const output = noiseBuffer.getChannelData(0);
-      for (let i = 0; i < noiseBuffer.length; i++) {
-        output[i] = Math.random() * 2 - 1;
+      // 1. Plectrum / Pick Pluck Transient (Attack noise burst)
+      const noiseLen = Math.floor(ctx.sampleRate * 0.015); // 15ms noise attack
+      const noiseBuf = ctx.createBuffer(1, noiseLen, ctx.sampleRate);
+      const data = noiseBuf.getChannelData(0);
+      for (let i = 0; i < noiseLen; i++) {
+        data[i] = (Math.random() * 2 - 1) * Math.exp(-i / (noiseLen * 0.3));
       }
-      const noiseSource = ctx.createBufferSource();
-      noiseSource.buffer = noiseBuffer;
-
-      const noiseFilter = ctx.createBiquadFilter();
-      noiseFilter.type = 'bandpass';
-      noiseFilter.frequency.setValueAtTime(freq * 2, now);
-      noiseFilter.Q.setValueAtTime(3.0, now);
+      const noiseNode = ctx.createBufferSource();
+      noiseNode.buffer = noiseBuf;
 
       const noiseGain = ctx.createGain();
-      noiseGain.gain.setValueAtTime(0.35, now);
-      noiseGain.gain.exponentialRampToValueAtTime(0.001, now + 0.025);
+      noiseGain.gain.setValueAtTime(effectiveVol * 0.5, now);
+      noiseGain.gain.exponentialRampToValueAtTime(0.001, now + 0.02);
 
-      noiseSource.connect(noiseFilter);
-      noiseFilter.connect(noiseGain);
-      noiseGain.connect(masterNoteGain);
-      noiseSource.start(now);
+      noiseNode.connect(noiseGain);
+      noiseGain.connect(masterGain);
+      noiseNode.start(now);
 
-      // 2. Fundamental & Harmonics Oscillators (Acoustic Pluck Synthesis)
-      // Guitar strings have strong 1st, 2nd, 3rd, and 4th harmonics with pluck attack phase
+      // 2. Harmonic Oscillators (Sub-bass, Fundamental, Overtones)
       const harmonics = [
-        { mult: 1.0, type: 'sawtooth' as OscillatorType, gain: 0.7, decay: duration },
-        { mult: 2.0, type: 'triangle' as OscillatorType, gain: 0.35, decay: duration * 0.7 },
-        { mult: 3.0, type: 'sine' as OscillatorType, gain: 0.2, decay: duration * 0.5 },
-        { mult: 4.0, type: 'sine' as OscillatorType, gain: 0.1, decay: duration * 0.3 },
+        { ratio: 1.0, type: 'sawtooth' as OscillatorType, vol: 0.8 },
+        { ratio: 2.0, type: 'triangle' as OscillatorType, vol: 0.4 },
+        { ratio: 3.0, type: 'sine' as OscillatorType, vol: 0.2 },
+        { ratio: 4.0, type: 'sine' as OscillatorType, vol: 0.1 },
       ];
 
-      harmonics.forEach(({ mult, type, gain: hGainVal, decay }) => {
+      harmonics.forEach(({ ratio, type, vol: hVol }) => {
         const osc = ctx.createOscillator();
         const oscGain = ctx.createGain();
 
         osc.type = type;
-        osc.frequency.setValueAtTime(freq * mult, now);
-
-        // Very slight pitch bend on string pluck release tension
-        osc.frequency.exponentialRampToValueAtTime(freq * mult, now + 0.03);
+        osc.frequency.setValueAtTime(freq * ratio, now);
 
         oscGain.gain.setValueAtTime(0.001, now);
-        oscGain.gain.linearRampToValueAtTime(hGainVal, now + 0.004); // Instant attack
-        oscGain.gain.exponentialRampToValueAtTime(0.0001, now + Math.min(decay, duration));
+        oscGain.gain.linearRampToValueAtTime(hVol, now + 0.003); // Instant attack
+        oscGain.gain.exponentialRampToValueAtTime(0.0001, now + (duration / ratio));
 
         osc.connect(oscGain);
-        oscGain.connect(stringDampFilter);
+        oscGain.connect(lowpass);
 
         osc.start(now);
-        osc.stop(now + Math.min(decay, duration));
+        osc.stop(now + (duration / ratio));
       });
 
-      // Connect String filter -> Body Resonance -> Master -> Audio Context Output
-      stringDampFilter.connect(masterNoteGain);
-      
-      // Also send partial signal through body resonance filter
-      stringDampFilter.connect(bodyFilter);
-      bodyFilter.connect(bodyGain);
-      bodyGain.connect(masterNoteGain);
+      lowpass.connect(masterGain);
+      lowpass.connect(bodyResonance);
+      bodyResonance.connect(bodyGain);
+      bodyGain.connect(masterGain);
 
-      masterNoteGain.connect(ctx.destination);
+      masterGain.connect(ctx.destination);
 
     } catch (e) {
-      console.warn("Audio playback error:", e);
+      console.warn("Audio playback exception:", e);
     }
   }
 

@@ -42,7 +42,7 @@ export const GuitarScales: React.FC<GuitarScalesProps> = ({
   initialFrets = 15,
   displayMode: propDisplayMode = 'notes',
   soundEnabled = true,
-  volume: propVolume = 0.4,
+  volume: propVolume = 0.5,
   bpm: propBpm = 120,
   onNotePlay,
   onScaleChange,
@@ -59,16 +59,21 @@ export const GuitarScales: React.FC<GuitarScalesProps> = ({
   const [bpm, setBpm] = useState<number>(propBpm);
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   
-  // Currently active played note for visual feedback
+  // Currently active played note key for visual feedback ("stringIdx-fretNum")
   const [activeNoteKey, setActiveNoteKey] = useState<string | null>(null);
 
   const playbackTimerRef = useRef<NodeJS.Timeout | null>(null);
 
-  // Sync internal state with props if changed externally
+  // Synchronize soundFx audio settings
   useEffect(() => {
     soundFx.setEnabled(audioActive);
     soundFx.setVolume(vol);
   }, [audioActive, vol]);
+
+  // Global user interaction listener to ensure Web Audio context is unlocked on click
+  const unlockAudio = useCallback(() => {
+    soundFx.ensureAudioUnlocked();
+  }, []);
 
   const activeScale: ScaleDefinition =
     GUITAR_SCALES.find((s) => s.id === scaleId) || GUITAR_SCALES[0];
@@ -78,18 +83,21 @@ export const GuitarScales: React.FC<GuitarScalesProps> = ({
 
   const fretboardMatrix = buildFretboardMatrix(activeTuning, rootKey, activeScale, maxFrets);
 
-  // Play a single fret note with audio + visual highlight
+  // Play a single fret note with audio pluck on EVERY click + visual glowing highlight
   const playFretNote = useCallback(
     (note: FretNote) => {
-      // Ensure audio context is ready
+      // 1. Ensure audio engine context is unlocked
       soundFx.ensureAudioUnlocked();
-      soundFx.playGuitarNote(note.midiNote, 1.8, note.stringIndex);
+
+      // 2. Play acoustic guitar note pluck sound
+      soundFx.playGuitarNote(note.midiNote, 2.0, note.stringIndex);
       
+      // 3. Set visual highlight state
       const key = `${note.stringIndex}-${note.fretNumber}`;
       setActiveNoteKey(key);
       setTimeout(() => {
         setActiveNoteKey((prev) => (prev === key ? null : prev));
-      }, 350);
+      }, 400);
 
       if (onNotePlay) {
         onNotePlay(note.noteName, note.midiNote);
@@ -127,7 +135,7 @@ export const GuitarScales: React.FC<GuitarScalesProps> = ({
     return () => stopPlayback();
   }, [stopPlayback]);
 
-  // Automated scale playback (Ascending or Descending)
+  // Automated scale playback (Ascending, Descending, Strum)
   const playScaleSequence = (direction: 'asc' | 'desc' | 'arpeggio' | 'strum') => {
     stopPlayback();
     soundFx.ensureAudioUnlocked();
@@ -159,11 +167,11 @@ export const GuitarScales: React.FC<GuitarScalesProps> = ({
 
     if (direction === 'strum') {
       // Strum Root chord (play all root note positions together with small millisecond delay)
-      const rootNotes = uniqueNotes.filter((n) => n.isRoot).slice(0, 4);
+      const rootNotes = uniqueNotes.filter((n) => n.isRoot).slice(0, 5);
       rootNotes.forEach((n, idx) => {
         setTimeout(() => {
           playFretNote(n);
-        }, idx * 40);
+        }, idx * 45);
       });
       return;
     }
@@ -196,14 +204,14 @@ export const GuitarScales: React.FC<GuitarScalesProps> = ({
   };
 
   return (
-    <div className="gs-container">
+    <div className="gs-container" onMouseDown={unlockAudio} onTouchStart={unlockAudio}>
       {/* Header Bar */}
       <div className="gs-header">
         <div className="gs-title-group">
           <div className="gs-guitar-icon">🎸</div>
           <div>
-            <h2 className="gs-title">Guitar Scales Audio Visualizer</h2>
-            <div className="gs-subtitle">Interactive Fretboard & Realistic Web Audio Synth</div>
+            <h2 className="gs-title">Guitar Scales & Sound Engine</h2>
+            <div className="gs-subtitle">Click ANY Fret or String to Play Guitar Sound</div>
           </div>
         </div>
 
@@ -215,10 +223,10 @@ export const GuitarScales: React.FC<GuitarScalesProps> = ({
             setAudioActive(nextState);
             if (nextState) soundFx.ensureAudioUnlocked();
           }}
-          title="Click to enable/disable sound engine"
+          title="Click to toggle sound engine"
         >
           <div className="gs-audio-dot" style={{ backgroundColor: audioActive ? '#10b981' : '#ef4444' }} />
-          <span>{audioActive ? 'Audio Always Allowed (OK)' : 'Audio Muted'}</span>
+          <span>{audioActive ? 'Audio Attached & Active (Always OK)' : 'Audio Muted'}</span>
         </div>
       </div>
 
@@ -394,10 +402,17 @@ export const GuitarScales: React.FC<GuitarScalesProps> = ({
           {/* 6 Guitar Strings (String 1 Top High E to String 6 Bottom Low E) */}
           {fretboardMatrix.map((stringNotes, stringIdx) => {
             const stringOpenNote = activeTuning.stringNotes[stringIdx];
+            const openStringNoteObj = stringNotes[0]; // Fret 0 note
+
             return (
               <div key={stringIdx} className="gs-string-row">
-                {/* Tuning Head Nut */}
-                <div className="gs-string-head" title={`String ${stringIdx + 1}: ${stringOpenNote}`}>
+                {/* Tuning Head Nut - Clicking string head plucks open string note! */}
+                <div
+                  className="gs-string-head"
+                  onClick={() => playFretNote(openStringNoteObj)}
+                  title={`Click to pluck String ${stringIdx + 1} (${stringOpenNote})`}
+                  style={{ cursor: 'pointer' }}
+                >
                   {stringOpenNote.replace(/[0-9]/g, '')}
                 </div>
 
@@ -416,7 +431,8 @@ export const GuitarScales: React.FC<GuitarScalesProps> = ({
                       onClick={() => playFretNote(note)}
                       title={`String ${stringIdx + 1}, Fret ${note.fretNumber}: ${note.noteName}${note.octave} (${Math.round(note.frequency)} Hz)${note.degreeName ? ` - ${note.degreeName}` : ''}`}
                     >
-                      {note.isInScale && (
+                      {/* Show note node if note is in scale OR if note is currently being clicked/played */}
+                      {(note.isInScale || isActivePlaying) && (
                         <div
                           className={`gs-note-node ${
                             note.isRoot ? 'root-note' : 'scale-note'
