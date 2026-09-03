@@ -9,7 +9,7 @@
     send_page_view: true
   });
 
-  // Track Storybook story route navigation (hashchange & popstate)
+  // Track Storybook story route navigation
   function trackStoryNavigation() {
     if (typeof gtag === 'function') {
       gtag('event', 'page_view', {
@@ -28,72 +28,114 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-<!-- Web Audio API & HTML5 Audio Sound Effects (Realistic Meow) -->
+<!-- Web Audio API Guitar Sound Effect on EVERY Click -->
 <script>
   (function() {
-    // Reliable MP3 cat meow sound
-    const meowAudio = new Audio('https://cdn.freesound.org/previews/415/415209_5121236-lq.mp3');
-    meowAudio.volume = 0.5;
-
-    function playRealMeow() {
-      try {
-        const soundClone = meowAudio.cloneNode();
-        soundClone.volume = 0.5;
-        soundClone.play().catch(function(e) {
-          // If HTML5 Audio fails, fallback to synthesizer meow
-          playSynthMeow();
-        });
-      } catch (err) {
-        playSynthMeow();
-      }
-    }
-
     let audioCtx = null;
-    function initSynthAudio() {
+    // Guitar scale notes cycle for melodic picking on every click (E2, A2, D3, G3, B3, E4, G4, A4)
+    const guitarNotes = [164.81, 220.00, 293.66, 392.00, 493.88, 659.25, 783.99, 880.00];
+    let noteIndex = 0;
+
+    function getAudioCtx() {
       if (!audioCtx) {
         const AudioContextClass = window.AudioContext || window.webkitAudioContext;
         if (AudioContextClass) audioCtx = new AudioContextClass();
       }
       if (audioCtx && audioCtx.state === 'suspended') {
-        audioCtx.resume();
+        audioCtx.resume().catch(function() {});
       }
       return audioCtx;
     }
 
-    function playSynthMeow() {
-      const ctx = initSynthAudio();
+    function playGuitarPluckSound() {
+      const ctx = getAudioCtx();
       if (!ctx) return;
       try {
         const now = ctx.currentTime;
-        const osc = ctx.createOscillator();
-        const gain = ctx.createGain();
+        const freq = guitarNotes[noteIndex % guitarNotes.length];
+        noteIndex = (noteIndex + 1) % guitarNotes.length;
 
-        osc.type = 'triangle';
-        osc.frequency.setValueAtTime(600, now);
-        osc.frequency.exponentialRampToValueAtTime(900, now + 0.15);
-        osc.frequency.exponentialRampToValueAtTime(450, now + 0.4);
+        // Master output gain
+        const masterGain = ctx.createGain();
+        masterGain.gain.setValueAtTime(0.35, now);
+        masterGain.gain.exponentialRampToValueAtTime(0.0001, now + 1.2);
 
-        gain.gain.setValueAtTime(0.01, now);
-        gain.gain.linearRampToValueAtTime(0.5, now + 0.1);
-        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.4);
+        // Lowpass Filter for natural acoustic string damping
+        const lowpass = ctx.createBiquadFilter();
+        lowpass.type = 'lowpass';
+        lowpass.frequency.setValueAtTime(Math.min(8000, freq * 8), now);
+        lowpass.frequency.exponentialRampToValueAtTime(Math.min(1800, freq * 2), now + 0.3);
 
-        osc.connect(gain);
-        gain.connect(ctx.destination);
+        // Wooden body resonance filter
+        const bodyResonance = ctx.createBiquadFilter();
+        bodyResonance.type = 'bandpass';
+        bodyResonance.frequency.setValueAtTime(180, now);
+        bodyResonance.Q.setValueAtTime(1.5, now);
 
-        osc.start(now);
-        osc.stop(now + 0.4);
+        const bodyGain = ctx.createGain();
+        bodyGain.gain.setValueAtTime(0.25, now);
+
+        // Plectrum noise burst attack (12ms)
+        const noiseLen = Math.floor(ctx.sampleRate * 0.012);
+        const noiseBuf = ctx.createBuffer(1, noiseLen, ctx.sampleRate);
+        const data = noiseBuf.getChannelData(0);
+        for (let i = 0; i < noiseLen; i++) {
+          data[i] = (Math.random() * 2 - 1) * Math.exp(-i / (noiseLen * 0.3));
+        }
+        const noiseNode = ctx.createBufferSource();
+        noiseNode.buffer = noiseBuf;
+
+        const noiseGain = ctx.createGain();
+        noiseGain.gain.setValueAtTime(0.2, now);
+        noiseGain.gain.exponentialRampToValueAtTime(0.001, now + 0.015);
+
+        noiseNode.connect(noiseGain);
+        noiseGain.connect(masterGain);
+        noiseNode.start(now);
+
+        // Fundamental & Harmonic Oscillators (Guitar String Timbre)
+        const harmonics = [
+          { ratio: 1.0, type: 'sawtooth', vol: 0.7 },
+          { ratio: 2.0, type: 'triangle', vol: 0.35 },
+          { ratio: 3.0, type: 'sine', vol: 0.15 },
+        ];
+
+        harmonics.forEach(function(h) {
+          const osc = ctx.createOscillator();
+          const oscGain = ctx.createGain();
+
+          osc.type = h.type;
+          osc.frequency.setValueAtTime(freq * h.ratio, now);
+
+          oscGain.gain.setValueAtTime(0.001, now);
+          oscGain.gain.linearRampToValueAtTime(h.vol, now + 0.003);
+          oscGain.gain.exponentialRampToValueAtTime(0.0001, now + (1.2 / h.ratio));
+
+          osc.connect(oscGain);
+          oscGain.connect(lowpass);
+
+          osc.start(now);
+          osc.stop(now + (1.2 / h.ratio));
+        });
+
+        lowpass.connect(masterGain);
+        lowpass.connect(bodyResonance);
+        bodyResonance.connect(bodyGain);
+        bodyGain.connect(masterGain);
+
+        masterGain.connect(ctx.destination);
       } catch (e) {}
     }
 
-    // Play meow sound on any click
-    window.addEventListener('click', function() {
-      playRealMeow();
-    }, true);
+    ['click', 'pointerdown', 'touchstart'].forEach(function(evt) {
+      window.addEventListener(evt, function unlock() {
+        getAudioCtx();
+      }, { passive: true });
+    });
 
-    // Also trigger on storybook manager framing window
-    window.storybookSoundFx = {
-      meow: playRealMeow,
-      click: playRealMeow
-    };
+    // Play guitar pluck sound effect on EVERY click
+    window.addEventListener('click', function() {
+      playGuitarPluckSound();
+    }, true);
   })();
 </script>

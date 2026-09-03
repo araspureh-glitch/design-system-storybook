@@ -26,56 +26,107 @@
   }).observe(document, { subtree: true, childList: true });
 </script>
 
-<!-- Web Audio API Global Sound Effects for Storybook Manager UI -->
+<!-- Web Audio API Guitar Sound Effect on EVERY Click in Storybook Manager -->
 <script>
   (function() {
     let audioCtx = null;
+    const guitarNotes = [164.81, 220.00, 293.66, 392.00, 493.88, 659.25, 783.99, 880.00];
+    let noteIndex = 0;
 
-    function initAudio() {
+    function getAudioCtx() {
       if (!audioCtx) {
         const AudioContextClass = window.AudioContext || window.webkitAudioContext;
-        if (AudioContextClass) {
-          audioCtx = new AudioContextClass();
-        }
+        if (AudioContextClass) audioCtx = new AudioContextClass();
       }
       if (audioCtx && audioCtx.state === 'suspended') {
-        audioCtx.resume();
+        audioCtx.resume().catch(function() {});
       }
       return audioCtx;
     }
 
-    ['click', 'keydown', 'touchstart'].forEach(evt => {
-      window.addEventListener(evt, function unlock() {
-        initAudio();
-        window.removeEventListener(evt, unlock);
-      }, { once: true });
-    });
-
-    function playClickSound() {
-      const ctx = initAudio();
+    function playGuitarPluckSound() {
+      const ctx = getAudioCtx();
       if (!ctx) return;
       try {
         const now = ctx.currentTime;
-        const osc = ctx.createOscillator();
-        const gain = ctx.createGain();
+        const freq = guitarNotes[noteIndex % guitarNotes.length];
+        noteIndex = (noteIndex + 1) % guitarNotes.length;
 
-        osc.type = 'sine';
-        osc.frequency.setValueAtTime(750, now);
-        osc.frequency.exponentialRampToValueAtTime(350, now + 0.07);
+        const masterGain = ctx.createGain();
+        masterGain.gain.setValueAtTime(0.35, now);
+        masterGain.gain.exponentialRampToValueAtTime(0.0001, now + 1.2);
 
-        gain.gain.setValueAtTime(0.25, now);
-        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.07);
+        const lowpass = ctx.createBiquadFilter();
+        lowpass.type = 'lowpass';
+        lowpass.frequency.setValueAtTime(Math.min(8000, freq * 8), now);
+        lowpass.frequency.exponentialRampToValueAtTime(Math.min(1800, freq * 2), now + 0.3);
 
-        osc.connect(gain);
-        gain.connect(ctx.destination);
+        const bodyResonance = ctx.createBiquadFilter();
+        bodyResonance.type = 'bandpass';
+        bodyResonance.frequency.setValueAtTime(180, now);
+        bodyResonance.Q.setValueAtTime(1.5, now);
 
-        osc.start(now);
-        osc.stop(now + 0.07);
+        const bodyGain = ctx.createGain();
+        bodyGain.gain.setValueAtTime(0.25, now);
+
+        const noiseLen = Math.floor(ctx.sampleRate * 0.012);
+        const noiseBuf = ctx.createBuffer(1, noiseLen, ctx.sampleRate);
+        const data = noiseBuf.getChannelData(0);
+        for (let i = 0; i < noiseLen; i++) {
+          data[i] = (Math.random() * 2 - 1) * Math.exp(-i / (noiseLen * 0.3));
+        }
+        const noiseNode = ctx.createBufferSource();
+        noiseNode.buffer = noiseBuf;
+
+        const noiseGain = ctx.createGain();
+        noiseGain.gain.setValueAtTime(0.2, now);
+        noiseGain.gain.exponentialRampToValueAtTime(0.001, now + 0.015);
+
+        noiseNode.connect(noiseGain);
+        noiseGain.connect(masterGain);
+        noiseNode.start(now);
+
+        const harmonics = [
+          { ratio: 1.0, type: 'sawtooth', vol: 0.7 },
+          { ratio: 2.0, type: 'triangle', vol: 0.35 },
+          { ratio: 3.0, type: 'sine', vol: 0.15 },
+        ];
+
+        harmonics.forEach(function(h) {
+          const osc = ctx.createOscillator();
+          const oscGain = ctx.createGain();
+
+          osc.type = h.type;
+          osc.frequency.setValueAtTime(freq * h.ratio, now);
+
+          oscGain.gain.setValueAtTime(0.001, now);
+          oscGain.gain.linearRampToValueAtTime(h.vol, now + 0.003);
+          oscGain.gain.exponentialRampToValueAtTime(0.0001, now + (1.2 / h.ratio));
+
+          osc.connect(oscGain);
+          oscGain.connect(lowpass);
+
+          osc.start(now);
+          osc.stop(now + (1.2 / h.ratio));
+        });
+
+        lowpass.connect(masterGain);
+        lowpass.connect(bodyResonance);
+        bodyResonance.connect(bodyGain);
+        bodyGain.connect(masterGain);
+
+        masterGain.connect(ctx.destination);
       } catch (e) {}
     }
 
+    ['click', 'pointerdown', 'touchstart'].forEach(function(evt) {
+      window.addEventListener(evt, function unlock() {
+        getAudioCtx();
+      }, { passive: true });
+    });
+
     document.addEventListener('click', function() {
-      playClickSound();
+      playGuitarPluckSound();
     }, true);
   })();
 </script>

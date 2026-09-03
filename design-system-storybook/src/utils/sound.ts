@@ -66,29 +66,11 @@ class SoundManager {
     return curve;
   }
 
-  /** Subtle crisp click sound for buttons and navigation */
+  /** Guitar string pluck click sound for buttons and navigation */
   public playClick() {
     if (!this.isEnabled) return;
-    const ctx = this.getAudioContext();
-    if (!ctx) return;
-
     try {
-      if (ctx.state === 'suspended') ctx.resume();
-      const osc = ctx.createOscillator();
-      const gain = ctx.createGain();
-
-      osc.type = 'sine';
-      osc.frequency.setValueAtTime(800, ctx.currentTime);
-      osc.frequency.exponentialRampToValueAtTime(400, ctx.currentTime + 0.04);
-
-      gain.gain.setValueAtTime(this.volume * 0.8, ctx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.04);
-
-      osc.connect(gain);
-      gain.connect(ctx.destination);
-
-      osc.start();
-      osc.stop(ctx.currentTime + 0.04);
+      this.playGuitarNote(330 + Math.random() * 200, 1.2, 0, 'acoustic');
     } catch (e) {
       // Ignore
     }
