@@ -18,6 +18,9 @@ export interface EfficiencyTrendsProps {
   midPercent?: number;
   /** Value for the light (top) segment as % of total height (0–100) */
   lightPercent?: number;
+  val2024?: number;
+  val2025?: number;
+  valBg?: number;
   className?: string;
   style?: React.CSSProperties;
 }

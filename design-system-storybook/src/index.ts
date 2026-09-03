@@ -52,5 +52,7 @@ export { CurrentEfficiencyMetricsCard } from './components/CurrentEfficiencyMetr
 export { Card3 } from './components/Card3/Card3';
 export { Frame1171276173 } from './components/Frame1171276173/Frame1171276173';
 export { Frame1171276039 } from './components/Frame1171276039/Frame1171276039';
+export { GuitarScales } from './components/GuitarScales/GuitarScales';
 export { GA_MEASUREMENT_ID, trackGAEvent, trackGAPageView } from './utils/analytics';
 export * from './utils/sound';
+
