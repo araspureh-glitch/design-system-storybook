@@ -1,4 +1,4 @@
-﻿# Workspace Rules - design-system-storybook
+# Workspace Rules - design-system-storybook
 
 ## Git & GitHub Auto-Push
 
@@ -22,12 +22,15 @@ Run this exact PowerShell sequence after every change that modifies source files
 3. Set up gh credential helper (uses keyring token for araspureh-glitch):
    `\\ = 'C:\Program Files\GitHub CLI\gh.exe'; & \\ auth setup-git 2>&1`
 4. Stage changed files, commit, and push:
-   `\\ = "\\C:\Users\human\AppData\Local\Programs\Git\cmd\git.exe"; & \\ add <files>; & \\ commit -m '<message>'; & \\ push origin main 2>&1`
+   `$git = "C:\Users\human\AppData\Local\Programs\Git\cmd\git.exe"; & $git add <files>; & $git commit -m '<message>'; & $git push origin main 2>&1`
+5. Deploy to Vercel production:
+   `npx -y vercel deploy --prod`
 
 ### Rules
 
-- NEVER ask the user before committing or pushing.
-- ALWAYS push to origin main.
+- NEVER ask the user before committing, pushing, or deploying.
+- ALWAYS push to origin main and trigger Vercel deployment.
 - Use conventional commits: feat(), fix(), style(), refactor(), docs().
 - The push stderr output showing hash->hash main->main is SUCCESS - exit code 1 from stderr is normal for git push.
 - Always run git commands from workspace root: d:\iMAGES
+
