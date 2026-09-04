@@ -51,7 +51,7 @@ export { AlertsState } from './components/AlertsState/AlertsState';
 export { CurrentEfficiencyMetricsCard } from './components/CurrentEfficiencyMetricsCard/CurrentEfficiencyMetricsCard';
 export { Card3 } from './components/Card3/Card3';
 export { Frame1171276173 } from './components/Frame1171276173/Frame1171276173';
-export { Frame1171276039 } from './components/Frame1171276039/Frame1171276039';
+export { Frame1171276039, EfficiencyTrendsChart } from './components/Frame1171276039/Frame1171276039';
 export { GuitarScales } from './components/GuitarScales/GuitarScales';
 export { PianoKeyboard } from './components/PianoKeyboard/PianoKeyboard';
 export { GA_MEASUREMENT_ID, trackGAEvent, trackGAPageView } from './utils/analytics';

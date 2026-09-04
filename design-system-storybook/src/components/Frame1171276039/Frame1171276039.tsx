@@ -88,4 +88,6 @@ export const Frame1171276039: React.FC<Frame1171276039Props> = ({
   );
 };
 
+export const EfficiencyTrendsChart = Frame1171276039;
+
 export default Frame1171276039;
