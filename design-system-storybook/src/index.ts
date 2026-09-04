@@ -50,7 +50,7 @@ export { Card2 } from './components/Card2/Card2';
 export { AlertsState } from './components/AlertsState/AlertsState';
 export { CurrentEfficiencyMetricsCard } from './components/CurrentEfficiencyMetricsCard/CurrentEfficiencyMetricsCard';
 export { Card3 } from './components/Card3/Card3';
-export { Frame1171276173 } from './components/Frame1171276173/Frame1171276173';
+export { Frame1171276173, HeatMapChart } from './components/Frame1171276173/Frame1171276173';
 export { Frame1171276039, EfficiencyTrendsChart } from './components/Frame1171276039/Frame1171276039';
 export { GuitarScales } from './components/GuitarScales/GuitarScales';
 export { PianoKeyboard } from './components/PianoKeyboard/PianoKeyboard';

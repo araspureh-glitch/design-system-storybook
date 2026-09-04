@@ -161,4 +161,6 @@ export const Frame1171276173: React.FC<Frame1171276173Props> = ({
   );
 };
 
+export const HeatMapChart = Frame1171276173;
+
 export default Frame1171276173;
