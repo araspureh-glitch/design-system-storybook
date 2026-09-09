@@ -13,7 +13,7 @@ const meta: Meta = {
   parameters: {
     docs: {
       description: {
-        component: "System Usage Bar Chart collection combining Figma Components 337 to 343.",
+        component: "System Usage Bar Chart collection.",
       },
     },
   },
@@ -22,7 +22,7 @@ const meta: Meta = {
 export default meta;
 
 export const SystemUsageOverview: StoryObj = {
-  name: "System Usage Overview (All Bars)",
+  name: "Overview (All Bars)",
   render: () => (
     <div style={{ display: 'flex', alignItems: 'flex-end', gap: '16px', padding: '24px', background: '#0B132B', borderRadius: '12px', width: 'fit-content' }}>
       <Component337 />
@@ -36,37 +36,37 @@ export const SystemUsageOverview: StoryObj = {
   ),
 };
 
-export const Bar337: StoryObj = {
-  name: "Component 337 (31MW)",
+export const Bar31MW: StoryObj = {
+  name: "31MW Bar",
   render: () => <Component337 />,
 };
 
-export const Bar338: StoryObj = {
-  name: "Component 338 (22MW)",
+export const Bar22MW1: StoryObj = {
+  name: "22MW Bar 1",
   render: () => <Component338 />,
 };
 
-export const Bar339: StoryObj = {
-  name: "Component 339 (36MW)",
+export const Bar36MW: StoryObj = {
+  name: "36MW Bar",
   render: () => <Component339 />,
 };
 
-export const Bar340: StoryObj = {
-  name: "Component 340 (39MW)",
+export const Bar39MW: StoryObj = {
+  name: "39MW Bar",
   render: () => <Component340 />,
 };
 
-export const Bar341: StoryObj = {
-  name: "Component 341 (18MW)",
+export const Bar18MW: StoryObj = {
+  name: "18MW Bar",
   render: () => <Component341 />,
 };
 
-export const Bar342: StoryObj = {
-  name: "Component 342 (14MW)",
+export const Bar14MW: StoryObj = {
+  name: "14MW Bar",
   render: () => <Component342 />,
 };
 
-export const Bar343: StoryObj = {
-  name: "Component 343 (22MW)",
+export const Bar22MW2: StoryObj = {
+  name: "22MW Bar 2",
   render: () => <Component343 />,
 };
