@@ -8,66 +8,65 @@ import { Component341 } from '../Component341/Component341';
 import { Component342 } from '../Component342/Component342';
 import { Component343 } from '../Component343/Component343';
 
-const meta: Meta<typeof Component337> = {
-  title: "system usage sections/Component 337",
-  component: Component337,
+const meta: Meta = {
+  title: "charts/System Usage",
   parameters: {
     docs: {
       description: {
-        component: "System Usage Pill Bars: Contains Component 337 through Component 343 representing MW usage bars.",
+        component: "System Usage Bar Chart collection combining Figma Components 337 to 343.",
       },
-    },
-    backgrounds: {
-      default: 'dark',
-      values: [
-        { name: 'dark', value: '#13171f' },
-        { name: 'light', value: '#ffffff' },
-      ],
     },
   },
 };
 
 export default meta;
-type Story = StoryObj<typeof Component337>;
 
-export const Component_337: Story = {
-  render: () => <Component337 Property_1="Frame 1171275927" />,
-};
-
-export const Component_338: Story = {
-  render: () => <Component338 Property_1="Frame 1171275928" />,
-};
-
-export const Component_339: Story = {
-  render: () => <Component339 Property_1="Frame 1171275929" />,
-};
-
-export const Component_340: Story = {
-  render: () => <Component340 Property_1="Frame 1171275930" />,
-};
-
-export const Component_341: Story = {
-  render: () => <Component341 Property_1="Frame 1171275931" />,
-};
-
-export const Component_342: Story = {
-  render: () => <Component342 Property_1="Frame 1171275932" />,
-};
-
-export const Component_343: Story = {
-  render: () => <Component343 Property_1="Frame 1171275933" />,
-};
-
-export const AllBarsCombined: Story = {
+export const SystemUsageOverview: StoryObj = {
+  name: "System Usage Overview (All Bars)",
   render: () => (
-    <div style={{ display: 'flex', gap: '12px', alignItems: 'flex-end', background: '#13171f', padding: '24px', borderRadius: '12px' }}>
-      <Component337 Property_1="Frame 1171275927" />
-      <Component338 Property_1="Frame 1171275921" />
-      <Component339 Property_1="Frame 1171275922" />
-      <Component340 Property_1="Frame 1171275923" />
-      <Component341 Property_1="Frame 1171275924" />
-      <Component342 Property_1="Frame 1171275925" />
-      <Component343 Property_1="Frame 1171275926" />
+    <div style={{ display: 'flex', alignItems: 'flex-end', gap: '16px', padding: '24px', background: '#0B132B', borderRadius: '12px', width: 'fit-content' }}>
+      <Component337 />
+      <Component338 />
+      <Component339 />
+      <Component340 />
+      <Component341 />
+      <Component342 />
+      <Component343 />
     </div>
   ),
+};
+
+export const Bar337: StoryObj = {
+  name: "Component 337 (31MW)",
+  render: () => <Component337 />,
+};
+
+export const Bar338: StoryObj = {
+  name: "Component 338 (22MW)",
+  render: () => <Component338 />,
+};
+
+export const Bar339: StoryObj = {
+  name: "Component 339 (36MW)",
+  render: () => <Component339 />,
+};
+
+export const Bar340: StoryObj = {
+  name: "Component 340 (39MW)",
+  render: () => <Component340 />,
+};
+
+export const Bar341: StoryObj = {
+  name: "Component 341 (18MW)",
+  render: () => <Component341 />,
+};
+
+export const Bar342: StoryObj = {
+  name: "Component 342 (14MW)",
+  render: () => <Component342 />,
+};
+
+export const Bar343: StoryObj = {
+  name: "Component 343 (22MW)",
+  render: () => <Component343 />,
 };
