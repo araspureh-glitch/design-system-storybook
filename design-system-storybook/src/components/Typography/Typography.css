@@ -1,0 +1,144 @@
+.typography-container {
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  padding: 40px;
+  background-color: #ffffff;
+  color: #0d1326;
+  border-radius: 16px;
+  max-width: 900px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+}
+
+.typography-container.dark {
+  background-color: #0b132b;
+  color: #f8fafc;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+}
+
+/* Category Section Headings (Underlined small labels) */
+.typo-category-header {
+  margin-bottom: 24px;
+}
+
+.typo-category-title {
+  font-size: 14px;
+  font-weight: 500;
+  color: #475569;
+  display: inline-block;
+  border-bottom: 1.5px solid #0d1326;
+  padding-bottom: 4px;
+  margin: 0;
+}
+
+.dark .typo-category-title {
+  color: #94a3b8;
+  border-bottom-color: #38bdf8;
+}
+
+.typo-section {
+  margin-bottom: 48px;
+}
+
+.typo-section:last-child {
+  margin-bottom: 0;
+}
+
+/* Item Wrapper */
+.typo-item {
+  margin-bottom: 28px;
+}
+
+.typo-item:last-child {
+  margin-bottom: 0;
+}
+
+.typo-item-row {
+  display: flex;
+  align-items: baseline;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+
+/* Text Element Previews */
+.typo-display-1 {
+  font-size: 72px;
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin: 0 0 6px 0;
+}
+
+.typo-heading-1 {
+  font-size: 56px;
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.015em;
+  margin: 0 0 6px 0;
+}
+
+.typo-heading-2 {
+  font-size: 48px;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  margin: 0 0 6px 0;
+}
+
+.typo-heading-3 {
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 1.25;
+  margin: 0 0 6px 0;
+}
+
+.typo-heading-4 {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1.3;
+  margin: 0 0 6px 0;
+}
+
+.typo-heading-4-upper {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1.3;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin: 0 0 6px 0;
+}
+
+.typo-paragraph-1 {
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1.5;
+  margin: 0 0 6px 0;
+}
+
+.typo-paragraph-2 {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.5;
+  margin: 0 0 6px 0;
+}
+
+.typo-button-link {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.4;
+  margin: 0 0 6px 0;
+  display: inline-block;
+  border-bottom: 1.5px solid currentColor;
+  padding-bottom: 2px;
+  cursor: pointer;
+}
+
+/* Metadata Subtext Labels */
+.typo-meta {
+  font-size: 13px;
+  font-weight: 400;
+  color: #64748b;
+  margin: 0;
+}
+
+.dark .typo-meta {
+  color: #94a3b8;
+}
