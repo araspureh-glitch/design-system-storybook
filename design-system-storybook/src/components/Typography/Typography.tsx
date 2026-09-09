@@ -138,7 +138,7 @@ export const Typography: React.FC<TypographyProps> = ({
       {/* Font Specimen Card */}
       <div className="typo-font-specimen-card">
         <div className="typo-specimen-header">
-          <span className="typo-specimen-family">Inter & JetBrains Mono</span>
+          <span className="typo-specimen-family">Inter &amp; JetBrains Mono</span>
           <span className="typo-specimen-meta">Weights: 400 Regular · 500 Medium · 600 SemiBold · 700 Bold</span>
         </div>
         <div className="typo-alphabet-grid">
@@ -157,7 +157,7 @@ export const Typography: React.FC<TypographyProps> = ({
           value={customText}
           onChange={(e) => setCustomText(e.target.value)}
         />
-        {customText &amp;&amp; (
+        {customText && (
           <button 
             style={{ padding: '6px 12px', borderRadius: '6px', border: 'none', background: '#cbd5e1', cursor: 'pointer', fontSize: '12px', fontWeight: 600 }}
             onClick={() => setCustomText('')}
@@ -181,7 +181,7 @@ export const Typography: React.FC<TypographyProps> = ({
             <div className="typo-spec-badges">
               <span className="typo-chip">{item.spec}</span>
               <span className="typo-chip">Line Height: {item.lineHeight}</span>
-              {item.tracking &amp;&amp; <span className="typo-chip">Tracking: {item.tracking}</span>}
+              {item.tracking && <span className="typo-chip">Tracking: {item.tracking}</span>}
               <span className="typo-chip typo-chip-code">{item.cssVar}</span>
             </div>
           </div>
