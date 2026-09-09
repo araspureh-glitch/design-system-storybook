@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { Component350Frame1171275911 } from './Component350Frame1171275911';
 
 const meta: Meta<typeof Component350Frame1171275911> = {
-  title: "cards/Component 350/Frame 1171275911",
+  title: "cards/Smart City Health Score",
   component: Component350Frame1171275911,
   parameters: {
     docs: {

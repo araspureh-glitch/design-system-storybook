@@ -3,7 +3,7 @@ import React from 'react';
 import { Component336 } from './Component336';
 
 const meta: Meta<typeof Component336> = {
-  title: 'cards/Component 336',
+  title: 'cards/Renewable vs Non-Renewable Energy',
   component: Component336,
   parameters: {
     docs: {

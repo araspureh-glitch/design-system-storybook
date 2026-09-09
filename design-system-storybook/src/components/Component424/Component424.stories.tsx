@@ -3,7 +3,7 @@ import React from 'react';
 import { Component424 } from './Component424';
 
 const meta: Meta<typeof Component424> = {
-  title: 'charts/Component424',
+  title: 'charts/Power Load Bars',
   component: Component424,
   parameters: {
     docs: {
