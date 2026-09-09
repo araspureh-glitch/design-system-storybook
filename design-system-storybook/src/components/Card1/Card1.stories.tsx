@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { Card1 } from './Card1';
 
 const meta: Meta<typeof Card1> = {
-  title: "cards/card 1",
+  title: "cards/Air Quality Index Card",
   component: Card1,
   parameters: {
     docs: {

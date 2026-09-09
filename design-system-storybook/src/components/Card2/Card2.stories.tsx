@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { Card2 } from './Card2';
 
 const meta: Meta<typeof Card2> = {
-  title: "cards/card 2 ",
+  title: "cards/High Spike Alert Card",
   component: Card2,
   parameters: {
     docs: {

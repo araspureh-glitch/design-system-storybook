@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { AlertsState } from './AlertsState';
 
 const meta: Meta<typeof AlertsState> = {
-  title: "cards/alerts state ",
+  title: "cards/Alert Badges",
   component: AlertsState,
   parameters: {
     docs: {
